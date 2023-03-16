@@ -108,15 +108,15 @@ class Window(QWidget):
         grid.addWidget(self.PaddleExample, 13, 0, 1, 5)
         self.PaddleExample.setText("import paddle\nx = paddle.to_tensor([-0.4, -0.2, 0.1, 0.3])\nout = paddle.abs(x)\nprint(out)")
 
-        web_get_button = QPushButton("解析网页")
-        grid.addWidget(web_get_button, 14, 4, 1, 1)
-        web_get_button.clicked.connect(self.write_md)
+        write_button = QPushButton("写文件")
+        grid.addWidget(write_button, 14, 4, 1, 1)
+        write_button.clicked.connect(self.write_md)
 
         self.setWindowTitle('test')
         self.show()
 
     def setdifference(self,text):
-        self.difference = text
+        self.difference[0] = text
 
     def getweb(self):
         try:
@@ -137,8 +137,39 @@ class Window(QWidget):
         # print(torch_page)
 
     def write_md(self):
-        print("请在此函数内补充对应的写文件逻辑")
-        # TODO 汇集各个框体中的信息
+        torch_name = self.TorchName.text().split('(')[0]
+        paddle_name = self.PaddleName.text().split('(')[0]
+        file_name = torch_name+'.md'
+        with open(file_name,'w',encoding='utf-8') as f:
+            # write head
+            f.write('## [{}]{}\n\n'.format(self.difference,torch_name))
+            # write torch
+            f.write('### [{}]({})\n\n'.format(torch_name, self.TorchUrl.text()))
+            f.write('```python\n{}\n```\n\n'.format(self.TorchName.text()))
+            # write paddle
+            f.write('### [{}]({})\n\n'.format(paddle_name, self.PaddleUrl.text()))
+            f.write('```python\n{}\n```\n\n'.format(self.PaddleName.text()))
+            # write introduction
+            f.write('{}\n\n'.format(self.difference))
+            # write table
+            f.write('### {}\n'.format('参数映射'))
+            f.write('|PyTorch|PaddlePaddle|备注|\n')
+            f.write('| ------- | ------- | ------- |\n')
+            for i in range(self.table.rowCount()):
+                for j in range(self.table.columnCount()):
+                    f.write('|{}'.format(self.table.item(i,j).text()))
+                f.write('|\n')
+            f.write('\n')
+            # write code
+            f.write('### {}\n\n'.format('转写示例'))
+            f.write('```python\n')
+            f.write('# Pytorch 写法\n')
+            f.write(self.TorchExample.toPlainText())
+            f.write('\n\n')
+            f.write('# Paddle 写法\n')
+            f.write(self.PaddleExample.toPlainText())
+            f.write('\n')
+            f.write('```\n')
         pass
 
 if __name__ == '__main__':
