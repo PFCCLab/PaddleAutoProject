@@ -13,7 +13,7 @@ import sys
 import math
 import sys
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, QFileDialog, QLabel, QTextEdit, \
-    QGridLayout, QFrame, QColorDialog, QLineEdit, QTableWidget, QTableWidgetItem
+    QGridLayout, QFrame, QColorDialog, QLineEdit, QTableWidget, QTableWidgetItem, QRadioButton
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
@@ -51,9 +51,33 @@ class Window(QWidget):
         self.PaddleName = QLineEdit("paddle.abs(x, name=None)")
         grid.addWidget(self.PaddleName, 6, 1, 1, 4)
 
-        grid.addWidget(QLabel('区别介绍', self), 7, 0, 1, 1)
-        self.Difference = QLineEdit("Torch参数更多")
-        grid.addWidget(self.Difference, 7, 1, 1, 4)
+        # grid.addWidget(QLabel('区别介绍', self), 7, 0, 1, 1)
+        # self.Difference = QLineEdit("Torch参数更多")
+        # grid.addWidget(self.Difference, 7, 1, 1, 4)
+
+        self.difference = "无参数"
+        btn1 = QRadioButton("无参数")
+        btn1.setChecked(True)
+        grid.addWidget(btn1, 7, 0, 1, 1)
+        btn1.clicked.connect(lambda : self.setdifference(btn1.text()))
+        btn2 = QRadioButton("参数完全一致")
+        grid.addWidget(btn2, 7, 1, 1, 1)
+        btn2.clicked.connect(lambda: self.setdifference(btn2.text()))
+        btn3 = QRadioButton("仅参数名不一致")
+        grid.addWidget(btn3, 7, 2, 1, 1)
+        btn3.clicked.connect(lambda: self.setdifference(btn3.text()))
+        btn4 = QRadioButton("torch 参数更多")
+        grid.addWidget(btn4, 7, 3, 1, 1)
+        btn4.clicked.connect(lambda: self.setdifference(btn4.text()))
+        btn5 = QRadioButton("Paddle 参数更多")
+        grid.addWidget(btn5, 8, 0, 1, 1)
+        btn5.clicked.connect(lambda: self.setdifference(btn5.text()))
+        btn6 = QRadioButton("参数不一致")
+        grid.addWidget(btn6, 8, 1, 1, 1)
+        btn6.clicked.connect(lambda: self.setdifference(btn6.text()))
+        btn7 = QRadioButton("组合替代实现")
+        grid.addWidget(btn7, 8, 2, 1, 1)
+        btn7.clicked.connect(lambda: self.setdifference(btn7.text()))
 
         self.table = QTableWidget()
         self.table.setColumnCount(3)
@@ -90,6 +114,9 @@ class Window(QWidget):
 
         self.setWindowTitle('test')
         self.show()
+
+    def setdifference(self,text):
+        self.difference = text
 
     def getweb(self):
         try:
