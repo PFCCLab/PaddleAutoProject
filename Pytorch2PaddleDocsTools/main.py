@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, 
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
+from utils import get_paddle_func,get_torch_func
 
 class Window(QWidget):
 
@@ -51,8 +52,8 @@ class Window(QWidget):
         grid.addWidget(self.PaddleName, 6, 1, 1, 4)
 
         grid.addWidget(QLabel('区别介绍', self), 7, 0, 1, 1)
-        self.PaddleName = QLineEdit("Torch参数更多")
-        grid.addWidget(self.PaddleName, 7, 1, 1, 4)
+        self.Difference = QLineEdit("Torch参数更多")
+        grid.addWidget(self.Difference, 7, 1, 1, 4)
 
         self.table = QTableWidget()
         self.table.setColumnCount(3)
@@ -91,16 +92,17 @@ class Window(QWidget):
         self.show()
 
     def getweb(self):
-        print("请在utils补充对应的网页解析逻辑，并且在本函数中增加各个组件的赋值逻辑")
         try:
             torch_url = self.TorchUrl.text()
-            torch_page = requests.get(torch_url).text
+            torch_func = get_torch_func(torch_url)
+            self.TorchName.setText(torch_func)
         except:
             pass
 
         try:
             paddle_url = self.PaddleUrl.text()
-            paddle_page = requests.get(paddle_url).text
+            paddle_func = get_paddle_func(paddle_url)
+            self.PaddleName.setText(torch_func)
         except:
             pass
 
