@@ -17,7 +17,11 @@ from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, 
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
-from utils import get_paddle_func,get_torch_func
+from utils import get_paddle_func, get_torch_func, get_torch_example, get_paddle_example
+
+headers = {
+    'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+}
 
 class Window(QWidget):
 
@@ -129,11 +133,11 @@ class Window(QWidget):
         self.setWindowTitle('test')
         self.show()
 
-    def setdifference(self,text):
+    def setdifference(self, text):
         self.difference = text
         diff2desp = {
-            "无参数":"两者功能一致。",
-            "参数完全一致":"两者功能一致且参数用法一致。",
+            "无参数": "两者功能一致。",
+            "参数完全一致": "两者功能一致且参数用法一致。",
             "仅参数名不一致": "两者功能一致且参数用法一致，仅参数名不一致，具体如下：",
             "仅 torch 参数更多": "其中 Paddle 相比 PyTorch 支持更多其他参数，具体如下：",
             "仅 Paddle 参数更多": "其中 PyTorch 相比 Paddle 支持更多其他参数，具体如下：",
@@ -146,17 +150,29 @@ class Window(QWidget):
     def getweb(self):
         try:
             torch_url = self.TorchUrl.text()
-            torch_func = get_torch_func(torch_url)
-            self.TorchName.setText(torch_func)
-        except:
-            pass
+            torch_page = requests.get(torch_url, headers=headers).text
+            if torch_page is None:
+                print("输入pytorch网址错误，请重新输入！")
+            else:
+                torch_func = get_torch_func(torch_page)
+                torch_example = get_torch_example(torch_page)
+                self.TorchName.setText(torch_func)
+                self.TorchExample.setText(torch_example)
+        except Exception as e:
+            print(e)
 
         try:
             paddle_url = self.PaddleUrl.text()
-            paddle_func = get_paddle_func(paddle_url)
-            self.PaddleName.setText(paddle_func)
-        except:
-            pass
+            paddle_page = requests.get(paddle_url, headers=headers).text
+            if paddle_page is None:
+                print("输入paddlepaddle网址错误，请重新输入！")
+            else:
+                paddle_func = get_paddle_func(paddle_page)
+                paddle_example = get_paddle_example(paddle_page)
+                self.PaddleName.setText(paddle_func)
+                self.PaddleExample.setText(paddle_example)
+        except Exception as e:
+            print(e)
 
         # TODO 刷新表格的逻辑待补充
         # print(torch_page)
