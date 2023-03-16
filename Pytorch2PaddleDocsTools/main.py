@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, 
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
-from utils import get_paddle_func,get_torch_func
+from utils import get_paddle_func,get_torch_func,get_torch_example
 
 class Window(QWidget):
 
@@ -121,8 +121,11 @@ class Window(QWidget):
     def getweb(self):
         try:
             torch_url = self.TorchUrl.text()
-            torch_func = get_torch_func(torch_url)
+            torch_page = requests.get(torch_url).text
+            torch_func = get_torch_func(torch_page)
+            torch_example = get_torch_example(torch_page)
             self.TorchName.setText(torch_func)
+            self.TorchExample.setText(torch_example)
         except:
             pass
 
