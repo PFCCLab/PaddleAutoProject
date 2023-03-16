@@ -102,7 +102,7 @@ class Window(QWidget):
         try:
             paddle_url = self.PaddleUrl.text()
             paddle_func = get_paddle_func(paddle_url)
-            self.PaddleName.setText(torch_func)
+            self.PaddleName.setText(paddle_func)
         except:
             pass
 
