@@ -56,6 +56,7 @@ class Window(QWidget):
         # grid.addWidget(self.Difference, 7, 1, 1, 4)
 
         self.difference = "无参数"
+        self.description = "两者功能一致。"
         btn1 = QRadioButton("无参数")
         btn1.setChecked(True)
         grid.addWidget(btn1, 7, 0, 1, 1)
@@ -66,24 +67,27 @@ class Window(QWidget):
         btn3 = QRadioButton("仅参数名不一致")
         grid.addWidget(btn3, 7, 2, 1, 1)
         btn3.clicked.connect(lambda: self.setdifference(btn3.text()))
-        btn4 = QRadioButton("torch 参数更多")
+        btn4 = QRadioButton("仅 torch 参数更多")
         grid.addWidget(btn4, 7, 3, 1, 1)
         btn4.clicked.connect(lambda: self.setdifference(btn4.text()))
-        btn5 = QRadioButton("Paddle 参数更多")
+        btn5 = QRadioButton("仅 Paddle 参数更多")
         grid.addWidget(btn5, 8, 0, 1, 1)
         btn5.clicked.connect(lambda: self.setdifference(btn5.text()))
-        btn6 = QRadioButton("参数不一致")
+        btn6 = QRadioButton("参数用法不一致")
         grid.addWidget(btn6, 8, 1, 1, 1)
         btn6.clicked.connect(lambda: self.setdifference(btn6.text()))
         btn7 = QRadioButton("组合替代实现")
         grid.addWidget(btn7, 8, 2, 1, 1)
         btn7.clicked.connect(lambda: self.setdifference(btn7.text()))
+        btn8 = QRadioButton("无参数且用法不一致")
+        grid.addWidget(btn8, 8, 3, 1, 1)
+        btn8.clicked.connect(lambda: self.setdifference(btn8.text()))
 
         self.table = QTableWidget()
         self.table.setColumnCount(3)
         self.table.setRowCount(2)
         self.table.setHorizontalHeaderLabels(['PyTorch', 'PaddlePaddle', '备注'])
-        grid.addWidget(self.table, 9, 0, 1, 5)
+        grid.addWidget(self.table, 9, 0, 3, 4)
         # 表格内容示例
         item1 = QTableWidgetItem('input')
         self.table.setItem(0, 0, item1)
@@ -98,25 +102,46 @@ class Window(QWidget):
         item3 = QTableWidgetItem('表示输出的Tensor，PaddlePaddle无此参数，需要进行转写。')
         self.table.setItem(1, 2, item3)
 
-        grid.addWidget(QLabel('Torch Example', self), 10, 0, 1, 1)
+        add_row_button = QPushButton("增加一行")
+        grid.addWidget(add_row_button, 9, 4, 1, 1)
+        f = lambda : self.table.insertRow(self.table.rowCount())
+        add_row_button.clicked.connect(f)
+        del_row_button = QPushButton("减少一行")
+        grid.addWidget(del_row_button, 10, 4, 1, 1)
+        f = lambda : self.table.removeRow(self.table.rowCount()-1)
+        del_row_button.clicked.connect(f)
+
+        # TODO add eval button to run example code
+        grid.addWidget(QLabel('Torch Example', self), 12, 0, 1, 1)
         self.TorchExample = QTextEdit()
-        grid.addWidget(self.TorchExample, 11, 0, 1, 5)
+        grid.addWidget(self.TorchExample, 13, 0, 1, 5)
         self.TorchExample.setText('torch.abs(torch.tensor([-1, -2, 3]))')
 
-        grid.addWidget(QLabel('Paddle Example', self), 12, 0, 1, 1)
+        grid.addWidget(QLabel('Paddle Example', self), 14, 0, 1, 1)
         self.PaddleExample = QTextEdit()
-        grid.addWidget(self.PaddleExample, 13, 0, 1, 5)
+        grid.addWidget(self.PaddleExample, 15, 0, 1, 5)
         self.PaddleExample.setText("import paddle\nx = paddle.to_tensor([-0.4, -0.2, 0.1, 0.3])\nout = paddle.abs(x)\nprint(out)")
 
         write_button = QPushButton("写文件")
-        grid.addWidget(write_button, 14, 4, 1, 1)
+        grid.addWidget(write_button, 16, 4, 1, 1)
         write_button.clicked.connect(self.write_md)
 
         self.setWindowTitle('test')
         self.show()
 
     def setdifference(self,text):
-        self.difference[0] = text
+        self.difference = text
+        diff2desp = {
+            "无参数":"两者功能一致。",
+            "参数完全一致":"两者功能一致且参数用法一致。",
+            "仅参数名不一致": "两者功能一致且参数用法一致，仅参数名不一致，具体如下：",
+            "仅 torch 参数更多": "其中 Paddle 相比 PyTorch 支持更多其他参数，具体如下：",
+            "仅 Paddle 参数更多": "其中 PyTorch 相比 Paddle 支持更多其他参数，具体如下：",
+            "参数用法不一致": "Paddle 和 PyTorch 的参数用法不一致，具体如下：",
+            "组合替代实现": "PaddlePaddle 目前无对应 API，可使用如下代码组合实现该 API：",
+            "无参数且用法不一致": "两者功能不完全一致，转写示例如下：",
+        }
+        self.description = diff2desp[self.difference]
 
     def getweb(self):
         try:
@@ -153,26 +178,28 @@ class Window(QWidget):
             f.write('### [{}]({})\n\n'.format(paddle_name, self.PaddleUrl.text()))
             f.write('```python\n{}\n```\n\n'.format(self.PaddleName.text()))
             # write introduction
-            f.write('{}\n\n'.format(self.difference))
-            # write table
-            f.write('### {}\n'.format('参数映射'))
-            f.write('|PyTorch|PaddlePaddle|备注|\n')
-            f.write('| ------- | ------- | ------- |\n')
-            for i in range(self.table.rowCount()):
-                for j in range(self.table.columnCount()):
-                    f.write('|{}'.format(self.table.item(i,j).text()))
-                f.write('|\n')
-            f.write('\n')
-            # write code
-            f.write('### {}\n\n'.format('转写示例'))
-            f.write('```python\n')
-            f.write('# Pytorch 写法\n')
-            f.write(self.TorchExample.toPlainText())
-            f.write('\n\n')
-            f.write('# Paddle 写法\n')
-            f.write(self.PaddleExample.toPlainText())
-            f.write('\n')
-            f.write('```\n')
+            f.write('{}\n\n'.format(self.description))
+            if self.difference not in ['无参数', '参数完全一致', '组合替代实现', '无参数且用法不一致']:
+                # write table
+                f.write('### {}\n'.format('参数映射'))
+                f.write('|PyTorch|PaddlePaddle|备注|\n')
+                f.write('| ------- | ------- | ------- |\n')
+                for i in range(self.table.rowCount()):
+                    for j in range(self.table.columnCount()):
+                        f.write('|{}'.format(self.table.item(i,j).text()))
+                    f.write('|\n')
+                f.write('\n')
+            if self.difference not in ['无参数', '参数完全一致', '仅参数名不一致']:
+                # write code
+                f.write('### {}\n\n'.format('转写示例'))
+                f.write('```python\n')
+                f.write('# Pytorch 写法\n')
+                f.write(self.TorchExample.toPlainText())
+                f.write('\n\n')
+                f.write('# Paddle 写法\n')
+                f.write(self.PaddleExample.toPlainText())
+                f.write('\n')
+                f.write('```\n')
         pass
 
 if __name__ == '__main__':
