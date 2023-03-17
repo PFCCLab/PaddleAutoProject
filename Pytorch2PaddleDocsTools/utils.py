@@ -75,6 +75,5 @@ def get_paddle_example(paddle_page=''):
 
     # 去除一些奇奇怪怪的空格
     example_content = example_content.replace('                           ', '')
-    print(example_content)
 
     return example_content
