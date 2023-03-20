@@ -14,5 +14,4 @@ class TorchAliasFor(Exception):
     def get_new_url(self):
         temp_url = str(re.findall(
             r'Alias for <a class="reference internal" href="(.*?)" title="', self.torch_page, re.DOTALL)[0])
-        print(temp_url)
         self.new_url = '/'.join(self.torch_url.split('/')[:-1]) + "/" + temp_url
