@@ -19,6 +19,7 @@ from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
 from utils import get_paddle_func, get_torch_func, get_torch_example, get_paddle_example
 import webbrowser
+import re
 from error import TorchAliasFor
 
 headers = {
@@ -98,19 +99,6 @@ class Window(QWidget):
         self.table.setRowCount(2)
         self.table.setHorizontalHeaderLabels(['PyTorch', 'PaddlePaddle', '备注'])
         grid.addWidget(self.table, 9, 0, 3, 4)
-        # 表格内容示例
-        item1 = QTableWidgetItem('input')
-        self.table.setItem(0, 0, item1)
-        item2 = QTableWidgetItem('x')
-        self.table.setItem(0, 1, item2)
-        item3 = QTableWidgetItem('输入的Tensor，仅参数名不同')
-        self.table.setItem(0, 2, item3)
-        item1 = QTableWidgetItem('out')
-        self.table.setItem(1, 0, item1)
-        item2 = QTableWidgetItem('')
-        self.table.setItem(1, 1, item2)
-        item3 = QTableWidgetItem('表示输出的Tensor，PaddlePaddle无此参数，需要进行转写。')
-        self.table.setItem(1, 2, item3)
 
         add_row_button = QPushButton("增加一行")
         grid.addWidget(add_row_button, 9, 4, 1, 1)
@@ -166,6 +154,9 @@ class Window(QWidget):
                 torch_example = get_torch_example(torch_page)
                 self.TorchName.setText(torch_func)
                 self.TorchExample.setText(torch_example)
+                # 计算参数
+                params_torch = self._get_func_param(torch_func)
+
         except TorchAliasFor as te:
             self.TorchExample.setText(str(te))
         except Exception as e:
@@ -181,15 +172,45 @@ class Window(QWidget):
                 paddle_example = get_paddle_example(paddle_page)
                 self.PaddleName.setText(paddle_func)
                 self.PaddleExample.setText(paddle_example)
+                # 计算参数
+                params_paddle = self._get_func_param(paddle_func)
+
         except Exception as e:
             print(e)
 
         # TODO 刷新表格的逻辑待补充
+        self.get_table(params_torch,params_paddle)
         # print(torch_page)
+
+    def _get_func_param(self,input_str):
+        result = re.search("\((.*?)\)", input_str)
+        if result:
+            content = result.group(1)
+        else:
+            print("自动匹配参数填充表格失败",input_str)
+
+        params = content.split(',')
+        for number, i in enumerate(params):
+            if '=' in i:
+                params[number] = i.split('=')[0]
+
+        return params
 
     def open_web(self):
         webbrowser.open_new_tab("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/index_cn.html")
         webbrowser.open_new_tab("https://pytorch.org/docs/stable/index.html")
+
+    def get_table(self,params_torch,params_paddle):
+        params_max = max(len(params_torch),len(params_paddle))
+        self.table.setRowCount(params_max)
+        for i in range(len(params_torch)):
+            self.table.setItem(i, 0, QTableWidgetItem(params_torch[i]))
+
+        for i in range(len(params_paddle)):
+            self.table.setItem(i, 1, QTableWidgetItem(params_paddle[i]))
+
+        for i in range(params_max):
+            self.table.setItem(i, 2, QTableWidgetItem("代补充"))
 
     def write_md(self):
         torch_name = self.TorchName.text().split('(')[0]
