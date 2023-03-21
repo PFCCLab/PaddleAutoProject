@@ -20,6 +20,7 @@ import requests
 from utils import get_paddle_func, get_torch_func, get_torch_example, get_paddle_example
 import webbrowser
 import re
+from error import TorchAliasFor
 
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
@@ -144,6 +145,8 @@ class Window(QWidget):
         try:
             torch_url = self.TorchUrl.text()
             torch_page = requests.get(torch_url, headers=headers).text
+            if "Alias for" in torch_page:
+                raise TorchAliasFor(torch_page=torch_page, torch_url=torch_url)
             if torch_page is None:
                 print("输入pytorch网址错误，请重新输入！")
             else:
@@ -154,6 +157,8 @@ class Window(QWidget):
                 # 计算参数
                 params_torch = self._get_func_param(torch_func)
 
+        except TorchAliasFor as te:
+            self.TorchExample.setText(str(te))
         except Exception as e:
             print(e)
 
