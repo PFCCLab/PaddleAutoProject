@@ -18,6 +18,7 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
 from utils import get_paddle_func, get_torch_func, get_torch_example, get_paddle_example
+import webbrowser
 
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
@@ -46,6 +47,10 @@ class Window(QWidget):
         web_get_button = QPushButton("解析网页")
         grid.addWidget(web_get_button, 4, 4, 1, 1)
         web_get_button.clicked.connect(self.getweb)
+
+        web_get_button = QPushButton("打开api文档网站")
+        grid.addWidget(web_get_button, 4, 0, 1, 1)
+        web_get_button.clicked.connect(self.open_web)
 
         grid.addWidget(QLabel('PyTorch API name', self), 5, 0, 1, 1)
         grid.addWidget(QLabel('PaddlePaddle API name', self), 6, 0, 1, 1)
@@ -176,6 +181,10 @@ class Window(QWidget):
 
         # TODO 刷新表格的逻辑待补充
         # print(torch_page)
+
+    def open_web(self):
+        webbrowser.open_new_tab("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/index_cn.html")
+        webbrowser.open_new_tab("https://pytorch.org/docs/stable/index.html")
 
     def write_md(self):
         torch_name = self.TorchName.text().split('(')[0]
