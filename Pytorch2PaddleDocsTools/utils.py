@@ -71,7 +71,8 @@ def get_paddle_example(paddle_page=''):
         '<span class="o">', '').replace('<span class="mi">', '').replace('<span class="p">', '').replace(
         '<div class="highlight-python notranslate">\n', '').replace('<div class="highlight">\n', '').replace(
         '<span class="kn">', '').replace('</span>', '').replace('<span class="go">', '').replace('<pre>', '').replace(
-        '<span>', '').replace('<span class="nb">', '').replace('<span class="c1">', '').replace('<span class="mf">', '')
+        '<span>', '').replace('<span class="nb">', '').replace('<span class="c1">', '').replace('<span class="mf">', '')\
+        .replace('<span class="k">', '').replace('<span class="kc">', '')
 
     # 去除一些奇奇怪怪的空格
     example_content = example_content.replace('                           ', '')
