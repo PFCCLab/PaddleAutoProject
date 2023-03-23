@@ -9,6 +9,7 @@ https://maicss.gitbooks.io/pyqt5/content/
 zetcode.com
 """
 import copy
+import os.path
 import sys
 import math
 import sys
@@ -37,6 +38,10 @@ class Window(QWidget):
 
         grid = QGridLayout()
         self.setLayout(grid)
+
+        grid.addWidget(QLabel('Save Directory', self), 1, 0, 1, 1)
+        self.SaveDir = QLineEdit(".")
+        grid.addWidget(self.SaveDir, 1, 1, 1, 4)
 
         grid.addWidget(QLabel('PyTorch API url', self), 2, 0, 1, 1)
         grid.addWidget(QLabel('PaddlePaddle API url', self), 3, 0, 1, 1)
@@ -210,12 +215,13 @@ class Window(QWidget):
             self.table.setItem(i, 1, QTableWidgetItem(params_paddle[i]))
 
         for i in range(params_max):
-            self.table.setItem(i, 2, QTableWidgetItem("代补充"))
+            self.table.setItem(i, 2, QTableWidgetItem("待补充"))
 
     def write_md(self):
         torch_name = self.TorchName.text().split('(')[0]
         paddle_name = self.PaddleName.text().split('(')[0]
-        file_name = torch_name+'.md'
+        file_name = os.path.join(self.SaveDir.text(),torch_name+'.md')
+        print(file_name)
         with open(file_name,'w',encoding='utf-8') as f:
             # write head
             f.write('## [{}]{}\n\n'.format(self.difference,torch_name))
