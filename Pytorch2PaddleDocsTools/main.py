@@ -124,7 +124,7 @@ class Window(QWidget):
         grid.addWidget(write_button, 16, 4, 1, 1)
         write_button.clicked.connect(self.write_md)
 
-        self.setWindowTitle('test')
+        self.setWindowTitle('Pytorch2PaddleDocsTools')
         self.show()
 
     def setdifference(self, text):

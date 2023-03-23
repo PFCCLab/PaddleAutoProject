@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - [ main ]
+    tags: ['Pytorch2PaddleDocsTools_v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Pytorch2PaddleDocsTools-build:
+    name: ${{ matrix.friendlyName }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        PythonVersion: [3.10]
+        os: [ macos-11, windows-2019 ]
+        arch: [ x64, arm64 ]
+        include:
+          - os: macos-11
+            friendlyName: macOS
+            asset_name: Pytorch2PaddleDocsTools-darwin
+          - os: windows-2019
+            friendlyName: Windows
+            asset_name: Pytorch2PaddleDocsTools-win32
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.PythonVersion }}
+      - run: pip install Pillow pyinstaller
+      - name: PyInstaller Windows
+        uses: sayyid5416/pyinstaller@main
+        with:
+          python_ver: ${{ matrix.PythonVersion }}
+          exe_path: ./dist/${{ matrix.friendlyName }}
+          spec: 'Pytorch2PaddleDocsTools/build.spec'
+          requirements: 'Pytorch2PaddleDocsTools/requirements.txt'
+          upload_exe_with_name: ${{ matrix.asset_name }}-${{ matrix.arch }}
+
+
