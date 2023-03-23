@@ -39,5 +39,6 @@ jobs:
           spec: 'Pytorch2PaddleDocsTools/build.spec'
           requirements: 'Pytorch2PaddleDocsTools/requirements.txt'
           upload_exe_with_name: ${{ matrix.asset_name }}-${{ matrix.arch }}
+          options: --windowed, --onefile
 
 
