@@ -7,3 +7,7 @@
 - main::getweb 缺少将字典信息填充到组件的逻辑
 - main::write_md 缺少根据组件信息构造md文档的逻辑
 - 其他，如在API名称下增加选项按钮，用于人工指定当前对比的API属于“Torch此参数多”、“Paddle参数多”、“完全一致”等情况。
+
+## 已知问题
+
+打包后的 macos app 打不开的话需要手动给权限才能运行 `chmod +x Pytorch2PaddleDocsTools.app/Contents/MacOS/Pytorch2PaddleDocsTools`
