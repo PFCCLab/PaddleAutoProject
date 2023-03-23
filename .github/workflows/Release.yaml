@@ -3,10 +3,9 @@ name: Release
 on:
   push:
     branches:
-      - [ main ]
+      - main
     tags: ['Pytorch2PaddleDocsTools_v*']
   pull_request:
-  workflow_dispatch:
 
 jobs:
   Pytorch2PaddleDocsTools-build:
