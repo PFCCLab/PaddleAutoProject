@@ -9,7 +9,7 @@ https://maicss.gitbooks.io/pyqt5/content/
 zetcode.com
 """
 import copy
-import os.path
+import os
 import sys
 import math
 import sys
