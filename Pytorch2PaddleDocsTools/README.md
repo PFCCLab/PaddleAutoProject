@@ -5,3 +5,7 @@
 ## Call for Contributor
 
 https://github.com/PFCCLab/PaddleAutoProject/issues/13
+
+## 已知问题
+
+打包后的 macos app 打不开的话需要手动给权限才能运行 `chmod +x Pytorch2PaddleDocsTools.app/Contents/MacOS/Pytorch2PaddleDocsTools`
