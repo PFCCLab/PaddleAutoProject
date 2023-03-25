@@ -46,7 +46,7 @@ class Window(QWidget):
         grid.addWidget(QLabel('PyTorch API url', self), 2, 0, 1, 1)
         grid.addWidget(QLabel('PaddlePaddle API url', self), 3, 0, 1, 1)
 
-        self.TorchUrl = QLineEdit("https://pytorch.org/docs/1.13/generated/torch.abs.html?highlight=abs#torch.abs")
+        self.TorchUrl = QLineEdit("https://pytorch.org/docs/stable/generated/torch.abs.html?highlight=abs#torch.abs")
         grid.addWidget(self.TorchUrl, 2, 1, 1, 4)
         self.PaddleUrl = QLineEdit("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/paddle/abs_cn.html#abs")
         grid.addWidget(self.PaddleUrl, 3, 1, 1, 4)
