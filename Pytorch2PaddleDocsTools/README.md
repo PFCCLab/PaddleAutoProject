@@ -12,7 +12,20 @@ https://github.com/PFCCLab/PaddleAutoProject/issues/13
 
 ## 如何使用？
 
-### 一、配置环境
+### 一、获取工具
+
+本可以直接下载我们编译好的可执行文件，也可以通过拉取源码的方式运行。
+
+可执行文件地址：
+> [MacOS Arm64](https://github.com/Liyulingyue/PaddleAutoProject/suites/11815720661/artifacts/616952940)
+
+> [MacOS x64](https://github.com/Liyulingyue/PaddleAutoProject/suites/11815720661/artifacts/616952941)
+
+> [Win32 Arm64](https://github.com/Liyulingyue/PaddleAutoProject/suites/11815720661/artifacts/616952942)
+
+> [Win32 x64](https://github.com/Liyulingyue/PaddleAutoProject/suites/11815720661/artifacts/616952943)
+
+下面着重讲解如何通过源码运行，如果只想快速使用，跳过下面的介绍即可。
 
 1. 首先将PaddleAutoProject克隆到本地
 
@@ -69,11 +82,11 @@ python .\main.py
 
 #### 2.解析网页并判断文档映射类型
 
-由于abs文档属于无参数映射关系，故可以先选择其类型，并且点击解析网页。
+复制后，先点击解析网页。
 
 ![image-20230326201737648](README/image-20230326201737648.png)
 
-后得到解析成功后的结果：
+解析成功后，会自动填充部分信息。用户需要根据API的实际情况对内容进行修改。例如用户需要在上图的标记“2”处选择两个API对应的关系。对于abs，仅torch的参数多于paddle，故应选择仅torch的参数更多。
 
 ![image-20230326150955783](README/image-20230326150955783.png)
 
