@@ -1,6 +1,33 @@
 import re
 from bs4 import BeautifulSoup
 
+def torch_html2dict(torch_page=""):
+    torch_dict = {}
+    torch_dict['torch_func'] = get_torch_func(torch_page)
+    torch_dict['torch_example'] = get_torch_example(torch_page)
+    torch_dict['torch_parames'] = get_func_param(torch_dict['torch_func'])
+    return torch_dict
+
+def paddle_html2dict(paddle_page=""):
+    paddle_dict = {}
+    paddle_dict['paddle_func'] = get_paddle_func(paddle_page)
+    paddle_dict['paddle_example'] = get_paddle_example(paddle_page)
+    paddle_dict['paddle_parames'] = get_func_param(paddle_dict['paddle_func'])
+    return paddle_dict
+
+def get_func_param(input_str):
+    result = re.search("\((.*?)\)", input_str)
+    if result:
+        content = result.group(1)
+    else:
+        print("自动匹配参数填充表格失败",input_str)
+
+    params = content.split(',')
+    for number, i in enumerate(params):
+        if '=' in i:
+            params[number] = i.split('=')[0]
+
+    return params
 
 def get_torch_func(torch_page=""):
     soup = BeautifulSoup(torch_page, 'html.parser')

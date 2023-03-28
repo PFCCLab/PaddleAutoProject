@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, 
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QImage, QPixmap
 import requests
-from utils import get_paddle_func, get_torch_func, get_torch_example, get_paddle_example
+from utils import paddle_html2dict, torch_html2dict
 import webbrowser
 import re
 from error import TorchAliasFor
@@ -51,13 +51,16 @@ class Window(QWidget):
         self.PaddleUrl = QLineEdit("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/paddle/abs_cn.html#abs")
         grid.addWidget(self.PaddleUrl, 3, 1, 1, 4)
 
+        web_open_button = QPushButton("打开api文档网站")
+        grid.addWidget(web_open_button, 4, 0, 1, 1)
+        web_open_button.clicked.connect(self.open_web)
+
+        self.web_state = QLabel("")
+        grid.addWidget(self.web_state, 4, 1, 1, 1)
+
         web_get_button = QPushButton("解析网页")
         grid.addWidget(web_get_button, 4, 4, 1, 1)
         web_get_button.clicked.connect(self.getweb)
-
-        web_get_button = QPushButton("打开api文档网站")
-        grid.addWidget(web_get_button, 4, 0, 1, 1)
-        web_get_button.clicked.connect(self.open_web)
 
         grid.addWidget(QLabel('PyTorch API name', self), 5, 0, 1, 1)
         grid.addWidget(QLabel('PaddlePaddle API name', self), 6, 0, 1, 1)
@@ -155,12 +158,9 @@ class Window(QWidget):
             if torch_page is None:
                 print("输入pytorch网址错误，请重新输入！")
             else:
-                torch_func = get_torch_func(torch_page)
-                torch_example = get_torch_example(torch_page)
-                self.TorchName.setText(torch_func)
-                self.TorchExample.setText(torch_example)
-                # 计算参数
-                params_torch = self._get_func_param(torch_func)
+                torch_dict = torch_html2dict(torch_page)
+                self.TorchName.setText(torch_dict['torch_func'])
+                self.TorchExample.setText(torch_dict['torch_example'])
 
         except TorchAliasFor as te:
             self.TorchExample.setText(str(te))
@@ -173,39 +173,23 @@ class Window(QWidget):
             if paddle_page is None:
                 print("输入paddlepaddle网址错误，请重新输入！")
             else:
-                paddle_func = get_paddle_func(paddle_page)
-                paddle_example = get_paddle_example(paddle_page)
-                self.PaddleName.setText(paddle_func)
-                self.PaddleExample.setText(paddle_example)
-                # 计算参数
-                params_paddle = self._get_func_param(paddle_func)
+                paddle_dict = paddle_html2dict(paddle_page)
+                self.PaddleName.setText(paddle_dict['paddle_func'])
+                self.PaddleExample.setText(paddle_dict['paddle_example'])
 
         except Exception as e:
             print(e)
 
-        # TODO 刷新表格的逻辑待补充
-        self.get_table(params_torch,params_paddle)
-        # print(torch_page)
-
-    def _get_func_param(self,input_str):
-        result = re.search("\((.*?)\)", input_str)
-        if result:
-            content = result.group(1)
-        else:
-            print("自动匹配参数填充表格失败",input_str)
-
-        params = content.split(',')
-        for number, i in enumerate(params):
-            if '=' in i:
-                params[number] = i.split('=')[0]
-
-        return params
+        try:
+            self.set_table(torch_dict['torch_parames'],paddle_dict['paddle_parames'])
+        except:
+            self.web_state.setText("解析失败")
 
     def open_web(self):
         webbrowser.open_new_tab("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/index_cn.html")
         webbrowser.open_new_tab("https://pytorch.org/docs/stable/index.html")
 
-    def get_table(self,params_torch,params_paddle):
+    def set_table(self,params_torch,params_paddle):
         params_max = max(len(params_torch),len(params_paddle))
         self.table.setRowCount(params_max)
         for i in range(len(params_torch)):
