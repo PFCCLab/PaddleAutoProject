@@ -5,14 +5,16 @@ def torch_html2dict(torch_page=""):
     torch_dict = {}
     torch_dict['torch_func'] = get_torch_func(torch_page)
     torch_dict['torch_example'] = get_torch_example(torch_page)
-    torch_dict['torch_parames'] = get_func_param(torch_dict['torch_func'])
+    torch_parames = [item for item in get_func_param(torch_dict['torch_func']) if item != '*']
+    torch_dict['torch_parames'] = torch_parames
     return torch_dict
 
 def paddle_html2dict(paddle_page=""):
     paddle_dict = {}
     paddle_dict['paddle_func'] = get_paddle_func(paddle_page)
     paddle_dict['paddle_example'] = get_paddle_example(paddle_page)
-    paddle_dict['paddle_parames'] = get_func_param(paddle_dict['paddle_func'])
+    paddle_parames = [item for item in get_func_param(paddle_dict['paddle_func']) if item != 'name']
+    paddle_dict['paddle_parames'] = paddle_parames
     return paddle_dict
 
 def get_func_param(input_str):

@@ -187,16 +187,31 @@ class Window(QWidget):
 
     def open_web(self):
         webbrowser.open_new_tab("https://www.paddlepaddle.org.cn/documentation/docs/zh/api/index_cn.html")
-        webbrowser.open_new_tab("https://pytorch.org/docs/stable/index.html")
+        webbrowser.open_new_tab("https://pytorch.org/docs/1.13/")
 
     def set_table(self,params_torch,params_paddle):
         params_max = max(len(params_torch),len(params_paddle))
         self.table.setRowCount(params_max)
+
+        for i in range(params_max):
+            if i<len(params_torch):
+                self.table.setItem(i, 0, QTableWidgetItem(params_torch[i]))
+            else:
+                self.table.setItem(i, 0, QTableWidgetItem('-'))
+        
+        for i in range(params_max):
+            if i<len(params_paddle):
+                self.table.setItem(i, 1, QTableWidgetItem(params_paddle[i]))
+            else:
+                self.table.setItem(i, 1, QTableWidgetItem('-'))
+
+        '''
         for i in range(len(params_torch)):
             self.table.setItem(i, 0, QTableWidgetItem(params_torch[i]))
 
         for i in range(len(params_paddle)):
             self.table.setItem(i, 1, QTableWidgetItem(params_paddle[i]))
+        '''
 
         for i in range(params_max):
             self.table.setItem(i, 2, QTableWidgetItem("待补充"))
