@@ -5,6 +5,8 @@ on:
     branches:
       - main
     tags: ['Pytorch2PaddleDocsTools_v*']
+    paths:
+      - 'Pytorch2PaddleDocsTools/**'
   pull_request:
 
 jobs:
