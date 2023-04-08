@@ -14,3 +14,8 @@
 ## 当前进展
 
 设计思路为，通过PyQt构建前端页面，定期截取当前微信聊天页面，并通过OCR检查关键词，回复对应内容。
+
+## 鸣谢
+- https://blog.csdn.net/kaida1234/article/details/86497461 感谢关于Qt5的屏幕截图的示例代码
+- https://zhuanlan.zhihu.com/p/385978085 图片判断
+- https://blog.csdn.net/qq_46026178/article/details/120924385 鼠标移动和键盘输入
