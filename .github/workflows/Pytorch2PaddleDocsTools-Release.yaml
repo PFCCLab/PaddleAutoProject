@@ -2,8 +2,6 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
     tags: ['Pytorch2PaddleDocsTools_v*']
     paths:
       - 'Pytorch2PaddleDocsTools/**'
