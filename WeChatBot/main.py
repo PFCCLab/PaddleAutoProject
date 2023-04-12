@@ -8,22 +8,16 @@ https://github.com/maicss/PyQt-Chinese-tutorial
 https://maicss.gitbooks.io/pyqt5/content/
 zetcode.com
 """
-import copy
-import os
-import math
-import numpy as np
 import sys
 import cv2
-from PyQt5.QtWidgets import QWidget, QDesktopWidget, QApplication, QPushButton, QFileDialog, QLabel, QTextEdit, \
-    QGridLayout, QFrame, QColorDialog, QLineEdit, QTableWidget, QTableWidgetItem, QRadioButton
-from PyQt5.QtCore import QTimer, Qt, QRect
-from PyQt5.QtGui import QColor, QImage, QPixmap
-import requests
-import webbrowser
+from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QLabel, QGridLayout, QLineEdit
+from PyQt5.QtCore import QTimer, QRect
+from PyQt5.QtGui import QImage, QPixmap
 import re
-from paddleocr import PaddleOCR, draw_ocr
+from paddleocr import PaddleOCR
 import pyautogui
 import pyperclip
+from utils import *
 
 class Window(QWidget):
 
@@ -182,16 +176,31 @@ class Window(QWidget):
                     s += line[1][0]
             # print(s)
 
-
-
             if 1: # self.fff == 1:
                 if 'AAAA' in s:
-                    pyautogui.moveTo(self.writex, self.writey, duration=0.25)
-                    pyautogui.doubleClick()
+                    pattern = re.compile(r'查询(.*?)今日PR数')
+                    result = pattern.search(s)
+                    if result:
+                        r = get_issue_user_today(result.group(1))
 
-                    pyperclip.copy("敏师傅快去提PR！")  # 复制
-                    pyautogui.hotkey('ctrl', 'v')  # 粘贴
-                    pyautogui.hotkey('Enter') # 发送
+                        pyautogui.moveTo(self.writex, self.writey, duration=0.25)
+                        pyautogui.doubleClick()
+
+                        pyperclip.copy(r)  # 复制
+                        pyautogui.hotkey('ctrl', 'v')  # 粘贴
+                        pyautogui.hotkey('Enter') # 发送
+
+                    pattern = re.compile(r'查询(.*?)活跃PR数')
+                    result = pattern.search(s)
+                    if result:
+                        r = get_issue_user_open(result.group(1))
+
+                        pyautogui.moveTo(self.writex, self.writey, duration=0.25)
+                        pyautogui.doubleClick()
+
+                        pyperclip.copy(r)  # 复制
+                        pyautogui.hotkey('ctrl', 'v')  # 粘贴
+                        pyautogui.hotkey('Enter') # 发送
 
                     self.fff = 0
 
