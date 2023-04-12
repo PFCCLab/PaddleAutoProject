@@ -2,10 +2,8 @@ name: Release
 
 on:
   push:
-    tags: ['Pytorch2PaddleDocsTools_v*']
     paths:
       - 'Pytorch2PaddleDocsTools/**'
-  pull_request:
 
 jobs:
   Pytorch2PaddleDocsTools-build:
