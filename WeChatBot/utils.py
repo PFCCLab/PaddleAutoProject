@@ -42,6 +42,11 @@ def get_issue_user_today(username, token = TOKENS):
     for item in data:
         result_string += (str(item['number'])+' '+item['title']+" "+item['state']+'\n')
 
+    if pr_num == 0:
+        result_string += "有点不太努力了！\n"
+    if pr_num>=3:
+        result_string += "真的好卷！\n"
+
     return result_string
 
 def get_issue(issue_id, token = TOKENS):
