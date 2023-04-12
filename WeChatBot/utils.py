@@ -1,19 +1,20 @@
-import os
+import requests
 from config_infor import *
-import json
 import datetime
 
 def get_issue_user_open(username,token = TOKENS):
     # 获取某账户当前的open issue
-    f_string = f'curl \
-                --request GET \
-                --url "https://api.github.com/repos/PaddlePaddle/Paddle/issues?state=open&creator={username}" \
-                --header "Accept: application/vnd.github+json" \
-                --header "Authorization: Bearer {token}"'
-    raw = os.popen(f_string)
-    msg = raw.buffer.read().decode('utf-8')
+    url = f'https://api.github.com/repos/PaddlePaddle/Paddle/issues?state=open&creator={username}'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.43',
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Authorization': 'Bearer ' + token
+    }
+    res = requests.get(url=url, headers=headers)
 
-    data = json.loads(msg)
+    data = res.json()
     pr_num = len(data)
     result_string = username+'的活跃PR数为'+str(pr_num)+'\n'
     for item in data:
@@ -28,15 +29,18 @@ def get_issue_user_today(username, token = TOKENS):
     utc_time = utc_time.isoformat()
     print(utc_time)
 
-    f_string = f'curl \
-                --request GET \
-                --url "https://api.github.com/repos/PaddlePaddle/Paddle/issues?state=all&creator={username}&since={utc_time}" \
-                --header "Accept: application/vnd.github+json" \
-                --header "Authorization: Bearer {token}"'
-    raw = os.popen(f_string)
-    msg = raw.buffer.read().decode('utf-8')
+    url = f'https://api.github.com/repos/PaddlePaddle/Paddle/issues?state=all&creator={username}&since={utc_time}'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.43',
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Authorization': 'Bearer ' + token
+    }
 
-    data = json.loads(msg)
+    res = requests.get(url=url, headers=headers)
+
+    data = res.json()
     pr_num = len(data)
     result_string = username+'的今日PR数为'+str(pr_num)+'\n'
     for item in data:
