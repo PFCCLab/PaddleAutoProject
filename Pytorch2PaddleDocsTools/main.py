@@ -86,10 +86,10 @@ class Window(QWidget):
         btn3 = QRadioButton("仅参数名不一致")
         grid.addWidget(btn3, 7, 2, 1, 1)
         btn3.clicked.connect(lambda: self.setdifference(btn3.text()))
-        btn4 = QRadioButton("仅 torch 参数更多")
+        btn4 = QRadioButton("torch 参数更多")
         grid.addWidget(btn4, 7, 3, 1, 1)
         btn4.clicked.connect(lambda: self.setdifference(btn4.text()))
-        btn5 = QRadioButton("仅 Paddle 参数更多")
+        btn5 = QRadioButton("仅 paddle 参数更多")
         grid.addWidget(btn5, 8, 0, 1, 1)
         btn5.clicked.connect(lambda: self.setdifference(btn5.text()))
         btn6 = QRadioButton("参数用法不一致")
@@ -141,8 +141,8 @@ class Window(QWidget):
             "无参数": "两者功能一致。",
             "参数完全一致": "两者功能一致且参数用法一致。",
             "仅参数名不一致": "两者功能一致且参数用法一致，仅参数名不一致，具体如下：",
-            "仅 torch 参数更多": "其中 Paddle 相比 PyTorch 支持更多其他参数，具体如下：",
-            "仅 Paddle 参数更多": "其中 PyTorch 相比 Paddle 支持更多其他参数，具体如下：",
+            "torch 参数更多": "其中 PyTorch 相比 Paddle 支持更多其他参数，具体如下：",
+            "仅 paddle 参数更多": "其中 Paddle 相比 PyTorch 支持更多其他参数，具体如下：",
             "参数用法不一致": "Paddle 和 PyTorch 的参数用法不一致，具体如下：",
             "组合替代实现": "PaddlePaddle 目前无对应 API，可使用如下代码组合实现该 API：",
             "无参数且用法不一致": "两者功能不完全一致，转写示例如下：",
@@ -235,7 +235,7 @@ class Window(QWidget):
             if self.difference not in ['无参数', '参数完全一致', '组合替代实现', '无参数且用法不一致']:
                 # write table
                 f.write('### {}\n'.format('参数映射'))
-                f.write('|PyTorch|PaddlePaddle|备注|\n')
+                f.write('| PyTorch | PaddlePaddle | 备注 |\n')
                 f.write('| ------- | ------- | ------- |\n')
                 for i in range(self.table.rowCount()):
                     for j in range(self.table.columnCount()):
