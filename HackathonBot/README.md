@@ -63,9 +63,9 @@
 
 除`报名状态`外，剩下`四种状态`的变更可以通过监控`PR`的状态来完成, 具体的实现逻辑如下：
 
-*　获取`paddle`仓库下黑客松`开始之后`标题中包含`Hackathon No.`字样的所有`PR`。
-*　如果`PR`是`PaddlePaddle/community`仓库下的，说明该PR与设计文档有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交RFC`；如果已经`merge`，说明状态为`完成设计文档`。
-*　如果`PR`不是`PaddlePaddle/community`仓库下的，说明该`PR`与提交代码有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交PR`；如果已经`merge`，说明状态为`完成任务`。
+* 获取`paddle`仓库下黑客松`开始之后`标题中包含`Hackathon No.`字样的所有`PR`。
+* 如果`PR`是`PaddlePaddle/community`仓库下的，说明该PR与设计文档有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交RFC`；如果已经`merge`，说明状态为`完成设计文档`。
+* 如果`PR`不是`PaddlePaddle/community`仓库下的，说明该`PR`与提交代码有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交PR`；如果已经`merge`，说明状态为`完成任务`。
 
 #### PR格式
 
