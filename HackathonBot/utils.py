@@ -2,7 +2,7 @@ import requests
 import time
 import logging
 
-access_token = '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'
+access_token = ''
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
