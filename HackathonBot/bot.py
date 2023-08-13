@@ -1,28 +1,29 @@
+import time
+import json
+import schedule
+
 import utils
 
 
 def update_issue_automatically():
     # 1. 获取issue表格
     response = utils.request_get_issue(issue_url)
-    with open('C:/Users/25942/Desktop/test.txt', mode='w', encoding='utf-8') as f:
-        f.write(response['body'])
 
     # 从issue中提取题目列表
-    task_list = utils.process_issue(response['body'], task_num)
+    task_list = utils.process_issue(response['body'])
 
     # 2. 根据评论更新表格
     comment_url = issue_url + '/comments'
     comments = utils.request_get_multi(comment_url)
     for comment in comments:
         utils.update_status_by_comment(task_list, comment)
-    
-    with open('./test.txt', mode='w', encoding='utf-8') as f:
-        f.write(response['body'])
         
 
     # 3. 根据PR更新表格
     # - 根据提出的PR更新状态为已提交
     # - 根据close的PR更新状态为已完成
+
+    # TODO：这里可以改变监测的仓库
     repo_urls = ['https://api.github.com/repos/Tomoko-hjf/paddleviz/pulls']
 
     for repo_url in repo_urls:
@@ -58,19 +59,34 @@ def update_issue_automatically():
 
     # 处理换行符
     updated_issue = updated_issue.replace('\r', '')
-    with open('./test1.txt', mode='w', encoding='utf-8') as f:
+    file_name = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
+    with open('./logs/{}.md'.format(file_name), mode='w', encoding='utf-8') as f:
         f.write(updated_issue)
 
     # 5. 更新 issue
-    res = utils.request_update_issue(issue_url, updated_issue)
+    data = {}
+    data['body'] = updated_issue
+    data['title'] = response['title']
+    data['assignee'] = response['assignee']
+    data['state'] = response['state']
+    data['state_reason'] = response['state_reason']
+    data['milestone'] = response['milestone']
+    data['labels'] = response['labels']
+
+    res = utils.request_update_issue(issue_url, json.dumps(data))
 
 
 if __name__ == '__main__':
-    # TODO: 替换为自己的GitHub访问令牌和要获取评论的issue的信息
-    owner = 'PaddlePaddle'
-    repo = 'Paddle'
-    issue_number = '43938'
-    task_num = 200
-    issue_url = 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/1'
     
+    # issue链接
+    issue_url = 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/1'
+
+    # 运行一次查看效果
     update_issue_automatically()
+
+    # 每两小时运行一次
+    schedule.every(2).hours.do(update_issue_automatically)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(10)

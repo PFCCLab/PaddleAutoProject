@@ -63,9 +63,13 @@
 
 除`报名状态`外，剩下`四种状态`的变更可以通过监控`PR`的状态来完成, 具体的实现逻辑如下：
 
-* 获取`paddle`仓库下黑客松`开始之后`标题中包含`Hackathon No.`字样的所有`PR`。
+* 获取指定仓库下黑客松`开始之后`标题中包含`Hackathon No.`字样的所有`PR`，具体是`bot.py`文件的`repo_urls`变量下的所有仓库。
 * 如果`PR`是`PaddlePaddle/community`仓库下的，说明该PR与设计文档有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交RFC`；如果已经`merge`，说明状态为`完成设计文档`。
 * 如果`PR`不是`PaddlePaddle/community`仓库下的，说明该`PR`与提交代码有关。继续判断是否`merge`，如果未`merge`，说明状态为`提交PR`；如果已经`merge`，说明状态为`完成任务`。
+* 每次更新后的issue内容将会保存在`logs`文件夹下，文件名是更新日期。
+
+> 对于人工处理的赛题，可以将赛题题号加入`utils.py`文件的`un_handle_tasks`变量中，小助手不会处理这些任务。
+
 
 #### PR格式
 
@@ -77,6 +81,16 @@
 
 * `utils.py`：负责拉取评论和PR、根据评论更新状态、根据PR更新状态。
 * `bot.py`：小助手整体运行逻辑。
+
+## 🚩 运行方式
+1、替换`utils.py`文件中的`Github token`；替换`bot.py`文件中的`issue_url`和`repo_urls`,代表监控的issue链接和仓库链接；
+2、如果不开代理，请将`utils.py`文件中`proxies`置为`None`；
+3、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
+```shell
+cd HackathonBot
+
+python bot.py
+```
 
 ## 🚩 未来规划
 

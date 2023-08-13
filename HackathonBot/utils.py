@@ -2,18 +2,24 @@ import requests
 import time
 import logging
 
-access_token = ''
+access_token = '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'
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
     'https': 'http://127.0.0.1:7890'
 }
 
+# 总的任务数量
+task_num = 200
+
 # 黑客松开始时间，只会统计黑客松开始时间之后的PR
 startTime = '2023-07-28T13:33:48Z'
 
 # TODO：这里需要定制化表头
 column_name = ['num', 'difficulty', 'issue', 'status', 'team']
+
+# 忽略不处理的题号，这部分留给人工处理
+un_handle_tasks = []
 
 def request_get_issue(url, params={}):
     """
@@ -30,11 +36,16 @@ def request_get_multi(url, params={}):
     """
     # 总的结果汇总
     result = []
+
+    # 模糊查询title （TODO: Rest API 没有提供此功能，可能需要 GraphQL API）
+    # params["head"] = "in:title+Hackathon"
+    params["per_page"] = 100
     
     # 当前时间
     curTime = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.localtime())
     # 当前请求页
     page = 1
+
     while curTime > startTime:
         # 请求结果
         params['page'] = page
@@ -57,24 +68,29 @@ def request_get_multi(url, params={}):
 
 def request_update_issue(url, data):
     """
-    @desc: 更新issue内容
+    desc: 更新issue内容
+
+    params:
+        url: str 推送的url地址
+        data: str 推送的issue内容
     """
     response = requests.patch(url, data=data, headers=headers, proxies=proxies)
     response = response.json()
-    print(response)
+    # print(response)
 
 
-def process_issue(task_text, num):
+def process_issue(task_text):
     """
-    @desc: 从文本中提取题目列表，并封装为对象
+    desc: 从文本中提取题目列表，并封装为题目对象
+
     params:
         task_text: str 题目列表文本
-        num: number 题目个数
+
     return:
         task_list: [] 对象格式的题目列表，每一列都是对象的一个属性，用字符串表示
     """
     task_list = []
-    for i in range(num):
+    for i in range(task_num):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
@@ -97,15 +113,28 @@ def process_issue(task_text, num):
 
 def update_status_by_comment(tasks, comment):
     """
-    @desc: 根据评论更新表格内容
+    desc: 根据评论更新表格内容
+
+    params:
+        tasks: 处理后的task对象数组
+        comment: 处理后的comment对象
+
     """
     # 提取评论信息，将字符串格式化为对象
     comment = process_comment(comment)
+    
     # 只更新报名信息
     if '报名' not in comment['status']:
         return
+    
+    # 依次更新评论中提到的每个题目
     if 'num' in comment:
         for num in comment['num']:
+
+            # 对于手工修改的task，无需进行处理
+            if num in un_handle_tasks:
+                return
+
             task = tasks[num - 1]
             update_status = {
                 'username': comment['username'],
@@ -137,6 +166,11 @@ def update_status_by_pull(tasks, pull):
         if num > len(tasks):
             logging.error('pull编号错误：' + pull['html_url'])
             return
+        
+        # 对于手工修改的task，无需进行处理
+        if num in un_handle_tasks:
+            return
+
         task = tasks[num - 1]
 
         # TODO：状态需要定制化
@@ -155,6 +189,15 @@ def update_status_by_pull(tasks, pull):
 
         task['status'] = get_updated_status(task['status'], update_status)
 
+        # 处理过程中发现已完成任务，则更新完成人信息
+        if "完成任务" in task["status"]:
+            status = task["status"]
+            end = status.find("完成任务")
+            start = status.rfind("@", end)
+            end = status.find(" ", start)
+            task["team"] = status[start: end]
+            un_handle_tasks.append(num)
+
 
 def process_comment(comment):
     """
@@ -165,6 +208,8 @@ def process_comment(comment):
     comment_obj['username'] = comment['user']['login']
     content = comment['body']
     comment_obj['created_at'] = comment['created_at']
+
+    content = content.replace('：',':').replace(',', '、').replace('[','【').replace(']','】')
 
     # 获取题号
     start = content.find("序号")
@@ -180,7 +225,7 @@ def process_comment(comment):
     comment_obj['num'] = nums
     
     # 获取状态
-    start = content.find("状态") + 3
+    start = content.find("状态") + 2
     end = start + 1
     while content[end] != '\r' and content[end] != '\n':
         end += 1
@@ -198,30 +243,49 @@ def get_updated_status(ori_status, update_status):
         ori_status: str 原先状态栏的字符串表示
         update_status: dict 更新状态的对象表示，该对象包含 username:str 用户名; status:str 变更后状态；pr:dict pr列表
     """
-    # TODO：状态需要定制化
-    if update_status['status'] == '报名':
-        badge = '<img src="https://img.shields.io/badge/状态-报名-2ECC71" />'
-    elif update_status['status'] == '提交RFC':
-        badge = '<img src="https://img.shields.io/badge/状态-提交RFC-F1C40F" />'
-    elif update_status['status'] == '完成设计文档':
-        badge = '<img src="https://img.shields.io/badge/状态-完成设计文档-3498DB" />'
-    elif update_status['status'] == '提交PR':
-        badge = '<img src="https://img.shields.io/badge/状态-提交PR-F39C12" />'
-    elif update_status['status'] == '完成任务':
-        badge = '<img src="https://img.shields.io/badge/状态-完成任务-9B59B6" />'
-
     # 寻找之前的PR
     prs = ''
+    user_status = None
+
+    # 如果用户出现在状态列表中，则需要保留之前的PR
     if update_status['username'] in ori_status:
         start = ori_status.find(update_status['username'])
         end = ori_status.find('<br>', start)
-        use_status = ori_status[start: end].strip(' ')
-        start = use_status.find('[', start)
+        user_status = ori_status[start: end].strip(' ')
+        start = user_status.find('[', start)
         if start != -1:
-            prs = ori_status[start:]
-    # 新加入PR
+            prs = user_status[start:]
+    
+    # 新加入PR(因为返回的PR是倒序返回的，所以需要头插)
     for pr in update_status['pr']:
-        prs = prs + pr + ' '
+        if pr not in prs:
+            prs = pr + ' ' + prs
+    
+    # 更新状态前需要判断是否可以更新，状态级别只能增大，不能减小
+    ori_status_level = get_status_level(user_status)
+    update_status_level = get_status_level(update_status["status"])
+
+    if ori_status_level < update_status_level:
+        # TODO：状态需要定制化
+        if update_status['status'] == '报名':
+            badge = '<img src="https://img.shields.io/badge/状态-报名-2ECC71" />'
+        elif update_status['status'] == '提交RFC':
+            badge = '<img src="https://img.shields.io/badge/状态-提交RFC-F1C40F" />'
+        elif update_status['status'] == '完成设计文档':
+            badge = '<img src="https://img.shields.io/badge/状态-完成设计文档-3498DB" />'
+        elif update_status['status'] == '提交PR':
+            badge = '<img src="https://img.shields.io/badge/状态-提交PR-F39C12" />'
+        elif update_status['status'] == '完成任务':
+            badge = '<img src="https://img.shields.io/badge/状态-完成任务-9B59B6" />'
+    else:
+        # 如果不需要变更用户状态，则沿用之前的状态
+        if user_status == None:
+            badge = ""
+        start = user_status.find("<img")
+        end = user_status.find("/>")
+        if start != -1 and end != -1:
+            badge = user_status[start: end + 2]
+
     
     # 格式化当前用户的状态
     status = '@{} {} {}'.format(update_status['username'], badge, prs)
@@ -236,3 +300,34 @@ def get_updated_status(ori_status, update_status):
         ori_status += '{}<br>'.format(status)
 
     return ori_status
+
+
+def get_status_level(status):
+
+    """
+    desc: 根据字符串形式的状态获取数字形式的状态编号
+    
+    params:
+        status: str 文本形式的状态
+
+    return:
+        status_level: int 数字形式的状态
+    """
+
+    if status == None:
+        return 0
+
+    if "报名" in status:
+        status_level = 1
+    elif "提交RFC" in status:
+        status_level = 2
+    elif "完成设计文档" in status:
+        status_level = 3
+    elif "提交PR" in status:
+        status_level = 4
+    elif "完成任务" in status:
+        status_level = 5
+    else:
+        status_level = 0
+
+    return status_level
