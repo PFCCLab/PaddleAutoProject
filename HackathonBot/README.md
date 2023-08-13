@@ -84,7 +84,9 @@
 
 ## 🚩 运行方式
 1、替换`utils.py`文件中的`Github token`；替换`bot.py`文件中的`issue_url`和`repo_urls`,代表监控的issue链接和仓库链接；
+
 2、如果不开代理，请将`utils.py`文件中`proxies`置为`None`；
+
 3、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
 ```shell
 cd HackathonBot
