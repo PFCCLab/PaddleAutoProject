@@ -74,13 +74,13 @@
 
 为了完成状态变更，只需要在`PR`的标题中以`【Hackathon No.xxx】`开头即可，程序会自动提取赛题编号并更新榜单。
 
-### 看板功能
-看板功能是将HTML转为图片存放在`./image`文件夹下，所以issue中的图片链接是需要指向这个图片的（这里存在一个图片文件放在那里的问题）。
+### 🚀 看板功能
+看板功能是将HTML转为图片存放在`./image`文件夹下，所以issue中的图片链接是需要指向这个图片的（这里存在一个图片文件放在哪里的问题）。
 
 示例效果：
 ![image](./images/board%E7%A4%BA%E4%BE%8B.jpg)
 
-感谢 [@AndSonder](https://github.com/AndSonder) 提供看板的思路和代码🍻
+感谢 [@AndSonder](https://github.com/AndSonder) 提供看板样式的代码🍻
 
 ## 🚩 代码结构
 
