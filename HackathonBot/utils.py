@@ -1,8 +1,11 @@
+import os
+
 import requests
 import time
 import logging
+import imgkit
 
-access_token = ''
+access_token = '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'
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
@@ -20,6 +23,11 @@ column_name = ['num', 'difficulty', 'issue', 'status', 'team']
 
 # 忽略不处理的题号，这部分留给人工处理
 un_handle_tasks = []
+
+# TODO: 需要写明每个赛道所包含的赛题，每个赛道是一个数组
+task_types = [[1, 2],
+              [3, 4]]
+type_names = ["API开发", "算子性能优化"]
 
 def request_get_issue(url, params={}):
     """
@@ -331,3 +339,45 @@ def get_status_level(status):
         status_level = 0
 
     return status_level
+
+
+def update_board(tasks):
+
+    board_head = "<!DOCTYPE html> <html> <head><style>table { width: 100%; border-collapse: collapse;} th, td { border: 1px solid black; padding: 8px; text-align: center; } th { background-color: #f2f2f2;} .progress { height: 20px; width: 100%; background-color: #f2f2f2; border: 1px solid #ccc; position: relative;} .progress-inner { height: 100%; width: 0; background-color: #4CAF50;position: absolute; text-align: center; color: white; } </style> <body> <table> <tr> <th>任务方向</th> <th>任务数量</th> <th>提交作品 / 任务认领</th> <th>提交率</th> <th>完成</th> <th>完成率</th> </tr>"
+
+    for i in range(len(task_types)):
+        type_name = type_names[i]
+        task_num, claimed, submitted, completed = len(task_types[i]), 0, 0, 0
+        
+        for task_id in task_types[i]:
+            task = tasks[task_id - 1]
+            status = task["status"]
+            if "完成任务" in status:
+                completed += 1
+                submitted += 1
+                claimed += 1
+            elif "提交RFC" in status or "完成设计文档" in status or "提交PR" in status:
+                submitted += 1
+                claimed += 1
+            elif "报名" in status:
+                claimed += 1
+        
+        row = '<tr><td>{}</td> <td>{}</td> <td>{} / {}</td> <td>{}%</td> <td>{}</td> <td> <div class="progress"> <div class="progress-inner" style="width: {}%;">{}%</div> </div> </td> </tr>'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
+
+        board_head += row
+
+    board_head += "</table> </body> </html>"
+
+    options = {'encoding': 'UTF-8' }
+
+    with open("temp.html", mode="w", encoding="utf-8") as f:
+        f.write(board_head)
+    
+    # 如果是Linux系统可以删除这个con或设置为None
+    con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')
+    imgkit.from_file("temp.html", "./images/board.jpg", options=options, config=con)
+    
+    os.remove("temp.html")
+
+
+

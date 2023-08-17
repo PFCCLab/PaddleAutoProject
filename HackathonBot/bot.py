@@ -56,7 +56,10 @@ def update_issue_automatically():
         row = '| {} | {} | {} | {} | {} |'.format(num, task['difficulty'], task['issue'], task['status'], task['team'])
         updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
 
-
+    # 5. 更新看板信息
+    utils.update_board(task_list)
+    
+    
     # 处理换行符
     updated_issue = updated_issue.replace('\r', '')
     file_name = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())

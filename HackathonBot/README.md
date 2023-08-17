@@ -70,10 +70,17 @@
 
 > 对于人工处理的赛题，可以将赛题题号加入`utils.py`文件的`un_handle_tasks`变量中，小助手不会处理这些任务。
 
-
 #### PR格式
 
 为了完成状态变更，只需要在`PR`的标题中以`【Hackathon No.xxx】`开头即可，程序会自动提取赛题编号并更新榜单。
+
+### 看板功能
+看板功能是将HTML转为图片存放在`./image`文件夹下，所以issue中的图片链接是需要指向这个图片的（这里存在一个图片文件放在那里的问题）。
+
+示例效果：
+![image](./images/board%E7%A4%BA%E4%BE%8B.jpg)
+
+感谢 [@AndSonder](https://github.com/AndSonder) 提供看板的思路和代码🍻
 
 ## 🚩 代码结构
 
@@ -87,7 +94,10 @@
 
 2、如果不开代理，请将`utils.py`文件中`proxies`置为`None`；
 
-3、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
+3、初始化`utils.py`文件中的`task_types`和`task_types`，指明每个赛题所属的赛道；
+> 注：如果运行在`Linux`中，需要删除`utils.py`文件`377`行`con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')`这句代码
+
+4、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
 ```shell
 cd HackathonBot
 
@@ -97,8 +107,6 @@ python bot.py
 ## 🚩 未来规划
 
 * **预警功能**：自动提醒每个赛题的状态，针对长时间没有变更状态的赛题进行预警。
-
-* **看板功能**：后期可以扩展看板功能，进行数据分析，更好的量化开发者的贡献，类似于 [openGauss 贡献看板](https://datastat.opengauss.org/zh/overview) [一款开源的开源社区贡献看板](https://ost.51cto.com/posts/14589)。
 
 
 
