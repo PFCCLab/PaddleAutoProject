@@ -58,7 +58,10 @@ def update_issue_automatically():
 
     # 5. 更新看板信息
     utils.update_board(task_list)
-    
+    # start = updated_issue.find("看板")
+    # start = updated_issue.find("<img", start)
+    # end = updated_issue.find(">", start)
+    # updated_issue = updated_issue[: start] + "<img src=data:image/jpg;base64,{} />".format(board) + updated_issue[end + 1:]
     
     # 处理换行符
     updated_issue = updated_issue.replace('\r', '')
@@ -77,6 +80,7 @@ def update_issue_automatically():
     data['labels'] = response['labels']
 
     res = utils.request_update_issue(issue_url, json.dumps(data))
+
 
 
 if __name__ == '__main__':

@@ -1,3 +1,4 @@
+import base64
 import os
 
 import requests
@@ -5,7 +6,7 @@ import time
 import logging
 import imgkit
 
-access_token = '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'
+access_token = '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'
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
@@ -84,7 +85,7 @@ def request_update_issue(url, data):
     """
     response = requests.patch(url, data=data, headers=headers, proxies=proxies)
     response = response.json()
-    # print(response)
+    return response
 
 
 def process_issue(task_text):
@@ -375,9 +376,17 @@ def update_board(tasks):
     
     # 如果是Linux系统可以删除这个con或设置为None
     con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')
-    imgkit.from_file("temp.html", "./images/board.jpg", options=options, config=con)
+    imgkit.from_file("temp.html", "./image/board.jpg", options=options, config=con)
     
     os.remove("temp.html")
+
+    # 将图片转为base64编码
+    # with open("./image/board.jpg", 'rb') as image_file:
+    #     encoded_string = base64.b64encode(image_file.read())
+    #     encoded_string = encoded_string.decode('utf-8')
+    #     print(encoded_string)
+
+    # return encoded_string
 
 
 
