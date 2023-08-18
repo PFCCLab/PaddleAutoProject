@@ -6,7 +6,7 @@ import time
 import logging
 import imgkit
 
-access_token = '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'
+access_token = ''
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
