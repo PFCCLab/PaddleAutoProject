@@ -6,7 +6,7 @@ import time
 import logging
 import imgkit
 
-access_token = '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'
+access_token = ''
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
@@ -14,7 +14,7 @@ proxies={
 }
 
 # 总的任务数量
-task_num = 200
+task_num = 500
 
 # 黑客松开始时间，只会统计黑客松开始时间之后的PR
 startTime = '2023-07-28T13:33:48Z'
