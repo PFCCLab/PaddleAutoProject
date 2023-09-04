@@ -6,7 +6,7 @@ import time
 import logging
 import imgkit
 
-access_token = ''
+access_token = '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'
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 proxies={
     'http': 'http://127.0.0.1:7890',
@@ -28,6 +28,7 @@ un_handle_tasks = []
 # TODO: 需要写明每个赛道所包含的赛题，每个赛道是一个数组
 task_types = [[1, 2],
               [3, 4]]
+
 type_names = ["API开发", "算子性能优化"]
 
 def request_get_issue(url, params={}):
@@ -129,12 +130,13 @@ def update_status_by_comment(tasks, comment):
         comment: 处理后的comment对象
 
     """
+
     # 提取评论信息，将字符串格式化为对象
     comment = process_comment(comment)
-    
-    # 只更新报名信息
-    if '报名' not in comment['status']:
+
+    if comment == None:
         return
+    
     
     # 依次更新评论中提到的每个题目
     if 'num' in comment:
@@ -200,11 +202,7 @@ def update_status_by_pull(tasks, pull):
 
         # 处理过程中发现已完成任务，则更新完成人信息
         if "完成任务" in task["status"]:
-            status = task["status"]
-            end = status.find("完成任务")
-            start = status.rfind("@", end)
-            end = status.find(" ", start)
-            task["team"] = status[start: end]
+            task["team"] = '@' + username
             un_handle_tasks.append(num)
 
 
@@ -218,27 +216,38 @@ def process_comment(comment):
     content = comment['body']
     comment_obj['created_at'] = comment['created_at']
 
+    # 只更新报名信息
+    if '报名' not in content:
+        return None
+
     content = content.replace('：',':').replace(',', '、').replace('[','【').replace(']','】')
 
     # 获取题号
-    start = content.find("序号")
+    start = content.find("报名")
+
     while content[start] < '0' or content[start] > '9':
         start += 1
     end = start + 1
-    while content[end] != '\r' and content[end] != '\n':
+    while end < len(content) and content[end] != '\r' and content[end] != '\n':
         end += 1
     
-    # TODO: 题号需要用顿号隔开
-    nums = content[start: end].strip(' ').split('、')
-    nums = [int(num) for num in nums]
+    # TODO: 题号需要用顿号隔开或-隔开
+    sequence = content[start: end].strip(' ')
+    if '-' in sequence:
+        nums = sequence.split('-')
+        nums = [int(num) for num in nums]
+        nums = [i for i in range(nums[0], nums[1] + 1)]
+    else:
+        nums = sequence.split('、')
+        nums = [int(num) for num in nums]
     comment_obj['num'] = nums
     
-    # 获取状态
-    start = content.find("状态") + 2
-    end = start + 1
-    while content[end] != '\r' and content[end] != '\n':
-        end += 1
-    comment_obj['status'] = content[start: end].strip(' ')
+    # # 获取状态
+    # start = content.find("状态") + 2
+    # end = start + 1
+    # while content[end] != '\r' and content[end] != '\n':
+    #     end += 1
+    # comment_obj['status'] = content[start: end].strip(' ')
 
     return comment_obj
 
@@ -255,6 +264,8 @@ def get_updated_status(ori_status, update_status):
     # 寻找之前的PR
     prs = ''
     user_status = None
+
+    print('----', update_status['username'], update_status['status'], update_status['pr'])
 
     # 如果用户出现在状态列表中，则需要保留之前的PR
     if update_status['username'] in ori_status:
@@ -302,11 +313,11 @@ def get_updated_status(ori_status, update_status):
     # 如果该用户存在则替换
     if '@' + update_status['username'] in ori_status:
         start = ori_status.find('@' + update_status['username'])
-        end = ori_status.find('<br>')
+        end = ori_status.find('<br>', start)
         ori_status = f'{ori_status[ :start]}{status}{ori_status[end: ]}'
     # 否则追加
     else:
-        ori_status += '{}<br>'.format(status)
+        ori_status += '{}<br> '.format(status)
 
     return ori_status
 
@@ -376,7 +387,7 @@ def update_board(tasks):
     
     # 如果是Linux系统可以删除这个con或设置为None
     con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')
-    imgkit.from_file("temp.html", "./image/board.jpg", options=options, config=con)
+    imgkit.from_file("temp.html", "./images/board.jpg", options=options, config=con)
     
     os.remove("temp.html")
 
@@ -387,6 +398,3 @@ def update_board(tasks):
     #     print(encoded_string)
 
     # return encoded_string
-
-
-

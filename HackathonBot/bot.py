@@ -55,13 +55,6 @@ def update_issue_automatically():
         # TODO：这里后期需要定制化表头
         row = '| {} | {} | {} | {} | {} |'.format(num, task['difficulty'], task['issue'], task['status'], task['team'])
         updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
-
-    # 5. 更新看板信息
-    utils.update_board(task_list)
-    # start = updated_issue.find("看板")
-    # start = updated_issue.find("<img", start)
-    # end = updated_issue.find(">", start)
-    # updated_issue = updated_issue[: start] + "<img src=data:image/jpg;base64,{} />".format(board) + updated_issue[end + 1:]
     
     # 处理换行符
     updated_issue = updated_issue.replace('\r', '')
@@ -80,6 +73,13 @@ def update_issue_automatically():
     data['labels'] = response['labels']
 
     res = utils.request_update_issue(issue_url, json.dumps(data))
+
+    # 5. 更新看板信息
+    utils.update_board(task_list)
+    # start = updated_issue.find("看板")
+    # start = updated_issue.find("<img", start)
+    # end = updated_issue.find(">", start)
+    # updated_issue = updated_issue[: start] + "<img src=data:image/jpg;base64,{} />".format(board) + updated_issue[end + 1:]
 
 
 
