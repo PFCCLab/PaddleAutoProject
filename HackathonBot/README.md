@@ -2,7 +2,7 @@
 
 ## 📄 背景
 
-💡💡💡 `Hackathon5`开赛在即，本次大赛会有上百个赛题等着大家攻克，但统计这些赛题的报名信息和当前进度是一项繁重的工作 (感谢 @花花！🍻)。
+💡💡💡 `Hackathon5`开赛在即，本次大赛会有上百个赛题等着大家攻克，但统计这些赛题的报名信息和当前进度是一项繁重的工作。
 
 如果有一个小助手💡可以帮助我们自动统计和展示赛题进度，那自然是极好的，所以`黑客松小助手`它带着期盼走来了!🎉🎉🎉
 
@@ -12,7 +12,45 @@
 
 * 根据issue回复自动填写报名信息，完成任务认领。
 * 根据提交的PR状态，自动更新issue中表单信息，完成状态变更。
-* 汇总所有的赛题，形成总体看板。
+* 汇总所有的赛题，形成总体任务看板。
+
+## 🚩 运行方式
+1、修改配置文件，其中每个配置的含义如下：
+* access_token：账号token
+* proxies：代理地址
+* issue_url：黑客松 issue页面 url 地址, 注意结尾不要有斜杠
+* repo_urls：监控的仓库列表
+* task_num：总的任务数量
+* start_time：黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+* un_handle_tasks： 忽略不处理的题号，这部分留给人工处理
+* removed_tasks：已删除的赛题
+* type_names： 赛道名
+* task_types：每个赛题所属的赛道，每个赛道是一个数组
+
+2、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
+```shell
+cd HackathonBot
+
+python bot.py
+```
+
+### 注意事项
+* issue 中任务表格的题号前后必须只能有一个空格，如 `| 1 |`。
+* issue 中必须有`看板信息`这几个字，并且表格后面接上`#####`这个特殊标志。
+
+示例
+```markdown
+| 序号   | 难度  | 任务 ISSUE | 队伍名称/状态/PR | 完成队伍 |
+| :--: | :--: |:--: | :--: |:--: |
+| 1 | ⭐ |       [新增星星任务](https://github.com/Tomoko-hjf/paddleviz/issues/1)         |           |           |
+| 2 |   ⭐⭐         |        [保护星星](https://github.com/Tomoko-hjf/paddleviz/issues/1)         |           |           |
+| 3 |    ⭐⭐⭐        |       [收集星星](https://github.com/Tomoko-hjf/paddleviz/issues/1)          |           |           |
+| 4 |    ⭐⭐⭐⭐        |      [飞桨之星](https://github.com/Tomoko-hjf/paddleviz/issues/1)          |           |           |
+
+## 看板信息
+
+#####
+```
 
 ## 🚩 实现方案
 
@@ -50,7 +88,7 @@
 
 #### 报名格式
 
-为了自动填写报名信息，需要在`issue`下回复报名信息，格式如下：
+为了自动填写报名信息，需要在`issue`下回复报名信息，如果报名格式不正确，则会在comment区提示报名不正确，格式如下：
 
 ```
 【报名】: 2、3
@@ -73,35 +111,20 @@
 
 为了完成状态变更，只需要在`PR`的标题中以`【Hackathon No.xxx】`开头即可，程序会自动提取赛题编号并更新榜单。
 
+如果PR格式不正确，也会在comment区域进行提示。
+
 ### 🚀 看板功能
-看板功能是将HTML转为图片存放在`./image`文件夹下，所以issue中的图片链接是需要指向这个图片的（这里存在一个图片文件放在哪里的问题）。
+看板功能会按照赛道类型统计每个赛道赛题的认领数、完成率等信息。
+![img](./images/board.png)
 
-示例效果：
-![image](./images/board%E7%A4%BA%E4%BE%8B.jpg)
-
-感谢 [@AndSonder](https://github.com/AndSonder) 提供看板样式的代码🍻
+感谢 [@AndSonder](https://github.com/AndSonder) 提供看板样式的代码🍻。
 
 ## 🚩 代码结构
 
-整体的代码文件分为两个：
+整体的代码文件分为三个：
 
 * `utils.py`：负责拉取评论和PR、根据评论更新状态、根据PR更新状态。
 * `bot.py`：小助手整体运行逻辑。
-
-## 🚩 运行方式
-1、替换`utils.py`文件中的`Github token`；替换`bot.py`文件中的`issue_url`和`repo_urls`,代表监控的issue链接和仓库链接；
-
-2、如果不开代理，请将`utils.py`文件中`proxies`置为`None`；
-
-3、初始化`utils.py`文件中的`task_types`和`task_types`，指明每个赛题所属的赛道；
-> 注：如果运行在`Linux`中，需要删除`utils.py`文件`377`行`con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')`这句代码
-
-4、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
-```shell
-cd HackathonBot
-
-python bot.py
-```
-
+* `config.py`：常用的配置项
 
 

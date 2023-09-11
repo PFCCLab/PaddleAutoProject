@@ -4,3 +4,7 @@
 | 2 |   ⭐⭐         |        [保护星星](https://github.com/Tomoko-hjf/paddleviz/issues/1)         |           |           |
 | 3 |    ⭐⭐⭐        |       [收集星星](https://github.com/Tomoko-hjf/paddleviz/issues/1)          |           |           |
 | 4 |    ⭐⭐⭐⭐        |      [飞桨之星](https://github.com/Tomoko-hjf/paddleviz/issues/1)          |           |           |
+
+## 看板信息
+
+#####

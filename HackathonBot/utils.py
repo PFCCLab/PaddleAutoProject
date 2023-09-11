@@ -1,35 +1,39 @@
-import base64
-import os
-
 import requests
 import time
-import logging
-import imgkit
+import json
 
-access_token = ''
+from config import config, logger
+
+access_token = config['access_token']
+
 headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
-proxies={
-    'http': 'http://127.0.0.1:7890',
-    'https': 'http://127.0.0.1:7890'
-}
+
+proxies = config['proxies']
+
+issue_url = config['issue_url']
 
 # 总的任务数量
-task_num = 500
+task_num = config['task_num']
 
 # 黑客松开始时间，只会统计黑客松开始时间之后的PR
-startTime = '2023-07-28T13:33:48Z'
+start_time = config['start_time']
 
-# TODO：这里需要定制化表头
+# 每列的名称
 column_name = ['num', 'difficulty', 'issue', 'status', 'team']
 
 # 忽略不处理的题号，这部分留给人工处理
-un_handle_tasks = []
+un_handle_tasks = config['un_handle_tasks']
 
-# TODO: 需要写明每个赛道所包含的赛题，每个赛道是一个数组
-task_types = [[1, 2],
-              [3, 4]]
+# 已删除的赛题
+removed_tasks = config['removed_tasks']
 
-type_names = ["API开发", "算子性能优化"]
+# 每个赛道所包含的赛题，每个赛道是一个数组
+task_types = config['task_types']
+
+type_names = config['type_names']
+
+comment_to_user_list = []
+
 
 def request_get_issue(url, params={}):
     """
@@ -56,7 +60,7 @@ def request_get_multi(url, params={}):
     # 当前请求页
     page = 1
 
-    while curTime > startTime:
+    while curTime > start_time:
         # 请求结果
         params['page'] = page
         response = requests.get(url, headers=headers, proxies=proxies, params=params)
@@ -74,6 +78,22 @@ def request_get_multi(url, params={}):
         page += 1
     
     return result
+
+
+def comment_to_user(data):
+    """
+    desc: 在issue下回复（报名格式、编号错误， pr 编号错误）
+
+    params:
+        data: comment 内容
+    """
+    # 如果已经回复过了，不再回复
+    if data['id'] in comment_to_user_list:
+        return
+    data = json.dumps(data)
+    response = requests.post(issue_url + '/comments', data=data, headers=headers, proxies=proxies)
+    response = response.json()
+    return response
 
 
 def request_update_issue(url, data):
@@ -104,7 +124,8 @@ def process_issue(task_text):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
-            return task_list
+            logger.info('没有从issue内容中找到编号为【{}】的赛题'.format(str(i + 1)))
+            continue
         end = start + 1
         column = 0
         task = {}
@@ -137,14 +158,26 @@ def update_status_by_comment(tasks, comment):
     if comment == None:
         return
     
-    
     # 依次更新评论中提到的每个题目
     if 'num' in comment:
         for num in comment['num']:
-
+            
+            # 如果报名的赛题编号错误
+            if num > len(tasks) or num <= 0:
+                comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                comment_to_user_list.append('comment-' + str(comment["id"]))
+                logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
+                return
+                
             # 对于手工修改的task，无需进行处理
             if num in un_handle_tasks:
                 return
+            
+            # 对于删除的赛题，需要进行提醒赛题已删除
+            if num in removed_tasks:
+                logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
+                comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
+                comment_to_user_list.append('comment-' + str(comment["id"]))
 
             task = tasks[num - 1]
             update_status = {
@@ -174,8 +207,10 @@ def update_status_by_pull(tasks, pull):
         num = int(title[start: end])
 
         # 防止某些PR编号写错
-        if num > len(tasks):
-            logging.error('pull编号错误：' + pull['html_url'])
+        if num > len(tasks) or num <= 0:
+            comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+            comment_to_user_list.append('pull-' + str(pull["id"]))
+            logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
             return
         
         # 对于手工修改的task，无需进行处理
@@ -184,7 +219,6 @@ def update_status_by_pull(tasks, pull):
 
         task = tasks[num - 1]
 
-        # TODO：状态需要定制化
         if 'community' in html_url:
             update_status = {
                 'username': username,
@@ -215,15 +249,22 @@ def process_comment(comment):
     comment_obj['username'] = comment['user']['login']
     content = comment['body']
     comment_obj['created_at'] = comment['created_at']
-
-    # 只更新报名信息
-    if '报名' not in content:
-        return None
+    comment_obj['id'] = comment['id']
 
     content = content.replace('：',':').replace(',', '、').replace('[','【').replace(']','】')
 
+    # 只更新报名信息
+    if '报名' in content and ':' in content and '【报名】:' not in content:
+        logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
+        comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
+        comment_to_user_list.append('comment-' + str(comment["id"]))
+        return None
+
     # 获取题号
-    start = content.find("报名")
+    start = content.find("【报名】")
+    # 不是报名评论，直接返回None
+    if start == -1:
+        return None
 
     while content[start] < '0' or content[start] > '9':
         start += 1
@@ -231,7 +272,7 @@ def process_comment(comment):
     while end < len(content) and content[end] != '\r' and content[end] != '\n':
         end += 1
     
-    # TODO: 题号需要用顿号隔开或-隔开
+    # 题号用顿号隔开或-隔开
     sequence = content[start: end].strip(' ')
     if '-' in sequence:
         nums = sequence.split('-')
@@ -241,13 +282,8 @@ def process_comment(comment):
         nums = sequence.split('、')
         nums = [int(num) for num in nums]
     comment_obj['num'] = nums
-    
-    # # 获取状态
-    # start = content.find("状态") + 2
-    # end = start + 1
-    # while content[end] != '\r' and content[end] != '\n':
-    #     end += 1
-    # comment_obj['status'] = content[start: end].strip(' ')
+
+    logger.info('{} 报名赛题 {}'.format(comment_obj['username'], str(nums)))
 
     return comment_obj
 
@@ -265,8 +301,6 @@ def get_updated_status(ori_status, update_status):
     prs = ''
     user_status = None
 
-    print('----', update_status['username'], update_status['status'], update_status['pr'])
-
     # 如果用户出现在状态列表中，则需要保留之前的PR
     if update_status['username'] in ori_status:
         start = ori_status.find(update_status['username'])
@@ -276,10 +310,10 @@ def get_updated_status(ori_status, update_status):
         if start != -1:
             prs = user_status[start:]
     
-    # 新加入PR(因为返回的PR是倒序返回的，所以需要头插)
+    # 新加入PR
     for pr in update_status['pr']:
         if pr not in prs:
-            prs = pr + ' ' + prs
+            prs = prs + ' ' + pr
     
     # 更新状态前需要判断是否可以更新，状态级别只能增大，不能减小
     ori_status_level = get_status_level(user_status)
@@ -354,8 +388,14 @@ def get_status_level(status):
 
 
 def update_board(tasks):
+    """
+    desc: 根据任务对象列表获取看板信息
 
-    board_head = "<!DOCTYPE html> <html> <head><style>table { width: 100%; border-collapse: collapse;} th, td { border: 1px solid black; padding: 8px; text-align: center; } th { background-color: #f2f2f2;} .progress { height: 20px; width: 100%; background-color: #f2f2f2; border: 1px solid #ccc; position: relative;} .progress-inner { height: 100%; width: 0; background-color: #4CAF50;position: absolute; text-align: center; color: white; } </style> <body> <table> <tr> <th>任务方向</th> <th>任务数量</th> <th>提交作品 / 任务认领</th> <th>提交率</th> <th>完成</th> <th>完成率</th> </tr>"
+    params:
+        tasks: 任务列表对象
+    """
+
+    board_head = "| 任务方向 | 任务数量 | 提交作品 / 任务认领 | 提交率 | 完成 | 完成率 |\n| :----: | :----: | :----:  | :----: | :----: | :----: |\n"
 
     for i in range(len(task_types)):
         type_name = type_names[i]
@@ -374,27 +414,8 @@ def update_board(tasks):
             elif "报名" in status:
                 claimed += 1
         
-        row = '<tr><td>{}</td> <td>{}</td> <td>{} / {}</td> <td>{}%</td> <td>{}</td> <td> <div class="progress"> <div class="progress-inner" style="width: {}%;">{}%</div> </div> </td> </tr>'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
+        row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
 
         board_head += row
 
-    board_head += "</table> </body> </html>"
-
-    options = {'encoding': 'UTF-8' }
-
-    with open("temp.html", mode="w", encoding="utf-8") as f:
-        f.write(board_head)
-    
-    # 如果是Linux系统可以删除这个con或设置为None
-    con = imgkit.config(wkhtmltoimage='D:\\Software\\wkhtmltox\\bin\\wkhtmltoimage.exe')
-    imgkit.from_file("temp.html", "./images/board.jpg", options=options, config=con)
-    
-    os.remove("temp.html")
-
-    # 将图片转为base64编码
-    # with open("./image/board.jpg", 'rb') as image_file:
-    #     encoded_string = base64.b64encode(image_file.read())
-    #     encoded_string = encoded_string.decode('utf-8')
-    #     print(encoded_string)
-
-    # return encoded_string
+    return board_head
