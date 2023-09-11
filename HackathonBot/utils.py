@@ -125,6 +125,7 @@ def process_issue(task_text):
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
             logger.info('没有从issue内容中找到编号为【{}】的赛题'.format(str(i + 1)))
+            task_list.append(None)
             continue
         end = start + 1
         column = 0
@@ -402,7 +403,11 @@ def update_board(tasks):
         task_num, claimed, submitted, completed = len(task_types[i]), 0, 0, 0
         
         for task_id in task_types[i]:
+            if task_id > len(tasks):
+                continue
             task = tasks[task_id - 1]
+            if task == None:
+                continue
             status = task["status"]
             if "完成任务" in status:
                 completed += 1

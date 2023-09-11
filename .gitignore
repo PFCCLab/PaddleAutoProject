@@ -1,1 +1,3 @@
 __pycache__
+**/logs/*.md
+**/logs/*.txt

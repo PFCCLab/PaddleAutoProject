@@ -49,6 +49,8 @@ def update_issue_automatically():
         # 4. 更新榜单内容
         updated_issue = response['body']
         for task in task_list:
+            if task == None:
+                continue
             num = int(task['num'].strip(' '))
             start = updated_issue.find('| {} |'.format(num))
             end = start + 1

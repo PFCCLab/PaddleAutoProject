@@ -14,7 +14,7 @@ config = {
     },
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/1',
+    'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/6',
     
     # 监控的仓库列表
     'repo_urls': repo_urls,
@@ -32,11 +32,10 @@ config = {
     'removed_tasks' : [],
 
     # 赛道名
-    'type_names' : ["API开发", "算子性能优化"], 
+    'type_names' : ["API开发", "算子性能优化", "论文复现"], 
 
     # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2], [3, 4]],
-
+    'task_types' : [[1, 2], [3, 4], [5, 6]]
 
 }
 
@@ -46,7 +45,7 @@ def get_logger():
 
     formatter = logging.Formatter('%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
-    file_handler = logging.FileHandler('./logs/output.log', encoding='utf-8')
+    file_handler = logging.FileHandler('./logs/output.txt', encoding='utf-8')
     file_handler.setLevel(level=logging.INFO)
     file_handler.setFormatter(formatter)
 
