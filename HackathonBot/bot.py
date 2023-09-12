@@ -62,21 +62,22 @@ def update_issue_automatically():
             updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
         
         
-        # 5. 更新看板信息
-        board_info = utils.update_board(task_list)
-        start = updated_issue.find('看板信息')
-        while updated_issue[start] != '\n':
-            start += 1
-        end = updated_issue.find('#####', start)
-        updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
+        if config["hackathon"]:
+            # 5. 更新看板信息，框架计划不需要更新看板信息
+            board_info = utils.update_board(task_list)
+            start = updated_issue.find('看板信息')
+            while updated_issue[start] != '\n':
+                start += 1
+            end = updated_issue.find('#####', start)
+            updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
 
-        # 处理换行符，写入日志存档
+        # 6. 处理换行符，写入日志存档
         updated_issue = updated_issue.replace('\r', '')
         file_name = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
         with open('./logs/{}.md'.format(file_name), mode='w', encoding='utf-8') as f:
             f.write(updated_issue)
 
-        # 6. 更新 issue
+        # 7. 更新 issue
         data = {}
         data['body'] = updated_issue
         data['title'] = response['title']

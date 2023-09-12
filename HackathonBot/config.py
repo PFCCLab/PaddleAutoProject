@@ -13,6 +13,9 @@ config = {
         'https': 'http://127.0.0.1:7890'
     },
 
+    # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+    'start_time' : '2023-07-28T13:33:48Z',
+
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
     'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/6',
     
@@ -21,9 +24,6 @@ config = {
 
     # 总的任务数量
     'task_num' : 5,
-
-    # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-07-28T13:33:48Z',
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -35,7 +35,10 @@ config = {
     'type_names' : ["API开发", "算子性能优化"], 
 
     # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2], [3, 4]]
+    'task_types' : [[1, 2], [3, 4]],
+
+    # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
+    'hackathon': True
 
 }
 
