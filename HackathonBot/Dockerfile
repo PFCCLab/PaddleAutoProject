@@ -2,6 +2,8 @@ FROM python:3.8
 
 RUN pip install requests schedule
 
+WORKDIR /home/code/HackathonBot
+
 COPY . /home/code/HackathonBot
 
-RUN cd /home/code/HackathonBot && python bot.py
+CMD ["python", "bot.py"]
