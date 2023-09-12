@@ -101,11 +101,11 @@ if __name__ == '__main__':
     update_issue_automatically()
 
     # 每两小时运行一次
-    schedule.every(1).minutes.do(update_issue_automatically)
+    schedule.every(2).hours.do(update_issue_automatically)
 
     while True:
         try:
             schedule.run_pending()
-            time.sleep(10)
+            time.sleep(100)
         except Exception as e:
             logger.error(e)
