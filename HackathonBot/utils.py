@@ -179,8 +179,14 @@ def update_status_by_comment(tasks, comment):
                 logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
                 comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
+                return
 
             task = tasks[num - 1]
+
+            if task == None:
+                logger.error('赛题【{}】没有出现在任务列表中'.format(num))
+                return
+
             update_status = {
                 'username': comment['username'],
                 'status': '报名',
@@ -219,6 +225,10 @@ def update_status_by_pull(tasks, pull):
             return
 
         task = tasks[num - 1]
+
+        if task == None:
+            logger.error('赛题【{}】没有出现在任务列表中'.format(num))
+            return
 
         if 'community' in html_url:
             update_status = {
