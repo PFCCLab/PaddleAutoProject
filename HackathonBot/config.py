@@ -4,8 +4,11 @@ import logging
 repo_urls = ['https://api.github.com/repos/Tomoko-hjf/paddleviz/pulls']
 
 config = {
-    # token
-    'access_token': '',
+    # 更新issue的token
+    'issue_token': '',
+
+    # 更新评论的token
+    'comment_token': '',
 
     # 代理地址
     'proxies': {

@@ -4,9 +4,13 @@ import json
 
 from config import config, logger
 
-access_token = config['access_token']
+issue_token = config['issue_token']
 
-headers = {'Authorization': f'token {access_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
+comment_token = config['comment_token']
+
+issue_headers = {'Authorization': f'token {issue_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
+
+comment_headers = {'Authorization': f'token {comment_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
 
 proxies = config['proxies']
 
@@ -39,7 +43,7 @@ def request_get_issue(url, params={}):
     """
     @desc: 返回单条issue
     """
-    response = requests.get(url, headers=headers, proxies=proxies, params=params)
+    response = requests.get(url, headers=comment_headers, proxies=proxies, params=params)
     response = response.json()
     return response
 
@@ -63,7 +67,7 @@ def request_get_multi(url, params={}):
     while curTime > start_time:
         # 请求结果
         params['page'] = page
-        response = requests.get(url, headers=headers, proxies=proxies, params=params)
+        response = requests.get(url, headers=comment_headers, proxies=proxies, params=params)
         response = response.json()
 
         # 如果已经没有PR了，直接返回已有的
@@ -91,7 +95,7 @@ def comment_to_user(data):
     if data['id'] in comment_to_user_list:
         return
     data = json.dumps(data)
-    response = requests.post(issue_url + '/comments', data=data, headers=headers, proxies=proxies)
+    response = requests.post(issue_url + '/comments', data=data, headers=comment_headers, proxies=proxies)
     response = response.json()
     return response
 
@@ -104,7 +108,7 @@ def request_update_issue(url, data):
         url: str 推送的url地址
         data: str 推送的issue内容
     """
-    response = requests.patch(url, data=data, headers=headers, proxies=proxies)
+    response = requests.patch(url, data=data, headers=issue_headers, proxies=proxies)
     response = response.json()
     return response
 
@@ -434,3 +438,4 @@ def update_board(tasks):
         board_head += row
 
     return board_head
+
