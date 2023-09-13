@@ -81,14 +81,15 @@ def update_issue_automatically():
         data = {}
         data['body'] = updated_issue
         data['title'] = response['title']
-        data['assignee'] = response['assignee']
-        data['state'] = response['state']
-        data['state_reason'] = response['state_reason']
-        data['milestone'] = response['milestone']
-        data['labels'] = response['labels']
+        # data['assignee'] = response['assignee']
+        # data['state'] = response['state']
+        # data['state_reason'] = response['state_reason']
+        # data['milestone'] = response['milestone']
+        # data['labels'] = response['labels']
 
         res = utils.request_update_issue(issue_url, json.dumps(data))
         # logger.info('更新issue内容返回结果: ' + str(res))
+        print(res)
 
     except Exception as e:
         logger.exception(e)

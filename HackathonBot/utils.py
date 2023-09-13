@@ -439,3 +439,14 @@ def update_board(tasks):
 
     return board_head
 
+# if __name__ == '__main__':
+#     url = 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262'
+#     data = {}
+
+#     data['title'] = '【PaddlePaddle Hackathon 5th】开源贡献个人挑战赛-热身赛'
+#     with open('./logs/2023-09-13T22-11-11.md', encoding = 'utf-8') as f:
+#         body = f.read()
+
+#     data['body'] = body
+#     res = request_update_issue(url, json.dumps(data))
+#     print(res)
