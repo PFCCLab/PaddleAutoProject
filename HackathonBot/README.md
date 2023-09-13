@@ -26,6 +26,7 @@
 * removed_tasks：已删除的赛题
 * type_names： 赛道名
 * task_types：每个赛题所属的赛道，每个赛道是一个数组
+* hackathon: 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
 
 2、执行如下命令，代码会每两小时更新一次issue，每次更新后的issue内容会保存在`logs`文件夹下；
 ```shell
