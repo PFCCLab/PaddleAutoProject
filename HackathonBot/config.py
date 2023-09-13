@@ -1,7 +1,7 @@
 import logging
 
 # 监控的仓库列表
-repo_urls = ['https://api.github.com/repos/Tomoko-hjf/paddleviz/pulls']
+repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls']
 
 config = {
     # 更新issue的token
@@ -17,16 +17,16 @@ config = {
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-07-28T13:33:48Z',
+    'start_time' : '2023-09-13T15:28:48Z',
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/6',
+    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262',
     
     # 监控的仓库列表
     'repo_urls': repo_urls,
 
     # 总的任务数量
-    'task_num' : 5,
+    'task_num' : 11,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -35,10 +35,10 @@ config = {
     'removed_tasks' : [],
 
     # 赛道名
-    'type_names' : ["API开发", "算子性能优化"], 
+    'type_names' : ["热身赛"], 
 
     # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2], [3, 4]],
+    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
 
     # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
     'hackathon': True
