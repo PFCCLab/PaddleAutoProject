@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import re
 
 from config import config, logger
 
@@ -207,9 +208,9 @@ def update_status_by_pull(tasks, pull):
     username = pull['user']['login']
     html_url = pull['html_url']
     state = pull['state']
-    if 'Hackathon No.' in title:
+    if re.match(r'.*?Hackathon.*?No\.(.*?)', title) is not None:
         # 获取题目编号
-        start = 0
+        start = title.find('No')
         while title[start] < '0' or title[start] > '9':
             start += 1
         end = start + 1
@@ -450,3 +451,6 @@ def update_board(tasks):
 #     data['body'] = body
 #     res = request_update_issue(url, json.dumps(data))
 #     print(res)
+    # title = 'PaddlePaddle 5th No.3]'
+    # res = re.match(r'.*?Hackathon.*?No\.(.*?)', title)
+    # print(res)

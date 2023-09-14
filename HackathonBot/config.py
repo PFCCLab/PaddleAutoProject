@@ -1,7 +1,9 @@
 import logging
 
 # 监控的仓库列表
-repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls']
+repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
+             'https://api.github.com/repos/PaddlePaddle/community/pulls',
+            ]
 
 config = {
     # 更新issue的token
@@ -17,7 +19,7 @@ config = {
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-09-13T15:28:48Z',
+    'start_time' : '2023-09-13T00:28:48Z',
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
     'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262',
