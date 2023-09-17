@@ -27,7 +27,7 @@ def update_issue_automatically():
         # 3. 根据PR更新表格
         # - 根据提出的PR更新状态为已提交
         # - 根据close的PR更新状态为已完成
-        repo_urls = config['repo_urls']
+        repo_urls = config['repo_urls'] if config["hackathon"] == 'True' else []
 
         for repo_url in repo_urls:
             params = {
@@ -63,7 +63,7 @@ def update_issue_automatically():
             updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
         
         
-        if config["hackathon"]:
+        if config["hackathon"] == 'True':
             # 5. 更新看板信息，框架计划不需要更新看板信息
             board_info = utils.update_board(task_list)
             start = updated_issue.find('看板信息')
@@ -84,15 +84,12 @@ def update_issue_automatically():
         data['title'] = response['title']
 
         res = utils.request_update_issue(issue_url, json.dumps(data))
-        # logger.info('更新issue内容返回结果: ' + str(res))
-        print(res)
+        logger.info('更新issue内容返回结果: ' + str(res))
 
     except Exception as e:
         logger.exception(e)
 
     
-
-
 if __name__ == '__main__':
 
     # 运行一次查看效果

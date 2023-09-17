@@ -1,4 +1,5 @@
 import logging
+import os
 
 # 监控的仓库列表
 repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
@@ -7,15 +8,15 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
 
 config = {
     # 更新issue的token
-    'issue_token': '',
+    'issue_token': os.environ.get('ISSUE_TOKEN'),
 
     # 更新评论的token
-    'comment_token': '',
+    'comment_token': os.environ.get('COMMENT_TOKEN'),
 
     # 代理地址
     'proxies': {
-        'http': 'http://127.0.0.1:7890',
-        'https': 'http://127.0.0.1:7890'
+        'http': os.environ.get('HTTP_PROXY'),
+        'https': os.environ.get('HTTPS_PROXY')
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -28,7 +29,7 @@ config = {
     'repo_urls': repo_urls,
 
     # 总的任务数量
-    'task_num' : 11,
+    'task_num' : 11 if os.environ.get('HACKATHON') == 'True' else 18,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -43,9 +44,11 @@ config = {
     'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
 
     # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
-    'hackathon': True
+    'hackathon': os.environ.get('HACKATHON')
 
 }
+
+print('config', config)
 
 def get_logger():
     logger = logging.getLogger('logger')

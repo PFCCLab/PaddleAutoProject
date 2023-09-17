@@ -170,7 +170,7 @@ def update_status_by_comment(tasks, comment):
             
             # 如果报名的赛题编号错误
             if num > len(tasks) or num <= 0:
-                comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                # comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
                 logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                 return
@@ -182,7 +182,7 @@ def update_status_by_comment(tasks, comment):
             # 对于删除的赛题，需要进行提醒赛题已删除
             if num in removed_tasks:
                 logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
-                comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
+                # comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
                 return
 
@@ -220,7 +220,7 @@ def update_status_by_pull(tasks, pull):
 
         # 防止某些PR编号写错
         if num > len(tasks) or num <= 0:
-            comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+            # comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
             comment_to_user_list.append('pull-' + str(pull["id"]))
             logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
             return
@@ -267,12 +267,12 @@ def process_comment(comment):
     comment_obj['created_at'] = comment['created_at']
     comment_obj['id'] = comment['id']
 
-    content = content.replace('：',':').replace(',', '、').replace('[','【').replace(']','】')
+    content = content.replace('：',':').replace('，', ',').replace(',', '、').replace('[','【').replace(']','】')
 
     # 只更新报名信息
-    if '报名' in content and ':' in content and '【报名】:' not in content:
+    if '报名:' in content and '【报名】:' not in content:
         logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
-        comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
+        # comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
         comment_to_user_list.append('comment-' + str(comment["id"]))
         return None
 
@@ -428,10 +428,10 @@ def update_board(tasks):
                 completed += 1
                 submitted += 1
                 claimed += 1
-            elif "提交RFC" in status or "完成设计文档" in status or "提交PR" in status:
+            elif "提交PR" in status:
                 submitted += 1
                 claimed += 1
-            elif "报名" in status:
+            elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
                 claimed += 1
         
         row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
@@ -439,18 +439,3 @@ def update_board(tasks):
         board_head += row
 
     return board_head
-
-# if __name__ == '__main__':
-#     url = 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262'
-#     data = {}
-
-#     data['title'] = '【PaddlePaddle Hackathon 5th】开源贡献个人挑战赛-热身赛'
-#     with open('./logs/2023-09-13T22-11-11.md', encoding = 'utf-8') as f:
-#         body = f.read()
-
-#     data['body'] = body
-#     res = request_update_issue(url, json.dumps(data))
-#     print(res)
-    # title = 'PaddlePaddle 5th No.3]'
-    # res = re.match(r'.*?Hackathon.*?No\.(.*?)', title)
-    # print(res)
