@@ -322,7 +322,7 @@ def get_updated_status(ori_status, update_status):
         start = ori_status.find(update_status['username'])
         end = ori_status.find('<br>', start)
         user_status = ori_status[start: end].strip(' ')
-        start = user_status.find('[', start)
+        start = user_status.find('[')
         if start != -1:
             prs = user_status[start:]
     
@@ -351,10 +351,11 @@ def get_updated_status(ori_status, update_status):
         # 如果不需要变更用户状态，则沿用之前的状态
         if user_status == None:
             badge = ""
-        start = user_status.find("<img")
-        end = user_status.find("/>")
-        if start != -1 and end != -1:
-            badge = user_status[start: end + 2]
+        else:
+            start = user_status.find("<img")
+            end = user_status.find("/>")
+            if start != -1 and end != -1:
+                badge = user_status[start: end + 2]
 
     
     # 格式化当前用户的状态
