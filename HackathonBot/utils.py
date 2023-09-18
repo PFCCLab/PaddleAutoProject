@@ -170,7 +170,7 @@ def update_status_by_comment(tasks, comment):
             
             # 如果报名的赛题编号错误
             if num > len(tasks) or num <= 0:
-                # comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
                 logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                 return
@@ -182,7 +182,7 @@ def update_status_by_comment(tasks, comment):
             # 对于删除的赛题，需要进行提醒赛题已删除
             if num in removed_tasks:
                 logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
-                # comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
+                comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
                 return
 
@@ -220,7 +220,7 @@ def update_status_by_pull(tasks, pull):
 
         # 防止某些PR编号写错
         if num > len(tasks) or num <= 0:
-            # comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+            comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
             comment_to_user_list.append('pull-' + str(pull["id"]))
             logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
             return
@@ -272,7 +272,7 @@ def process_comment(comment):
     # 只更新报名信息
     if '报名:' in content and '【报名】:' not in content:
         logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
-        # comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
+        comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
         comment_to_user_list.append('comment-' + str(comment["id"]))
         return None
 
