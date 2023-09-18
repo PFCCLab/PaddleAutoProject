@@ -27,7 +27,7 @@ def update_issue_automatically():
         # 3. 根据PR更新表格
         # - 根据提出的PR更新状态为已提交
         # - 根据close的PR更新状态为已完成
-        repo_urls = config['repo_urls'] if config["hackathon"] == 'True' else []
+        repo_urls = config['repo_urls']
 
         for repo_url in repo_urls:
             params = {

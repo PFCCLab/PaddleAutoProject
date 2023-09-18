@@ -26,7 +26,7 @@ config = {
     'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262',
     
     # 监控的仓库列表
-    'repo_urls': repo_urls,
+    'repo_urls': repo_urls if os.environ.get('HACKATHON') == 'True' else [],
 
     # 总的任务数量
     'task_num' : 11 if os.environ.get('HACKATHON') == 'True' else 18,
