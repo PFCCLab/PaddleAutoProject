@@ -63,7 +63,7 @@ def update_issue_automatically():
             updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
         
         
-        if config["hackathon"] == 'True':
+        if config["hackathon"]:
             # 5. 更新看板信息，框架计划不需要更新看板信息
             board_info = utils.update_board(task_list)
             start = updated_issue.find('看板信息')
