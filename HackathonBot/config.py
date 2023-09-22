@@ -6,19 +6,19 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/community/pulls',
             ]
 
-is_hackathon = True if os.environ.get('HACKATHON') == 'True' else False
+is_hackathon = True # if os.environ.get('HACKATHON') == 'True' else False
 
 config = {
     # 更新issue的token
-    'issue_token':  os.environ.get('ISSUE_TOKEN'),
+    'issue_token':  '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', # os.environ.get('ISSUE_TOKEN'),
 
     # 更新评论的token
-    'comment_token': os.environ.get('COMMENT_TOKEN'),
+    'comment_token': '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', #os.environ.get('COMMENT_TOKEN'),
 
     # 代理地址
     'proxies': {
-        'http': os.environ.get('HTTP_PROXY'),
-        'https': os.environ.get('HTTPS_PROXY')
+        'http': 'http://127.0.0.1:7890', #os.environ.get('HTTP_PROXY'),
+        'https': 'http://127.0.0.1:7890', #os.environ.get('HTTPS_PROXY')
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
