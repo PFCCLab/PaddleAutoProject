@@ -24,7 +24,7 @@ task_num = config['task_num']
 start_time = config['start_time']
 
 # 每列的名称
-column_name = ['num', 'difficulty', 'issue', 'status', 'team']
+column_name = ['num', 'direction', 'state']
 
 # 忽略不处理的题号，这部分留给人工处理
 un_handle_tasks = config['un_handle_tasks']
@@ -166,13 +166,15 @@ def update_status_by_comment(tasks, comment):
     
     # 依次更新评论中提到的每个题目
     if 'num' in comment:
-        for num in comment['num']:
-            
+        for i in range(0, len(comment['num'])):
+
+            num = comment['num'][i]
+
             # 如果报名的赛题编号错误
             if num > len(tasks) or num <= 0:
-                comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                comment_to_user({"body": "@{} 赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
-                logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
+                logger.error('@{} 赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                 return
                 
             # 对于手工修改的task，无需进行处理
@@ -181,7 +183,7 @@ def update_status_by_comment(tasks, comment):
             
             # 对于删除的赛题，需要进行提醒赛题已删除
             if num in removed_tasks:
-                logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
+                logger.error('@{} 赛题【{}】已被删除'.format(comment['username'], str(num)))
                 comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
                 comment_to_user_list.append('comment-' + str(comment["id"]))
                 return
@@ -194,67 +196,11 @@ def update_status_by_comment(tasks, comment):
 
             update_status = {
                 'username': comment['username'],
-                'status': '报名',
-                'pr': []
+                'status': '报名' if comment["type"] == "apply" else "提交作品",
+                'pr': [] if comment["type"] == "apply" else [comment["pr"][i]]
             }
-            task['status'] = get_updated_status(task['status'], update_status)
-
-
-def update_status_by_pull(tasks, pull):
-    """
-    @desc: 根据 open issue 更新表格内容
-    """
-    title = pull['title']
-    username = pull['user']['login']
-    html_url = pull['html_url']
-    state = pull['state']
-    if re.match(r'.*?Hackathon.*?No\.(.*?)', title) is not None:
-        # 获取题目编号
-        start = title.find('No')
-        while title[start] < '0' or title[start] > '9':
-            start += 1
-        end = start + 1
-        while title[end] >= '0' and title[end] <= '9':
-            end += 1
-        num = int(title[start: end])
-
-        # 防止某些PR编号写错
-        if num > len(tasks) or num <= 0:
-            comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
-            comment_to_user_list.append('pull-' + str(pull["id"]))
-            logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
-            return
-        
-        # 对于手工修改的task，无需进行处理
-        if num in un_handle_tasks:
-            return
-
-        task = tasks[num - 1]
-
-        if task == None:
-            logger.error('赛题【{}】没有出现在任务列表中'.format(num))
-            return
-
-        if 'community' in html_url:
-            update_status = {
-                'username': username,
-                'status': '提交RFC' if state == 'open' else '完成设计文档',
-                'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
-            }
-        else:
-            update_status = {
-                'username': username,
-                'status': '提交PR' if state == 'open' else '完成任务',
-                'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
-            }
-
-        task['status'] = get_updated_status(task['status'], update_status)
-
-        # 处理过程中发现已完成任务，则更新完成人信息
-        if "完成任务" in task["status"]:
-            task["team"] = '@' + username
-            un_handle_tasks.append(num)
-
+            task['state'] = get_updated_status(task['state'], update_status)
+            
 
 def process_comment(comment):
     """
@@ -267,7 +213,7 @@ def process_comment(comment):
     comment_obj['created_at'] = comment['created_at']
     comment_obj['id'] = comment['id']
 
-    content = content.replace('：',':').replace('，', ',').replace(',', '、').replace('[','【').replace(']','】')
+    content = content.replace('：',':').replace('，', ',').replace(',', '、')
 
     # 只更新报名信息
     if '报名:' in content and '【报名】:' not in content:
@@ -276,32 +222,68 @@ def process_comment(comment):
         comment_to_user_list.append('comment-' + str(comment["id"]))
         return None
 
-    # 获取题号
-    start = content.find("【报名】")
-    # 不是报名评论，直接返回None
-    if start == -1:
-        return None
+    if content.find("【报名】") != -1:
+        comment_obj["type"] = "apply"
+        
+        # 获取题号
+        start = content.find("【报名】")
 
-    while content[start] < '0' or content[start] > '9':
-        start += 1
-    end = start + 1
-    while end < len(content) and content[end] != '\r' and content[end] != '\n':
-        end += 1
+        while content[start] < '0' or content[start] > '9':
+            start += 1
+        end = start + 1
+        while end < len(content) and content[end] != '\r' and content[end] != '\n':
+            end += 1
+        
+        # 题号用顿号隔开或-隔开
+        sequence = content[start: end].strip(' ')
+        if '-' in sequence:
+            nums = sequence.split('-')
+            nums = [int(num) for num in nums]
+            nums = [i for i in range(nums[0], nums[1] + 1)]
+        else:
+            nums = sequence.split('、')
+            nums = [int(num) for num in nums]
+        comment_obj['num'] = nums
+
+        logger.info('{} 报名赛题 {}'.format(comment_obj['username'], str(nums)))
+
+        return comment_obj
     
-    # 题号用顿号隔开或-隔开
-    sequence = content[start: end].strip(' ')
-    if '-' in sequence:
-        nums = sequence.split('-')
-        nums = [int(num) for num in nums]
-        nums = [i for i in range(nums[0], nums[1] + 1)]
-    else:
-        nums = sequence.split('、')
-        nums = [int(num) for num in nums]
-    comment_obj['num'] = nums
+    elif content.find("【提交】") != -1:
+        comment_obj["type"] = "commit"
 
-    logger.info('{} 报名赛题 {}'.format(comment_obj['username'], str(nums)))
+        # 获取题号
+        start = content.find("【提交】")
 
-    return comment_obj
+        while content[start] < '0' or content[start] > '9':
+            start += 1
+        end = start + 1
+        while end < len(content) and content[end] != '\r' and content[end] != '\n':
+            end += 1
+        
+        # 题号用顿号隔开或-隔开
+        sequence = content[start: end].strip(' ')
+        if '-' in sequence:
+            nums = sequence.split('-')
+            nums = [int(num) for num in nums]
+            nums = [i for i in range(nums[0], nums[1] + 1)]
+        else:
+            nums = sequence.split('、')
+            nums = [int(num) for num in nums]
+        comment_obj['num'] = nums
+        
+        start = content.find("作品链接】")
+        start = content.find("http", start)
+        issues = content[start: ]
+        issues = issues.replace("\n", "、")
+        issues = issues.split("、")
+        issues = [issue.strip(" ") for issue in issues]
+        issues = ['[{}]({})'.format(issue[issue.rfind('/')+ 1:], issue) for issue in issues]
+        comment_obj["pr"] = issues
+
+        return comment_obj
+
+    return None
 
 
 def get_updated_status(ori_status, update_status):
@@ -336,26 +318,16 @@ def get_updated_status(ori_status, update_status):
     update_status_level = get_status_level(update_status["status"])
 
     if ori_status_level < update_status_level:
-        # TODO：状态需要定制化
         if update_status['status'] == '报名':
             badge = '<img src="https://img.shields.io/badge/状态-报名-2ECC71" />'
-        elif update_status['status'] == '提交RFC':
-            badge = '<img src="https://img.shields.io/badge/状态-提交RFC-F1C40F" />'
-        elif update_status['status'] == '完成设计文档':
-            badge = '<img src="https://img.shields.io/badge/状态-完成设计文档-3498DB" />'
-        elif update_status['status'] == '提交PR':
-            badge = '<img src="https://img.shields.io/badge/状态-提交PR-F39C12" />'
-        elif update_status['status'] == '完成任务':
-            badge = '<img src="https://img.shields.io/badge/状态-完成任务-9B59B6" />'
+        elif update_status['status'] == '提交作品':
+            badge = '<img src="https://img.shields.io/badge/状态-提交作品-F39C12" />'
     else:
         # 如果不需要变更用户状态，则沿用之前的状态
-        if user_status == None:
-            badge = ""
-        else:
-            start = user_status.find("<img")
-            end = user_status.find("/>")
-            if start != -1 and end != -1:
-                badge = user_status[start: end + 2]
+        start = user_status.find("<img")
+        end = user_status.find("/>")
+        if start != -1 and end != -1:
+            badge = user_status[start: end + 2]
 
     
     # 格式化当前用户的状态
@@ -387,19 +359,13 @@ def get_status_level(status):
 
     if status == None:
         return 0
+    
+    status_level = 0
 
     if "报名" in status:
         status_level = 1
-    elif "提交RFC" in status:
+    elif "提交作品" in status:
         status_level = 2
-    elif "完成设计文档" in status:
-        status_level = 3
-    elif "提交PR" in status:
-        status_level = 4
-    elif "完成任务" in status:
-        status_level = 5
-    else:
-        status_level = 0
 
     return status_level
 

@@ -6,14 +6,12 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/community/pulls',
             ]
 
-is_hackathon = True # if os.environ.get('HACKATHON') == 'True' else False
-
 config = {
     # 更新issue的token
-    'issue_token':  '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', # os.environ.get('ISSUE_TOKEN'),
+    'issue_token':  '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', # os.environ.get('ISSUE_TOKEN'),
 
     # 更新评论的token
-    'comment_token': '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', #os.environ.get('COMMENT_TOKEN'),
+    'comment_token': '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', #os.environ.get('COMMENT_TOKEN'),
 
     # 代理地址
     'proxies': {
@@ -25,13 +23,13 @@ config = {
     'start_time' : '2023-09-13T00:28:48Z',
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/' + ('57262' if is_hackathon else '57264'),
-    
+    'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/7',
+
     # 监控的仓库列表
-    'repo_urls': repo_urls if is_hackathon else [],
+    'repo_urls': [],
 
     # 总的任务数量
-    'task_num' : 11 if is_hackathon else 18,
+    'task_num' : 2,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -44,9 +42,6 @@ config = {
 
     # 每个赛题所属的赛道，每个赛道是一个数组
     'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
-
-    # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
-    'hackathon': is_hackathon
 
 }
 
