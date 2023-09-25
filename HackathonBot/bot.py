@@ -63,7 +63,7 @@ if __name__ == '__main__':
     update_issue_automatically()
 
     # 每两小时运行一次
-    schedule.every(10).minutes.do(update_issue_automatically)
+    schedule.every(2).hours.do(update_issue_automatically)
 
     while True:
         try:

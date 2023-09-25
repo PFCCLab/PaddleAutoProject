@@ -197,7 +197,7 @@ def update_status_by_comment(tasks, comment):
             update_status = {
                 'username': comment['username'],
                 'status': '报名' if comment["type"] == "apply" else "提交作品",
-                'pr': [] if comment["type"] == "apply" else [comment["pr"][i]]
+                'pr': [] if comment["type"] == "apply" else comment["pr"]
             }
             task['state'] = get_updated_status(task['state'], update_status)
             
