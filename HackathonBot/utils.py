@@ -297,9 +297,13 @@ def process_comment(comment):
         nums = sequence.split('-')
         nums = [int(num) for num in nums]
         nums = [i for i in range(nums[0], nums[1] + 1)]
-    else:
+    elif '、' in sequence:
         nums = sequence.split('、')
         nums = [int(num) for num in nums]
+    else:
+        nums = sequence.split(' ')
+        nums = [int(num) for num in nums]
+    
     comment_obj['num'] = nums
 
     logger.info('{} 报名赛题 {}'.format(comment_obj['username'], str(nums)))
