@@ -260,6 +260,9 @@ def process_comment(comment):
     """
     @desc: 提取评论信息，将字符串化的status转化为对象信息
     """
+    if comment['user']['login'] == 'HackathonBot':
+        return None
+
     comment_obj = {}
     # 获取评论者的用户名和评论内容
     comment_obj['username'] = comment['user']['login']
@@ -282,7 +285,7 @@ def process_comment(comment):
     if start == -1:
         return None
 
-    while content[start] < '0' or content[start] > '9':
+    while start < len(content) and (content[start] < '0' or content[start] > '9'):
         start += 1
     end = start + 1
     while end < len(content) and content[end] != '\r' and content[end] != '\n':
