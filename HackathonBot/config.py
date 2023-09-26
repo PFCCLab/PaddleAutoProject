@@ -4,6 +4,18 @@ import os
 # 监控的仓库列表
 repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/community/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleClas/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleSeg/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleDetection/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleNLP/pulls',
+             'https://api.github.com/repos/PaddlePaddle/Paddle3D/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleMIX/pulls',
+             'https://api.github.com/repos/PaddlePaddle/Paddle2ONNX/pulls',
+             'https://api.github.com/repos/ArmDeveloperEcosystem/Paddle-examples-for-AVH/pulls',
+             'https://api.github.com/repos/openvinotoolkit/openvino/pulls',
+             'https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls'
             ]
 
 config = {
@@ -38,10 +50,14 @@ config = {
     'removed_tasks' : [],
 
     # 赛道名
-    'type_names' : ["热身赛"], 
+    'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务"], 
 
     # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]],
+    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+                    [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52],
+                    [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
+                    [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]],
 
 }
 
