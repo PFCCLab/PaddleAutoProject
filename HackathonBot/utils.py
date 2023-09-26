@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import re
 
 from config import config, logger
 
@@ -207,9 +208,9 @@ def update_status_by_pull(tasks, pull):
     username = pull['user']['login']
     html_url = pull['html_url']
     state = pull['state']
-    if 'Hackathon No.' in title:
+    if re.match(r'.*?Hackathon.*?No\.(.*?)', title) is not None:
         # 获取题目编号
-        start = 0
+        start = title.find('No')
         while title[start] < '0' or title[start] > '9':
             start += 1
         end = start + 1
@@ -259,6 +260,9 @@ def process_comment(comment):
     """
     @desc: 提取评论信息，将字符串化的status转化为对象信息
     """
+    if comment['user']['login'] == 'HackathonBot':
+        return None
+
     comment_obj = {}
     # 获取评论者的用户名和评论内容
     comment_obj['username'] = comment['user']['login']
@@ -266,10 +270,10 @@ def process_comment(comment):
     comment_obj['created_at'] = comment['created_at']
     comment_obj['id'] = comment['id']
 
-    content = content.replace('：',':').replace(',', '、').replace('[','【').replace(']','】')
+    content = content.replace('：',':').replace('，', ',').replace(',', '、').replace('[','【').replace(']','】')
 
     # 只更新报名信息
-    if '报名' in content and ':' in content and '【报名】:' not in content:
+    if '报名:' in content and '【报名】:' not in content:
         logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
         comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
         comment_to_user_list.append('comment-' + str(comment["id"]))
@@ -281,7 +285,7 @@ def process_comment(comment):
     if start == -1:
         return None
 
-    while content[start] < '0' or content[start] > '9':
+    while start < len(content) and (content[start] < '0' or content[start] > '9'):
         start += 1
     end = start + 1
     while end < len(content) and content[end] != '\r' and content[end] != '\n':
@@ -321,7 +325,7 @@ def get_updated_status(ori_status, update_status):
         start = ori_status.find(update_status['username'])
         end = ori_status.find('<br>', start)
         user_status = ori_status[start: end].strip(' ')
-        start = user_status.find('[', start)
+        start = user_status.find('[')
         if start != -1:
             prs = user_status[start:]
     
@@ -350,10 +354,11 @@ def get_updated_status(ori_status, update_status):
         # 如果不需要变更用户状态，则沿用之前的状态
         if user_status == None:
             badge = ""
-        start = user_status.find("<img")
-        end = user_status.find("/>")
-        if start != -1 and end != -1:
-            badge = user_status[start: end + 2]
+        else:
+            start = user_status.find("<img")
+            end = user_status.find("/>")
+            if start != -1 and end != -1:
+                badge = user_status[start: end + 2]
 
     
     # 格式化当前用户的状态
@@ -427,10 +432,10 @@ def update_board(tasks):
                 completed += 1
                 submitted += 1
                 claimed += 1
-            elif "提交RFC" in status or "完成设计文档" in status or "提交PR" in status:
+            elif "提交PR" in status:
                 submitted += 1
                 claimed += 1
-            elif "报名" in status:
+            elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
                 claimed += 1
         
         row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
@@ -438,4 +443,3 @@ def update_board(tasks):
         board_head += row
 
     return board_head
-

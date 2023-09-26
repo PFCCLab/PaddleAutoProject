@@ -35,14 +35,15 @@ def update_issue_automatically():
             }
             pulls = utils.request_get_multi(repo_url, params)
             for pull in pulls:
-                utils.update_status_by_pull(task_list, pull)
+                if pull['created_at'] > config['start_time']:
+                    utils.update_status_by_pull(task_list, pull)
 
             params = {
                 "state": "closed"
             }
             pulls = utils.request_get_multi(repo_url, params)
             for pull in pulls:
-                if pull['merged_at']:
+                if pull['created_at'] > config['start_time'] and pull['merged_at']:
                     utils.update_status_by_pull(task_list, pull)
 
 
@@ -81,21 +82,14 @@ def update_issue_automatically():
         data = {}
         data['body'] = updated_issue
         data['title'] = response['title']
-        data['assignee'] = response['assignee']
-        data['state'] = response['state']
-        data['state_reason'] = response['state_reason']
-        data['milestone'] = response['milestone']
-        data['labels'] = response['labels']
 
         res = utils.request_update_issue(issue_url, json.dumps(data))
-        # logger.info('更新issue内容返回结果: ' + str(res))
+        logger.info('更新issue内容返回结果: ' + str(res))
 
     except Exception as e:
         logger.exception(e)
 
     
-
-
 if __name__ == '__main__':
 
     # 运行一次查看效果
