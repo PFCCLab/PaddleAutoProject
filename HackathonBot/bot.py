@@ -22,30 +22,6 @@ def update_issue_automatically():
         comments = utils.request_get_multi(comment_url)
         for comment in comments:
             utils.update_status_by_comment(task_list, comment)
-            
-
-        # 3. 根据PR更新表格
-        # - 根据提出的PR更新状态为已提交
-        # - 根据close的PR更新状态为已完成
-        repo_urls = config['repo_urls']
-
-        for repo_url in repo_urls:
-            params = {
-                "state": "open"
-            }
-            pulls = utils.request_get_multi(repo_url, params)
-            for pull in pulls:
-                if pull['created_at'] > config['start_time']:
-                    utils.update_status_by_pull(task_list, pull)
-
-            params = {
-                "state": "closed"
-            }
-            pulls = utils.request_get_multi(repo_url, params)
-            for pull in pulls:
-                if pull['created_at'] > config['start_time'] and pull['merged_at']:
-                    utils.update_status_by_pull(task_list, pull)
-
 
         # 4. 更新榜单内容
         updated_issue = response['body']
@@ -59,19 +35,10 @@ def update_issue_automatically():
                 end += 1
             
             # TODO：这里后期需要定制化表头
-            row = '| {} | {} | {} | {} | {} |'.format(num, task['difficulty'], task['issue'], task['status'], task['team'])
+            row = '| {} | {} | {} |'.format(num, task['direction'], task['state'])
             updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
         
         
-        if config["hackathon"]:
-            # 5. 更新看板信息，框架计划不需要更新看板信息
-            board_info = utils.update_board(task_list)
-            start = updated_issue.find('看板信息')
-            while updated_issue[start] != '\n':
-                start += 1
-            end = updated_issue.find('#####', start)
-            updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
-
         # 6. 处理换行符，写入日志存档
         updated_issue = updated_issue.replace('\r', '')
         file_name = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())

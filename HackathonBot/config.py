@@ -18,8 +18,6 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls'
             ]
 
-is_hackathon = True if os.environ.get('HACKATHON') == 'True' else False
-
 config = {
     # 更新issue的token
     'issue_token': os.environ.get('ISSUE_TOKEN'),
@@ -34,16 +32,16 @@ config = {
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-09-13T00:28:48Z',
+    'start_time' : '2023-09-23T00:28:48Z',
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/' + ('57262' if is_hackathon else '57264'),
-    
+    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57585',
+
     # 监控的仓库列表
-    'repo_urls': repo_urls if is_hackathon else [],
+    'repo_urls': [],
 
     # 总的任务数量
-    'task_num' : 82 if is_hackathon else 18,
+    'task_num' : 2,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -60,9 +58,6 @@ config = {
                     [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52],
                     [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
                     [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]],
-
-    # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
-    'hackathon': is_hackathon
 
 }
 
