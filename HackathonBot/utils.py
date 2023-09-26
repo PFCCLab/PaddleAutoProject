@@ -206,6 +206,9 @@ def process_comment(comment):
     """
     @desc: 提取评论信息，将字符串化的status转化为对象信息
     """
+    if comment['user']['login'] == 'HackathonBot':
+        return None
+        
     comment_obj = {}
     # 获取评论者的用户名和评论内容
     comment_obj['username'] = comment['user']['login']

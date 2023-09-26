@@ -8,22 +8,22 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
 
 config = {
     # 更新issue的token
-    'issue_token':  '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', # os.environ.get('ISSUE_TOKEN'),
+    'issue_token': os.environ.get('ISSUE_TOKEN'),
 
     # 更新评论的token
-    'comment_token': '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', #os.environ.get('COMMENT_TOKEN'),
+    'comment_token': os.environ.get('COMMENT_TOKEN'),
 
     # 代理地址
     'proxies': {
-        'http': 'http://127.0.0.1:7890', #os.environ.get('HTTP_PROXY'),
-        'https': 'http://127.0.0.1:7890', #os.environ.get('HTTPS_PROXY')
+        'http': os.environ.get('HTTP_PROXY'),
+        'https': os.environ.get('HTTPS_PROXY')
     },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-09-13T00:28:48Z',
+    'start_time' : '2023-09-23T00:28:48Z',
 
     # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/Tomoko-hjf/paddleviz/issues/7',
+    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57585',
 
     # 监控的仓库列表
     'repo_urls': [],
