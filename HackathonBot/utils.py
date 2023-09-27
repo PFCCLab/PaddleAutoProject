@@ -281,7 +281,7 @@ def process_comment(comment):
         issues = issues.replace("\n", "、")
         issues = issues.split("、")
         issues = [issue.strip(" ") for issue in issues]
-        issues = ['[{}]({})'.format(issue[issue.rfind('/')+ 1:], issue) for issue in issues]
+        issues = ['[{}]({})'.format(issue[issue.rfind('/') + 1 : issue.find('?') if issue.find('?') != -1 else len(issue)], issue[issue.find('http'):]) for issue in issues]
         comment_obj["pr"] = issues
 
         return comment_obj
