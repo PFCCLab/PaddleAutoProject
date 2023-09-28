@@ -45,7 +45,7 @@ config = {
     'repo_urls': repo_urls if is_hackathon else [],
 
     # 总的任务数量
-    'task_num' : 105 if is_hackathon else 18,
+    'task_num' : 109 if is_hackathon else 18,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
