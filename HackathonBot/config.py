@@ -17,7 +17,8 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/openvinotoolkit/openvino/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
-             'https://api.github.com/repos/PaddlePaddle/docs/pulls'
+             'https://api.github.com/repos/PaddlePaddle/docs/pulls',
+             'https://api.github.com/repos/InfiniTensor/InfiniTensor/pulls'
             ]
 
 is_hackathon = True if os.environ.get('HACKATHON') == 'True' else False
