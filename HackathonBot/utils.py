@@ -278,6 +278,7 @@ def process_comment(comment):
         start = content.find("作品链接】")
         start = content.find("http", start)
         issues = content[start: ]
+        issues = issues.replace("\r", "")
         issues = issues.replace("\n", "、")
         issues = issues.split("、")
         issues = [issue.strip(" ") for issue in issues]
