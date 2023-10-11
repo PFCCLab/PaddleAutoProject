@@ -91,7 +91,6 @@ def update_issue_automatically():
 
     
 if __name__ == '__main__':
-
     # 运行一次查看效果
     update_issue_automatically()
 

@@ -1,3 +1,9 @@
 __pycache__
 **/logs/*.md
 **/logs/*.txt
+
+# python 打包相关
+build
+dist
+config.json
+*.spec
