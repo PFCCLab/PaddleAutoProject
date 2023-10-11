@@ -32,11 +32,10 @@ config = {
     'comment_token': os.environ.get('COMMENT_TOKEN'),
 
     # 代理地址
-    'proxies': None,
-    # {
-    #     'http':  os.environ.get('HTTP_PROXY'),
-    #     'https': os.environ.get('HTTPS_PROXY')
-    # },
+    'proxies': {
+        'http':  os.environ.get('HTTP_PROXY'),
+        'https': os.environ.get('HTTPS_PROXY')
+    },
 
     # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
     'start_time' : '2023-09-13T00:28:48Z',
