@@ -59,18 +59,20 @@ def update_issue_automatically():
                 end += 1
             
             # TODO：这里后期需要定制化表头
-            row = '| {} | {} | {} | {} | {} |'.format(num, task['difficulty'], task['issue'], task['status'], task['team'])
+            row = '| {} | {} | {} |'.format(num, task['issue'], task['status'])
             updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
         
         
-        if config["hackathon"]:
-            # 5. 更新看板信息，框架计划不需要更新看板信息
-            board_info = utils.update_board(task_list)
+        # 5. 更新看板信息，框架计划不需要更新看板信息
+        board_info = utils.update_board(task_list)
+        start = updated_issue.find('看板信息')
+        if start == -1:
+            updated_issue += "\n## 看板信息 \n\n #####\n"
             start = updated_issue.find('看板信息')
-            while updated_issue[start] != '\n':
-                start += 1
-            end = updated_issue.find('#####', start)
-            updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
+        while updated_issue[start] != '\n':
+            start += 1
+        end = updated_issue.find('#####', start)
+        updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
 
         # 6. 处理换行符，写入日志存档
         updated_issue = updated_issue.replace('\r', '')

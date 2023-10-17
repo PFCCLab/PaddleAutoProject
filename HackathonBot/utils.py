@@ -24,7 +24,7 @@ task_num = config['task_num']
 start_time = config['start_time']
 
 # 每列的名称
-column_name = ['num', 'difficulty', 'issue', 'status', 'team']
+column_name = ['num', 'issue', 'status']
 
 # 忽略不处理的题号，这部分留给人工处理
 un_handle_tasks = config['un_handle_tasks']
@@ -36,6 +36,9 @@ removed_tasks = config['removed_tasks']
 task_types = config['task_types']
 
 type_names = config['type_names']
+
+# PR 前缀
+pr_prefix = config["pr_prefix"]
 
 comment_to_user_list = []
 
@@ -210,7 +213,7 @@ def update_status_by_pull(tasks, pull):
     username = pull['user']['login']
     html_url = pull['html_url']
     state = pull['state']
-    if re.match(r'.*?Hackathon.*?No\.(.*?)', title) is not None:
+    if pr_prefix in title:
         
         part_pr = False
         lower_title = title.lower().replace(' ', '')

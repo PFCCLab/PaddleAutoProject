@@ -3,26 +3,8 @@ import os
 import json
 
 # 监控的仓库列表
-repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
-             'https://api.github.com/repos/PaddlePaddle/community/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleClas/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleSeg/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleDetection/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleNLP/pulls',
-             'https://api.github.com/repos/PaddlePaddle/Paddle3D/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleMIX/pulls',
-             'https://api.github.com/repos/PaddlePaddle/Paddle2ONNX/pulls',
-             'https://api.github.com/repos/ArmDeveloperEcosystem/Paddle-examples-for-AVH/pulls',
-             'https://api.github.com/repos/openvinotoolkit/openvino/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
-             'https://api.github.com/repos/PaddlePaddle/docs/pulls',
-             'https://api.github.com/repos/InfiniTensor/InfiniTensor/pulls'
+repo_urls = ['https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'
             ]
-
-is_hackathon = True if os.environ.get('HACKATHON') == 'True' else False
 
 config = {
     # 更新issue的token
@@ -37,17 +19,17 @@ config = {
         'https': os.environ.get('HTTPS_PROXY')
     },
 
-    # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-09-13T00:28:48Z',
+    # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+    'start_time' : '2023-10-16T00:28:48Z',
 
-    # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/' + ('57262' if is_hackathon else '57264'),
+    # issue页面 url 地址, 注意结尾不要有斜杠
+    'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleScience/issues/571',
     
     # 监控的仓库列表
-    'repo_urls': repo_urls if is_hackathon else [],
+    'repo_urls': repo_urls,
 
     # 总的任务数量
-    'task_num' : 111 if is_hackathon else 18,
+    'task_num' : 20,
 
     # 忽略不处理的题号，这部分留给人工处理
     'un_handle_tasks' : [],
@@ -56,19 +38,13 @@ config = {
     'removed_tasks' : [],
 
     # 赛道名
-    'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务", "合作伙伴任务"], 
+    'type_names' : ["热身赛"], 
 
     # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-                    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 110],
-                    [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 101, 102, 103, 104, 105],
-                    [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
-                    [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
-                    [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 106, 107, 108, 109, 111]],
+    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
 
-    # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
-    'hackathon': is_hackathon
-
+    # 该issue相关PR的前缀，用来标识PR是否属于该issue
+    'pr_prefix' : "hydra No."
 }
 
 def get_logger():
