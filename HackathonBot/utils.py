@@ -169,7 +169,7 @@ def update_status_by_comment(tasks, comment, config):
                     'status': '报名',
                     'pr': []
                 }
-                state_col = "col_" + str(config["col_num"] - 1)
+                state_col = "col_" + str(config["pr_col"] - 1)
                 task[state_col] = get_updated_status(task[state_col], update_status)
     except Exception as e:
         logger.error("处理用户【{}】评论出现异常，请检查是否为格式问题, 评论内容为【{}】".format(comment['user']['login'], comment['body']))
@@ -236,8 +236,14 @@ def update_status_by_pull(tasks, pull, config):
                 'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
             }
         
-        state_col = "col_" + str(config["col_num"] - 1)
+        state_col = "col_" + str(config["pr_col"] - 1)
         task[state_col] = get_updated_status(task[state_col], update_status)
+
+        # 处理过程中发现已完成任务，则更新完成人信息
+        if "complete_col" in config and "完成任务" in task[state_col]:
+            complete_col = "col_" + str(config["complete_col"] - 1)
+            task[complete_col] = '@' + username
+            config["un_handle_tasks"].append(num)
 
 
 def process_comment(comment, config):
@@ -411,25 +417,35 @@ def update_board(tasks, config):
 
     for i in range(len(config['task_types'])):
         type_name = config['type_names'][i]
-        task_num, claimed, submitted, completed = len(config['task_types'][i]), 0, 0, 0
+        task_num, claimed, submitted, completed = 0, 0, 0, 0
         
-        for task_id in config['task_types'][i]:
-            if task_id > len(tasks):
-                continue
-            task = tasks[task_id - 1]
-            if task == None:
-                continue
-            state_col = "col_" + str(config["col_num"] - 1)
-            status = task[state_col]
-            if "完成任务" in status:
-                completed += 1
-                submitted += 1
-                claimed += 1
-            elif "提交PR" in status:
-                submitted += 1
-                claimed += 1
-            elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
-                claimed += 1
+        for task_range in config['task_types'][i]:
+            task_ids = []
+            if '-' in str(task_range):
+                nums = task_range.split('-')
+                task_ids = [i for i in range(int(nums[0]), int(nums[1]) + 1)]
+            else:
+                task_ids = [int(task_range)]
+            
+            task_num += len(task_ids)
+            
+            for task_id in task_ids:
+                if task_id > len(tasks):
+                    continue
+                task = tasks[task_id - 1]
+                if task == None:
+                    continue
+                state_col = "col_" + str(config["pr_col"] - 1)
+                status = task[state_col]
+                if "完成任务" in status:
+                    completed += 1
+                    submitted += 1
+                    claimed += 1
+                elif "提交PR" in status:
+                    submitted += 1
+                    claimed += 1
+                elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
+                    claimed += 1
         
         row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
 

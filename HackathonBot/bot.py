@@ -63,10 +63,9 @@ def update_issue_automatically():
                 while end < len(updated_issue) and updated_issue[end] != '\r' and updated_issue[end] != '\n':
                     end += 1
                 
-                col_num = config["col_num"]
                 row = "| "
-                for i in range(col_num):
-                    row += "{} | ".format(task["col_" + str(i)])
+                for key in task:
+                    row += "{} | ".format(task[key])
                 updated_issue = f'{updated_issue[:start]}{row}{updated_issue[end:]}'
             
             
