@@ -3,56 +3,24 @@ import time
 import json
 import re
 
-from config import config, logger
-
-issue_token = config['issue_token']
-
-comment_token = config['comment_token']
-
-issue_headers = {'Authorization': f'token {issue_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
-
-comment_headers = {'Authorization': f'token {comment_token}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
-
-proxies = config['proxies']
-
-issue_url = config['issue_url']
-
-# 总的任务数量
-task_num = config['task_num']
-
-# 黑客松开始时间，只会统计黑客松开始时间之后的PR
-start_time = config['start_time']
-
-# 每列的名称
-column_name = ['num', 'difficulty', 'issue', 'status', 'team']
-
-# 忽略不处理的题号，这部分留给人工处理
-un_handle_tasks = config['un_handle_tasks']
-
-# 已删除的赛题
-removed_tasks = config['removed_tasks']
-
-# 每个赛道所包含的赛题，每个赛道是一个数组
-task_types = config['task_types']
-
-type_names = config['type_names']
-
-comment_to_user_list = []
+from config import logger
 
 
-def request_get_issue(url, params={}):
+def request_get_issue(url, params={}, config={}):
     """
     @desc: 返回单条issue
     """
-    response = requests.get(url, headers=comment_headers, proxies=proxies, params=params)
+    comment_headers = {'Authorization': f'token {config["comment_token"]}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
+    response = requests.get(url, headers=comment_headers, proxies=config["proxies"], params=params)
     response = response.json()
     return response
 
 
-def request_get_multi(url, params={}):
+def request_get_multi(url, params={}, config={}):
     """
     @desc: 根据url获取请求, 将回复转为json格式，注意会返回某个时间之前所有的回复
     """
+    comment_headers = {'Authorization': f'token {config["comment_token"]}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
     # 总的结果汇总
     result = []
 
@@ -65,10 +33,10 @@ def request_get_multi(url, params={}):
     # 当前请求页
     page = 1
 
-    while curTime > start_time:
+    while curTime > config['start_time']:
         # 请求结果
         params['page'] = page
-        response = requests.get(url, headers=comment_headers, proxies=proxies, params=params)
+        response = requests.get(url, headers=comment_headers, proxies=config["proxies"], params=params)
         response = response.json()
 
         # 如果已经没有PR了，直接返回已有的
@@ -85,23 +53,25 @@ def request_get_multi(url, params={}):
     return result
 
 
-def comment_to_user(data):
+def comment_to_user(data, config):
     """
     desc: 在issue下回复（报名格式、编号错误， pr 编号错误）
 
     params:
         data: comment 内容
     """
+    comment_headers = {'Authorization': f'token {config["comment_token"]}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
+
     # 如果已经回复过了，不再回复
-    if data['id'] in comment_to_user_list:
+    if data['id'] in config["comment_to_user_list"]:
         return
     data = json.dumps(data)
-    response = requests.post(issue_url + '/comments', data=data, headers=comment_headers, proxies=proxies)
+    response = requests.post(config['issue_url'] + '/comments', data=data, headers=comment_headers, proxies=config["proxies"])
     response = response.json()
     return response
 
 
-def request_update_issue(url, data):
+def request_update_issue(url, data, config):
     """
     desc: 更新issue内容
 
@@ -109,12 +79,14 @@ def request_update_issue(url, data):
         url: str 推送的url地址
         data: str 推送的issue内容
     """
-    response = requests.patch(url, data=data, headers=issue_headers, proxies=proxies)
+    issue_headers = {'Authorization': f'token {config["issue_token"]}', 'Accept': 'application/vnd.github.raw+json', 'X-GitHub-Api-Version': '2022-11-28'}
+
+    response = requests.patch(url, data=data, headers=issue_headers, proxies=config["proxies"])
     response = response.json()
     return response
 
 
-def process_issue(task_text):
+def process_issue(task_text, config):
     """
     desc: 从文本中提取题目列表，并封装为题目对象
 
@@ -125,7 +97,7 @@ def process_issue(task_text):
         task_list: [] 对象格式的题目列表，每一列都是对象的一个属性，用字符串表示
     """
     task_list = []
-    for i in range(task_num):
+    for i in range(config['task_num']):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
@@ -140,7 +112,7 @@ def process_issue(task_text):
                 item_content = task_text[start + 1: end]
                 start = end            
                 item_content = item_content.strip(' ')
-                task[column_name[column]] = item_content
+                task["col_" + str(column)] = item_content
                 column += 1
             end += 1
         task_list.append(task)
@@ -148,7 +120,7 @@ def process_issue(task_text):
     return task_list
 
 
-def update_status_by_comment(tasks, comment):
+def update_status_by_comment(tasks, comment, config):
     """
     desc: 根据评论更新表格内容
 
@@ -159,7 +131,7 @@ def update_status_by_comment(tasks, comment):
     """
     try:
         # 提取评论信息，将字符串格式化为对象
-        comment = process_comment(comment)
+        comment = process_comment(comment, config)
 
         if comment == None:
             return
@@ -171,19 +143,19 @@ def update_status_by_comment(tasks, comment):
                 # 如果报名的赛题编号错误
                 if num > len(tasks) or num <= 0:
                     comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
-                    comment_to_user_list.append('comment-' + str(comment["id"]))
+                    config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                     return
                     
                 # 对于手工修改的task，无需进行处理
-                if num in un_handle_tasks:
+                if num in config['un_handle_tasks']:
                     return
                 
                 # 对于删除的赛题，需要进行提醒赛题已删除
-                if num in removed_tasks:
+                if num in config['removed_tasks']:
                     logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
                     comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
-                    comment_to_user_list.append('comment-' + str(comment["id"]))
+                    config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     return
 
                 task = tasks[num - 1]
@@ -197,12 +169,13 @@ def update_status_by_comment(tasks, comment):
                     'status': '报名',
                     'pr': []
                 }
-                task['status'] = get_updated_status(task['status'], update_status)
+                state_col = "col_" + str(config["pr_col"] - 1)
+                task[state_col] = get_updated_status(task[state_col], update_status)
     except Exception as e:
         logger.error("处理用户【{}】评论出现异常，请检查是否为格式问题, 评论内容为【{}】".format(comment['user']['login'], comment['body']))
         logger.exception(e)
 
-def update_status_by_pull(tasks, pull):
+def update_status_by_pull(tasks, pull, config):
     """
     @desc: 根据 open issue 更新表格内容
     """
@@ -210,8 +183,7 @@ def update_status_by_pull(tasks, pull):
     username = pull['user']['login']
     html_url = pull['html_url']
     state = pull['state']
-    if re.match(r'.*?Hackathon.*?No\.(.*?)', title) is not None:
-        
+    if re.match('.*?{}.*?'.format(config["pr_prefix"]), title) is not None: 
         part_pr = False
         lower_title = title.lower().replace(' ', '')
         if '-part' in lower_title:
@@ -229,12 +201,12 @@ def update_status_by_pull(tasks, pull):
         # 防止某些PR编号写错
         if num > len(tasks) or num <= 0:
             comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
-            comment_to_user_list.append('pull-' + str(pull["id"]))
+            config["comment_to_user_list"].append('pull-' + str(pull["id"]))
             logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
             return
         
         # 对于手工修改的task，无需进行处理
-        if num in un_handle_tasks:
+        if num in config['un_handle_tasks']:
             return
 
         task = tasks[num - 1]
@@ -263,16 +235,18 @@ def update_status_by_pull(tasks, pull):
                 'status': status,
                 'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
             }
-
-        task['status'] = get_updated_status(task['status'], update_status)
+        
+        state_col = "col_" + str(config["pr_col"] - 1)
+        task[state_col] = get_updated_status(task[state_col], update_status)
 
         # 处理过程中发现已完成任务，则更新完成人信息
-        if "完成任务" in task["status"]:
-            task["team"] = '@' + username
-            un_handle_tasks.append(num)
+        if "complete_col" in config and "完成任务" in task[state_col]:
+            complete_col = "col_" + str(config["complete_col"] - 1)
+            task[complete_col] = '@' + username
+            config["un_handle_tasks"].append(num)
 
 
-def process_comment(comment):
+def process_comment(comment, config):
     """
     @desc: 提取评论信息，将字符串化的status转化为对象信息
     """
@@ -292,7 +266,7 @@ def process_comment(comment):
     if '报名:' in content and '【报名】:' not in content:
         logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
         # comment_to_user({"body": "@{} 请检查报名格式，正确的格式为【报名】: 题目编号".format(comment_obj['username']), "id": 'comment-' + str(comment["id"])})
-        comment_to_user_list.append('comment-' + str(comment["id"]))
+        config["comment_to_user_list"].append('comment-' + str(comment["id"]))
         return None
 
     # 获取题号
@@ -431,7 +405,7 @@ def get_status_level(status):
     return status_level
 
 
-def update_board(tasks):
+def update_board(tasks, config):
     """
     desc: 根据任务对象列表获取看板信息
 
@@ -441,26 +415,37 @@ def update_board(tasks):
 
     board_head = "| 任务方向 | 任务数量 | 提交作品 / 任务认领 | 提交率 | 完成 | 完成率 |\n| :----: | :----: | :----:  | :----: | :----: | :----: |\n"
 
-    for i in range(len(task_types)):
-        type_name = type_names[i]
-        task_num, claimed, submitted, completed = len(task_types[i]), 0, 0, 0
+    for i in range(len(config['task_types'])):
+        type_name = config['type_names'][i]
+        task_num, claimed, submitted, completed = 0, 0, 0, 0
         
-        for task_id in task_types[i]:
-            if task_id > len(tasks):
-                continue
-            task = tasks[task_id - 1]
-            if task == None:
-                continue
-            status = task["status"]
-            if "完成任务" in status:
-                completed += 1
-                submitted += 1
-                claimed += 1
-            elif "提交PR" in status:
-                submitted += 1
-                claimed += 1
-            elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
-                claimed += 1
+        for task_range in config['task_types'][i]:
+            task_ids = []
+            if '-' in str(task_range):
+                nums = task_range.split('-')
+                task_ids = [i for i in range(int(nums[0]), int(nums[1]) + 1)]
+            else:
+                task_ids = [int(task_range)]
+            
+            task_num += len(task_ids)
+            
+            for task_id in task_ids:
+                if task_id > len(tasks):
+                    continue
+                task = tasks[task_id - 1]
+                if task == None:
+                    continue
+                state_col = "col_" + str(config["pr_col"] - 1)
+                status = task[state_col]
+                if "完成任务" in status:
+                    completed += 1
+                    submitted += 1
+                    claimed += 1
+                elif "提交PR" in status:
+                    submitted += 1
+                    claimed += 1
+                elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
+                    claimed += 1
         
         row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
 

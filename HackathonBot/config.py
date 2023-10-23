@@ -2,8 +2,72 @@ import logging
 import os
 import json
 
-# 监控的仓库列表
-repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
+common_config = {
+    # 更新issue的token
+    'issue_token': os.environ.get('ISSUE_TOKEN'),
+
+    # 更新评论的token
+    'comment_token': os.environ.get('COMMENT_TOKEN'),
+
+    # 代理地址
+    'proxies': {
+        'http':  os.environ.get('HTTP_PROXY'),
+        'https': os.environ.get('HTTPS_PROXY')
+    },
+
+    # 是否展示看板信息
+    'board': True,
+
+    'comment_to_user_list': []
+}
+
+configs = [
+    {
+        # 任务名称，起标识作用
+        'issue_name': "【快乐开源】基于hydra的案例改造计划",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2023-10-16T00:28:48Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleScience/issues/571',
+        
+        # 监控的仓库列表
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
+
+        # 总的任务数量
+        'task_num' : 20,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["热身赛"], 
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-20']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "hydra No.",
+
+        # PR、状态等信息所在的列
+        'pr_col': 3,
+        
+    }, {
+        # 任务名称，起标识作用
+        'issue_name': "【黑客松】",
+
+        # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2023-09-13T00:28:48Z',
+
+        # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262',
+        
+        # 监控的仓库列表
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/community/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls',
@@ -20,56 +84,39 @@ repo_urls = ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
              'https://api.github.com/repos/PaddlePaddle/docs/pulls',
              'https://api.github.com/repos/InfiniTensor/InfiniTensor/pulls'
-            ]
+            ],
 
-is_hackathon = True if os.environ.get('HACKATHON') == 'True' else False
+        # 总的任务数量
+        'task_num' : 111,
 
-config = {
-    # 更新issue的token
-    'issue_token': os.environ.get('ISSUE_TOKEN'),
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
 
-    # 更新评论的token
-    'comment_token': os.environ.get('COMMENT_TOKEN'),
+        # 已删除的赛题
+        'removed_tasks' : [],
 
-    # 代理地址
-    'proxies': {
-        'http':  os.environ.get('HTTP_PROXY'),
-        'https': os.environ.get('HTTPS_PROXY')
-    },
+        # 赛道名
+        'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务", "合作伙伴任务"], 
 
-    # 黑客松开始时间，只会统计黑客松开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-    'start_time' : '2023-09-13T00:28:48Z',
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                        [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 110],
+                        [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 101, 102, 103, 104, 105],
+                        [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
+                        [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
+                        [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 106, 107, 108, 109, 111]],
+        
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "Hackathon No.",
+        
+        # PR、状态等信息所在的列
+        'pr_col': 4,
 
-    # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
-    'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/' + ('57262' if is_hackathon else '57264'),
+        # 如果需要标识完成人，需要写上完成人所在的列
+        'complete_col': 5,
+    }
+]
     
-    # 监控的仓库列表
-    'repo_urls': repo_urls if is_hackathon else [],
-
-    # 总的任务数量
-    'task_num' : 111 if is_hackathon else 18,
-
-    # 忽略不处理的题号，这部分留给人工处理
-    'un_handle_tasks' : [],
-
-    # 已删除的赛题
-    'removed_tasks' : [],
-
-    # 赛道名
-    'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务", "合作伙伴任务"], 
-
-    # 每个赛题所属的赛道，每个赛道是一个数组
-    'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-                    [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 110],
-                    [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 101, 102, 103, 104, 105],
-                    [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
-                    [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
-                    [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 106, 107, 108, 109, 111]],
-
-    # 为True时代表黑客松任务。 为False时代表框架计划，此时 repo_urls 要设为 []
-    'hackathon': is_hackathon
-
-}
 
 def get_logger():
     logger = logging.getLogger('logger')
