@@ -283,16 +283,16 @@ def process_comment(comment, config):
     
     # 题号用顿号隔开或-隔开
     sequence = content[start: end].strip(' ')
-    if '-' in sequence:
-        nums = sequence.split('-')
-        nums = [int(num) for num in nums]
-        nums = [i for i in range(nums[0], nums[1] + 1)]
-    elif '、' in sequence:
-        nums = sequence.split('、')
-        nums = [int(num) for num in nums]
-    else:
-        nums = sequence.split(' ')
-        nums = [int(num) for num in nums]
+    ids = []
+    nums = sequence.split('、')
+    for num in nums:
+        if '-' in num:
+            arr = num.split('-')
+            arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
+            ids.extend(arr)
+        else:
+            ids.append(int(num))
+    nums = ids
     
     comment_obj['num'] = nums
 
