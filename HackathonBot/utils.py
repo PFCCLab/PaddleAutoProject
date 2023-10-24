@@ -115,6 +115,8 @@ def process_issue(task_text, config):
                 task["col_" + str(column)] = item_content
                 column += 1
             end += 1
+        if column < 3:
+            task = None
         task_list.append(task)
     
     return task_list
@@ -189,61 +191,73 @@ def update_status_by_pull(tasks, pull, config):
         if '-part' in lower_title:
             part_pr = True
 
+        title = title.replace('，', ',').replace(',', '、').replace(' ', '')
+
         # 获取题目编号
         start = title.find('No')
         while title[start] < '0' or title[start] > '9':
             start += 1
         end = start + 1
-        while title[end] >= '0' and title[end] <= '9':
+        while (end < len(title)) and ((title[end] >= '0' and title[end] <= '9') or (title[end] == '、') or (title[end] == '-')):
             end += 1
-        num = int(title[start: end])
-
-        # 防止某些PR编号写错
-        if num > len(tasks) or num <= 0:
-            comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
-            config["comment_to_user_list"].append('pull-' + str(pull["id"]))
-            logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
-            return
         
-        # 对于手工修改的task，无需进行处理
-        if num in config['un_handle_tasks']:
-            return
-
-        task = tasks[num - 1]
-
-        if task == None:
-            logger.error('赛题【{}】没有出现在任务列表中'.format(num))
-            return
-
-        if 'community' in html_url:
-            update_status = {
-                'username': username,
-                'status': '提交RFC' if state == 'open' else '完成设计文档',
-                'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
-            }
-        else:
-            status = ''
-            if state == 'open':
-                status = '提交PR'
-            elif part_pr:
-                status = '部分完成'
+        ids = []
+        nums = title[start: end].split('、')
+        for num in nums:
+            if '-' in num:
+                arr = num.split('-')
+                arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
+                ids.extend(arr)
             else:
-                status = '完成任务'
-            
-            update_status = {
-                'username': username,
-                'status': status,
-                'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
-            }
+                ids.append(int(num))
         
-        state_col = "col_" + str(config["pr_col"] - 1)
-        task[state_col] = get_updated_status(task[state_col], update_status)
+        for num in ids:
+            # 防止某些PR编号写错
+            if num > len(tasks) or num <= 0:
+                comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+                config["comment_to_user_list"].append('pull-' + str(pull["id"]))
+                logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
+                return
+            
+            # 对于手工修改的task，无需进行处理
+            if num in config['un_handle_tasks']:
+                return
 
-        # 处理过程中发现已完成任务，则更新完成人信息
-        if "complete_col" in config and "完成任务" in task[state_col]:
-            complete_col = "col_" + str(config["complete_col"] - 1)
-            task[complete_col] = '@' + username
-            config["un_handle_tasks"].append(num)
+            task = tasks[num - 1]
+
+            if task == None:
+                logger.error('赛题【{}】没有出现在任务列表中'.format(num))
+                return
+
+            if 'community' in html_url:
+                update_status = {
+                    'username': username,
+                    'status': '提交RFC' if state == 'open' else '完成设计文档',
+                    'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
+                }
+            else:
+                status = ''
+                if state == 'open':
+                    status = '提交PR'
+                elif part_pr:
+                    status = '部分完成'
+                else:
+                    status = '完成任务'
+                
+                update_status = {
+                    'username': username,
+                    'status': status,
+                    'pr': ['[#{}]({})'.format(html_url[html_url.rfind('/') + 1: ], html_url)]
+                }
+            
+            state_col = "col_" + str(config["pr_col"] - 1)
+            task[state_col] = get_updated_status(task[state_col], update_status)
+
+            # 处理过程中发现已完成任务，则更新完成人信息
+            if "complete_col" in config and "完成任务" in task[state_col]:
+                complete_col = "col_" + str(config["complete_col"] - 1)
+                task[complete_col] = '@' + username
+                config["un_handle_tasks"].append(num)
 
 
 def process_comment(comment, config):
@@ -283,16 +297,16 @@ def process_comment(comment, config):
     
     # 题号用顿号隔开或-隔开
     sequence = content[start: end].strip(' ')
-    if '-' in sequence:
-        nums = sequence.split('-')
-        nums = [int(num) for num in nums]
-        nums = [i for i in range(nums[0], nums[1] + 1)]
-    elif '、' in sequence:
-        nums = sequence.split('、')
-        nums = [int(num) for num in nums]
-    else:
-        nums = sequence.split(' ')
-        nums = [int(num) for num in nums]
+    ids = []
+    nums = sequence.split('、')
+    for num in nums:
+        if '-' in num:
+            arr = num.split('-')
+            arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
+            ids.extend(arr)
+        else:
+            ids.append(int(num))
+    nums = ids
     
     comment_obj['num'] = nums
 
