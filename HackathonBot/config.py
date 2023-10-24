@@ -107,7 +107,7 @@ configs = [
                         [88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 106, 107, 108, 109, 111]],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Hackathon No.",
+        'pr_prefix' : "Hackathon.*?No",
         
         # PR、状态等信息所在的列
         'pr_col': 4,
