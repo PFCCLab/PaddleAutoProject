@@ -81,13 +81,24 @@ def update_issue_automatically():
                 end = updated_issue.find('#####', start)
                 updated_issue = updated_issue[: start + 1] + board_info + updated_issue[end:]
 
-            # 6. 处理换行符，写入日志存档
+            # 6. 处理完成数量信息
+            statistic_info = utils.update_statistic_info(task_list, config)
+            start = updated_issue.find('统计信息')
+            if start == -1:
+                updated_issue += "\n## 统计信息 \n\n #####\n"
+                start = updated_issue.find('统计信息')
+            while updated_issue[start] != '\n':
+                start += 1
+            end = updated_issue.find('#####', start)
+            updated_issue = updated_issue[: start + 1] + statistic_info + updated_issue[end:]
+            
+            # 7. 处理换行符，写入日志存档
             updated_issue = updated_issue.replace('\r', '')
             file_name = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
             with open('./logs/{}.md'.format(file_name), mode='w', encoding='utf-8') as f:
                 f.write(updated_issue)
 
-            # 7. 更新 issue
+            # 8. 更新 issue
             data = {}
             data['body'] = updated_issue
             data['title'] = response['title']

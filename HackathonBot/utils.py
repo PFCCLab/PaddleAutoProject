@@ -252,12 +252,15 @@ def update_status_by_pull(tasks, pull, config):
             
             state_col = "col_" + str(config["pr_col"] - 1)
             task[state_col] = get_updated_status(task[state_col], update_status)
-
             # 处理过程中发现已完成任务，则更新完成人信息
-            if "complete_col" in config and "完成任务" in task[state_col]:
-                complete_col = "col_" + str(config["complete_col"] - 1)
-                task[complete_col] = '@' + username
-                config["un_handle_tasks"].append(num)
+            if "complete_col" in config:
+                start = task[state_col].find(username)
+                end = task[state_col].find('<br>', start)
+                user_status = task[state_col][start: end].strip(' ')
+                if "完成任务" in user_status:
+                    complete_col = "col_" + str(config["complete_col"] - 1)
+                    task[complete_col] = '@' + username
+                    config["un_handle_tasks"].append(num)
 
 
 def process_comment(comment, config):
@@ -455,7 +458,7 @@ def update_board(tasks, config):
                     completed += 1
                     submitted += 1
                     claimed += 1
-                elif "提交PR" in status:
+                elif "提交PR" in status or "部分完成" in status:
                     submitted += 1
                     claimed += 1
                 elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
@@ -466,3 +469,27 @@ def update_board(tasks, config):
         board_head += row
 
     return board_head
+
+
+def update_statistic_info(task_list, config):
+    """
+    统计完成数量信息
+    """
+    users_info = {}
+    state_col = "col_" + str(config["pr_col"] - 1)
+    for task in task_list:
+        if task == None:
+            continue
+        content = task[state_col]
+        if "完成任务" in content:
+            content = content[: content.find("完成任务")]
+            user_name = content[content.rfind('@') + 1 : content.rfind('<')].strip()
+            if user_name not in users_info:
+                users_info[user_name] = 0
+            users_info[user_name] += 1
+                
+    statistic_info = "> 排名不分先后 "
+    for user_name in users_info:
+        statistic_info += "@{} ({}) ".format(user_name, str(users_info[user_name]))
+    statistic_info += "\n"
+    return statistic_info
