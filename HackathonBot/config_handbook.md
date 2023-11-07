@@ -17,8 +17,7 @@ issue中表格需要按照下图配置
 注意事项：
 * 序号前后各有一个空格，举例 `| 10 |`。
 * 赛题状态目前默认为第`3`列，表头信息可以自行修改。如果不是第`3`列，需要在配置文件中指定`pr_col`字段，表示赛题状态所在列，列数从`1`开始。
-* 对于需要统计看板信息的任务，`issue`内容中最好有`看板信息`这几个字，并且在后面接上`回车 + #####`这个特殊标志，否则看板信息会加在`issue`内容的最后。
-* 对于需要统计参赛者完成赛题个数信息的任务，`issue`内容中最好有`统计信息`这几个字，并且在后面接上`回车 + #####`这个特殊标志，否则看板信息会加在`issue`内容的最后。
+* 看板信息和统计信息，默认加在`issue`内容的最后（推荐默认方式）
 
 ### 配置文件格式
 该示例中指定了`任务名称`，`issue链接`，`任务数量为20个`，该任务相关的PR包含`hydra No.`前缀，`赛题状态在第三列`等信息。
@@ -58,9 +57,9 @@ issue中表格需要按照下图配置
     'pr_col': 3,
 }
 ```
-参考范例：
-- https://github.com/PFCCLab/PaddleAutoProject/pull/49
-- https://github.com/PFCCLab/PaddleAutoProject/pull/51
+配置文件格式的参考范例 & 对应的表格格式：
+- https://github.com/PFCCLab/PaddleAutoProject/pull/49 对应 https://github.com/PaddlePaddle/Paddle/issues/58067
+- https://github.com/PFCCLab/PaddleAutoProject/pull/51 对应 https://github.com/PaddlePaddle/Paddle/issues/58237
 
 配置文件注意事项：
 * 赛题状态列默认是第三列，如果不是第三列，需要在赛题配置中指定`pr_col`字段，表示赛题状态所在列，列数从`1`开始。
