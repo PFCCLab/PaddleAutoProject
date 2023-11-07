@@ -140,7 +140,7 @@ configs = [
         'type_names' : ["PIR Python API 适配升级"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-67', '69-109', '111-252']],
+        'task_types' : [['1-252']],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR API adaptor No.",
