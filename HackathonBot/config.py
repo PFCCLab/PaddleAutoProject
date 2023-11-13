@@ -219,7 +219,7 @@ configs = [
         'issue_name': "[Docathon] 中文文档 copy-from 清理",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2023-11-8T00:00:00Z',
+        'start_time' : '2023-11-08T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/6300',
