@@ -12,8 +12,8 @@ common_config = {
 
     # 代理地址
     'proxies': {
-        'http':  os.environ.get('HTTP_PROXY'),
-        'https': os.environ.get('HTTPS_PROXY')
+        'http': "", #os.environ.get('HTTP_PROXY'),
+        'https': "", #os.environ.get('HTTPS_PROXY')
     },
 
     # 是否展示看板信息
