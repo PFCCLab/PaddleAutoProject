@@ -54,7 +54,7 @@ configs = [
             ],
 
         # 总的任务数量
-        'task_num' : 111,
+        'task_num' : 112,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
