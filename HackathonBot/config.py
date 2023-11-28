@@ -237,10 +237,10 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["快乐开源","黑客松"], 
+        'type_names' : ["快乐开源"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-37'],[38,39]],
+        'task_types' : [['1-39']],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR OpTest Fix No.",
