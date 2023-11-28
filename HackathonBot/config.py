@@ -83,7 +83,7 @@ configs = [
         'complete_col': 5,
     }, {
         # 任务名称，起标识作用
-        'issue_name': "【黑客松】PIR Python API 适配升级",
+        'issue_name': "PIR Python API 适配升级",
 
         # `【黑客松】PIR Python API 适配升级` 任务开始时间，只会统计任务开始时间之后的PR(注意时间中的字母T和Z不能缺少)
         'start_time' : '2023-10-20T00:00:48Z',
@@ -95,7 +95,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 总的任务数量
-        'task_num' : 252,
+        'task_num' : 315,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [68,110],   # 已经手动分配出去了
@@ -107,7 +107,7 @@ configs = [
         'type_names' : ["PIR Python API 适配升级"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-252']],
+        'task_types' : [['1-315']],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR API adaptor No.",
