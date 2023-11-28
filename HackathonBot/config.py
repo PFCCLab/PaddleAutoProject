@@ -228,7 +228,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 总的任务数量
-        'task_num' : 39,
+        'task_num' : 38,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],   # 已经手动分配出去了
@@ -237,10 +237,10 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["快乐开源"], 
+        'type_names' : ["快乐开源","黑客松"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-39']],
+        'task_types' : [['1-36'],[37,38]],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR OpTest Fix No.",
