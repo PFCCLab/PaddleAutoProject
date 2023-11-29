@@ -12,7 +12,7 @@ common_config = {
 
     # 代理地址
     'proxies': {
-        'http':  os.environ.get('HTTP_PROXY'),
+        'http': os.environ.get('HTTP_PROXY'),
         'https': os.environ.get('HTTPS_PROXY')
     },
 
@@ -53,8 +53,8 @@ configs = [
              'https://api.github.com/repos/InfiniTensor/InfiniTensor/pulls'
             ],
 
-        # 总的任务数量
-        'task_num' : 110,
+        # 最大的任务ID
+        'max_task_id' : 112,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -94,8 +94,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
-        # 总的任务数量
-        'task_num' : 315,
+        # 最大的任务ID
+        'max_task_id' : 315,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [68,110],   # 已经手动分配出去了
@@ -127,8 +127,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
-        # 总的任务数量
-        'task_num' : 28,
+        # 最大的任务ID
+        'max_task_id' : 28,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [18,21], # 已经手动分配出去了
@@ -161,8 +161,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
-        # 总的任务数量
-        'task_num' : 19,
+        # 最大的任务ID
+        'max_task_id' : 19,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [], 
@@ -194,8 +194,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
-        # 总的任务数量
-        'task_num' : 67,
+        # 最大的任务ID
+        'max_task_id' : 67,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [], 
