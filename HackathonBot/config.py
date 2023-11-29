@@ -83,7 +83,7 @@ configs = [
         'complete_col': 5,
     }, {
         # 任务名称，起标识作用
-        'issue_name': "【黑客松】PIR Python API 适配升级",
+        'issue_name': "PIR Python API 适配升级",
 
         # `【黑客松】PIR Python API 适配升级` 任务开始时间，只会统计任务开始时间之后的PR(注意时间中的字母T和Z不能缺少)
         'start_time' : '2023-10-20T00:00:48Z',
