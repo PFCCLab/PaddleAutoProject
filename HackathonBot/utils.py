@@ -97,7 +97,7 @@ def process_issue(task_text, config):
         task_list: [] 对象格式的题目列表，每一列都是对象的一个属性，用字符串表示
     """
     task_list = []
-    for i in range(config['task_num']):
+    for i in range(config['max_task_id']):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
@@ -144,7 +144,7 @@ def update_status_by_comment(tasks, comment, config):
                 
                 # 如果报名的赛题编号错误
                 if num > len(tasks) or num <= 0:
-                    comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                    # comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])}, config)
                     config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                     return
@@ -156,7 +156,7 @@ def update_status_by_comment(tasks, comment, config):
                 # 对于删除的赛题，需要进行提醒赛题已删除
                 if num in config['removed_tasks']:
                     logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
-                    comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
+                    comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])}, config)
                     config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     return
 
@@ -214,7 +214,7 @@ def update_status_by_pull(tasks, pull, config):
         for num in ids:
             # 防止某些PR编号写错
             if num > len(tasks) or num <= 0:
-                comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+                comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])}, config)
                 config["comment_to_user_list"].append('pull-' + str(pull["id"]))
                 logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
                 return
