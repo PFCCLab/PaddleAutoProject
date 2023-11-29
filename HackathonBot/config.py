@@ -214,6 +214,39 @@ configs = [
 
         # PR、状态等信息所在的列
         'pr_col': 4,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【PIR】 PIR下的OP单测修复",
+
+        # 【PIR】 PIR下的OP单测修复 任务开始时间
+        'start_time' : '2023-11-28T00:00:48Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/59382',
+        
+        # 监控的仓库列表
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
+
+        # 总的任务数量
+        'task_num' : 37,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],   # 已经手动分配出去了
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["快乐开源"], 
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-37']],
+        
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "PIR OpTest Fix No.",
+        
+        # PR、状态等信息所在的列
+        'pr_col': 3,
     },
 ]
     
