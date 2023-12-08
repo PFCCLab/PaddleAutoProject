@@ -32,7 +32,7 @@ configs = [
 
         # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/57262',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
              'https://api.github.com/repos/PaddlePaddle/community/pulls',
@@ -63,7 +63,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务", "合作伙伴任务"],
+        'type_names' : ["热身赛", "框架 API 开发任务", "框架其他开发任务", "科学计算模型复现", "套件开发任务", "合作伙伴任务"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
@@ -72,10 +72,10 @@ configs = [
                         [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
                         [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87],
                         [88, 89, 90, 91, 93, 94, 95, 96, 97, 98, 99, 100, 106, 107, 108, 109, 111, 113]],
-
+        
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Hackathon.*?No",
-
+        
         # PR、状态等信息所在的列
         'pr_col': 4,
 
@@ -90,7 +90,7 @@ configs = [
 
         # 黑客松 issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/58067',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
@@ -104,14 +104,14 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["PIR Python API 适配升级"],
+        'type_names' : ["PIR Python API 适配升级"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-315']],
-
+        
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR API adaptor No.",
-
+        
         # PR、状态等信息所在的列
         'pr_col': 3,
     },{
@@ -123,7 +123,7 @@ configs = [
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/58237',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
@@ -137,7 +137,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["Docathon"],
+        'type_names' : ["Docathon"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-28']],
@@ -147,7 +147,7 @@ configs = [
 
         # PR、状态等信息所在的列
         'pr_col': 3,
-
+        
     },{
         # 任务名称，起标识作用
         'issue_name': "[Docathon] 中文文档 copy-from 清理",
@@ -157,7 +157,7 @@ configs = [
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/6300',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
@@ -165,13 +165,13 @@ configs = [
         'max_task_id' : 19,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
+        'un_handle_tasks' : [], 
 
         # 已删除的赛题
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["Docathon"],
+        'type_names' : ["Docathon"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-19']],
@@ -190,7 +190,7 @@ configs = [
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/6193',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
@@ -198,13 +198,13 @@ configs = [
         'max_task_id' : 67,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
+        'un_handle_tasks' : [], 
 
         # 已删除的赛题
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["Docathon"],
+        'type_names' : ["Docathon"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-67']],
@@ -223,7 +223,7 @@ configs = [
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/59382',
-
+        
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
@@ -237,14 +237,14 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["快乐开源"],
+        'type_names' : ["快乐开源"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-38']],
-
+        
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PIR OpTest Fix No.",
-
+        
         # PR、状态等信息所在的列
         'pr_col': 3,
     },{
@@ -276,13 +276,13 @@ configs = [
         'task_types' : [['1-109']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "【Docstring Completion No.】",
+        'pr_prefix' : "【PPSCI Doc No.】",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
     },
 ]
-
+    
 
 def get_logger():
     logger = logging.getLogger('logger')
