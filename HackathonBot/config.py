@@ -235,7 +235,7 @@ configs = [
         'repo_urls': [],
 
         # 最大的任务ID
-        'max_task_id' : 25,
+        'max_task_id' : 26,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [1, 2, 3, 4, 6, 10, 11, 12, 24], 
@@ -247,7 +247,7 @@ configs = [
         'type_names' : ["HACKATHON 6th Code Camp"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-25']],
+        'task_types' : [['1-26']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "HACKATHON 6th Code Camp No.",
