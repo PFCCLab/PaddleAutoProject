@@ -37,7 +37,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
         # 最大的任务ID
-        'max_task_id': 118,
+        'max_task_id': 36,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks': [],
@@ -55,7 +55,7 @@ configs = [
         'pr_prefix': "Add Overview Doc No.",
 
         # PR、状态等信息所在的列
-        'pr_col': 3,
+        'pr_col': 4,
     },{
         # 任务名称，起标识作用
         'issue_name': "【Docathon】补充缺失的中文 API 文档",
