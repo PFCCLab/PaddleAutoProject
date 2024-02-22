@@ -264,7 +264,7 @@ configs = [
         'start_time' : '2023-08-10T00:00:48Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/59382',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/61975',
         
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
