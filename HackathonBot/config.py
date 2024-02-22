@@ -285,7 +285,7 @@ configs = [
         'task_types' : [['1-52']],
         
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "【complex op】No.",
+        'pr_prefix' : "complex op No.",
         
         # PR、状态等信息所在的列
         'pr_col': 3,
