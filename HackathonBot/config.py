@@ -289,6 +289,39 @@ configs = [
 
         # PR、状态等信息所在的列
         'pr_col': 3,
+    }, {
+        # 任务名称，起标识作用
+        'issue_name': "【快乐开源】为 PaddleScience 案例添加 export 和 inference 功能",
+
+        # 【complex op】paddlepaddle 支持复数 任务开始时间
+        'start_time' : '2024-02-26T00:00:48Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://github.com/PaddlePaddle/PaddleScience/issues/788',
+
+        # 监控的仓库列表
+        'repo_urls': ['https://github.com/PaddlePaddle/PaddleScience/pulls'],
+
+        # 最大的任务ID
+        'max_task_id' : 35,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],   # 已经手动分配出去了
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["快乐开源"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-35']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "PPSCI Export&Infer No.",
+
+        # PR、状态等信息所在的列
+        'pr_col': 4,
     }
 ]
 
