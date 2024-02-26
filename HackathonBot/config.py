@@ -293,14 +293,14 @@ configs = [
         # 任务名称，起标识作用
         'issue_name': "【快乐开源】为 PaddleScience 案例添加 export 和 inference 功能",
 
-        # 【complex op】paddlepaddle 支持复数 任务开始时间
+        # 【快乐开源】为 PaddleScience 案例添加 export 和 inference 功能
         'start_time' : '2024-02-26T00:00:48Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/PaddleScience/issues/788',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleScience/issues/788',
 
         # 监控的仓库列表
-        'repo_urls': ['https://github.com/PaddlePaddle/PaddleScience/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 35,
