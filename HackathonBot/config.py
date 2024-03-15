@@ -235,7 +235,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 52,
+        'max_task_id' : 55,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],   # 已经手动分配出去了
@@ -247,7 +247,7 @@ configs = [
         'type_names' : ["快乐开源"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-52']],
+        'task_types' : [['1-55']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "complex op No.",
