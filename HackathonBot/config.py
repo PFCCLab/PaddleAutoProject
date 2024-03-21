@@ -363,7 +363,7 @@ configs = [
         'start_time' : '2024-03-21T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/62905',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/62905',
 
         # 监控的仓库列表
         'repo_urls':  ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
@@ -371,7 +371,6 @@ configs = [
              'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
              'https://api.github.com/repos/PaddlePaddle/Paddle2ONNX/pulls',
              'https://api.github.com/repos/openvinotoolkit/openvino/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls',
              'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
              'https://api.github.com/repos/PaddlePaddle/docs/pulls',
             ],
@@ -412,7 +411,7 @@ configs = [
         'start_time' : '2024-03-21T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/62906',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/62906',
 
         # 监控的仓库列表
         'repo_urls':  [],
@@ -448,7 +447,7 @@ configs = [
         'start_time' : '2024-03-21T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/62907',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/62907',
 
         # 监控的仓库列表
         'repo_urls':  ['https://api.github.com/repos/PaddlePaddle/community/pulls'],
@@ -487,7 +486,7 @@ configs = [
         'start_time' : '2024-03-21T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/62908',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/62908',
 
         # 监控的仓库列表
         'repo_urls':  [],
