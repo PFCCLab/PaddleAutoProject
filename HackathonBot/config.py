@@ -522,10 +522,10 @@ configs = [
         'start_time' : '2024-04-01T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/63303',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/63303',
 
         # 监控的仓库列表
-        'repo_urls':  [],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 6,
@@ -543,13 +543,13 @@ configs = [
         'task_types' : [['1-6']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Hackathon 6th Fundable Projects No.3",
+        'pr_prefix' : "Hackathon 6th Fundable Projects 3 No.",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
 
         # 是否展示看板信息
-        'board': False,
+        'board': True,
     }
 ]
 
