@@ -97,7 +97,7 @@ def process_issue(task_text, config):
         task_list: [] 对象格式的题目列表，每一列都是对象的一个属性，用字符串表示
     """
     task_list = []
-    for i in range(config['task_num']):
+    for i in range(config['max_task_id']):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
@@ -144,7 +144,7 @@ def update_status_by_comment(tasks, comment, config):
                 
                 # 如果报名的赛题编号错误
                 if num > len(tasks) or num <= 0:
-                    comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])})
+                    # comment_to_user({"body": "@{} 报名赛题编号【{}】不存在".format(comment['username'], num), "id": "comment-" + str(comment["id"])}, config)
                     config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     logger.error('@{} 报名赛题编号【{}】不存在：'.format(comment['username'], str(num)))
                     return
@@ -156,7 +156,7 @@ def update_status_by_comment(tasks, comment, config):
                 # 对于删除的赛题，需要进行提醒赛题已删除
                 if num in config['removed_tasks']:
                     logger.error('@{} 报名的赛题【{}】已被删除'.format(comment['username'], str(num)))
-                    comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])})
+                    comment_to_user({"body": "@{} 抱歉，赛题【{}】已删除".format(comment['username'], num), "id": 'comment-' + str(comment["id"])}, config)
                     config["comment_to_user_list"].append('comment-' + str(comment["id"]))
                     return
 
@@ -214,7 +214,7 @@ def update_status_by_pull(tasks, pull, config):
         for num in ids:
             # 防止某些PR编号写错
             if num > len(tasks) or num <= 0:
-                comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])})
+                comment_to_user({"body": "@{} PR赛题编号【{}】不存在".format(username, num), "id": 'pull-' + str(pull["id"])}, config)
                 config["comment_to_user_list"].append('pull-' + str(pull["id"]))
                 logger.error('@{} PR #{}中赛题编号【{}】不存在：'.format(username, pull['html_url'], str(num)))
                 return
@@ -252,12 +252,15 @@ def update_status_by_pull(tasks, pull, config):
             
             state_col = "col_" + str(config["pr_col"] - 1)
             task[state_col] = get_updated_status(task[state_col], update_status)
-
             # 处理过程中发现已完成任务，则更新完成人信息
-            if "complete_col" in config and "完成任务" in task[state_col]:
-                complete_col = "col_" + str(config["complete_col"] - 1)
-                task[complete_col] = '@' + username
-                config["un_handle_tasks"].append(num)
+            if "complete_col" in config:
+                start = task[state_col].find(username)
+                end = task[state_col].find('<br>', start)
+                user_status = task[state_col][start: end].strip(' ')
+                if "完成任务" in user_status:
+                    complete_col = "col_" + str(config["complete_col"] - 1)
+                    task[complete_col] = '@' + username
+                    config["un_handle_tasks"].append(num)
 
 
 def process_comment(comment, config):
@@ -455,7 +458,7 @@ def update_board(tasks, config):
                     completed += 1
                     submitted += 1
                     claimed += 1
-                elif "提交PR" in status:
+                elif "提交PR" in status or "部分完成" in status:
                     submitted += 1
                     claimed += 1
                 elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
@@ -466,3 +469,27 @@ def update_board(tasks, config):
         board_head += row
 
     return board_head
+
+
+def update_statistic_info(task_list, config):
+    """
+    统计完成数量信息
+    """
+    users_info = {}
+    state_col = "col_" + str(config["pr_col"] - 1)
+    for task in task_list:
+        if task == None:
+            continue
+        content = task[state_col]
+        if "完成任务" in content:
+            content = content[: content.find("完成任务")]
+            user_name = content[content.rfind('@') + 1 : content.rfind('<')].strip()
+            if user_name not in users_info:
+                users_info[user_name] = 0
+            users_info[user_name] += 1
+                
+    statistic_info = "> 排名不分先后 "
+    for user_name in users_info:
+        statistic_info += "@{} ({}) ".format(user_name, str(users_info[user_name]))
+    statistic_info += "\n"
+    return statistic_info
