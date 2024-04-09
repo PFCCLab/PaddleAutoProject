@@ -543,7 +543,7 @@ configs = [
         'type_names' : ["Docathon"], 
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-28']],
+        'task_types' : [['1-58']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Remove File No.",
