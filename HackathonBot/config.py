@@ -497,8 +497,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
-        # 总的任务数量
-        'task_num' : 58,
+        # 最大的任务ID
+        'max_task_id' : 58,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -526,7 +526,7 @@ configs = [
         'start_time' : '2024-04-09T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/11906',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleOCR/issues/11906',
 
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls'],
