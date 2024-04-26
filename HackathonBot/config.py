@@ -586,7 +586,7 @@ configs = [
         'task_types' : [['1-664']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Fix PIR Unittest",
+        'pr_prefix' : "Fix PIR Unittest No.",
 
         # PR、状态等信息所在的列
         'pr_col': 5,
