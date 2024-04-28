@@ -499,7 +499,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 10,
+        'max_task_id' : 12,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -508,10 +508,10 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["Fundable Projects No.3"],
+        'type_names' : ["Fundable Projects No.6"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-10']],
+        'task_types' : [['1-12']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "OCR Issue No.",
