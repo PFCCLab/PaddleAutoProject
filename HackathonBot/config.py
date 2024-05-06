@@ -509,7 +509,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["Fundable Projects No.3"],
+        'type_names' : ["Fundable Projects No.6"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-12']],
