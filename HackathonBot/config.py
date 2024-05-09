@@ -278,7 +278,7 @@ configs = [
         'max_task_id' : 58,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [45, 48, 49, 51],
+        'un_handle_tasks' : [46, 48, 49, 51],
 
         # 已删除的赛题
         'removed_tasks' : [],
