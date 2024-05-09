@@ -566,13 +566,13 @@ configs = [
         'start_time' : '2024-05-07T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/64098',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/64098',
 
         # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls','https://api.github.com/repos/PaddlePaddle/docs/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 17,
+        'max_task_id' : 23,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -584,7 +584,7 @@ configs = [
         'type_names' : ["【快乐开源】PIR SaveLoad 体系单测适配"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-17']],
+        'task_types' : [['1-23']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Fix PIR JIT SaveLoad Unittest No.",
