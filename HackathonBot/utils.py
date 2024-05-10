@@ -101,7 +101,7 @@ def process_issue(task_text, config):
         start = task_text.find('| {} |'.format(i + 1))
         # 如果没有找到该编号的任务，直接返回
         if start < 0:
-            logger.info('没有从issue内容中找到编号为【{}】的赛题'.format(str(i + 1)))
+            logger.error('没有从issue内容中找到编号为【{}】的赛题，请检查issue内容格式是否正确'.format(str(i + 1)))
             task_list.append(None)
             continue
         end = start + 1
@@ -464,7 +464,7 @@ def update_board(tasks, config):
                 elif "提交RFC" in status or "完成设计文档" in status or "报名" in status:
                     claimed += 1
         
-        row = '| {} | {} | {} / {} | {}% | {} | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
+        row = '|  {}  |  {}  | {} / {} | {}% |  {}  | {}% |\n'.format(type_name, task_num, submitted, claimed, round(submitted / task_num * 100, 2), completed, round(completed / task_num * 100, 2), round(completed / task_num * 100, 2))
 
         board_head += row
 
