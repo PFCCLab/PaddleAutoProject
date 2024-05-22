@@ -521,7 +521,7 @@ configs = [
         'pr_prefix' : "Migrate Sparse API No.",
 
         # PR、状态等信息所在的列
-        'pr_col': 3,
+        'pr_col': 4,
 
         # 是否展示看板信息
         'board': True,
