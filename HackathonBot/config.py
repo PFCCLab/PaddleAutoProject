@@ -575,7 +575,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleSpeech/pulls'],
 
         # 最大的任务ID
-        'max_task_id': 12,
+        'max_task_id': 20,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks': [],
@@ -587,10 +587,10 @@ configs = [
         'type_names': ["已验证可提测","待修复"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types': [['1-9'],['1,12']],
+        'task_types': [['1-20']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix': "Fix Speech Issue No.",
+        'pr_prefix': "Speech Demo 2.6.1 No.",
 
         # PR、状态等信息所在的列
         'pr_col': 5,
