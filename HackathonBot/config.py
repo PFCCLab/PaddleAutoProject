@@ -597,6 +597,42 @@ configs = [
 
         # 是否展示看板信息
         'board': True,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 7th Code Camp】黑客松护航计划集训营（提前批）",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2024-06-19T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/65285',
+
+        # 监控的仓库列表
+        'repo_urls':  [],
+
+        # 最大的任务ID
+        'max_task_id' : 10,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["第七期黑客松护航计划集训营（提前批）"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-10']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "",
+
+        # PR、状态等信息所在的列
+        'pr_col': 5,
+
+        # 是否展示看板信息
+        'board': False,
     }
 ]
 
