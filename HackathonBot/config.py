@@ -467,7 +467,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 14,
+        'max_task_id' : 38,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -479,7 +479,7 @@ configs = [
         'type_names' : ["【快乐开源】PIR下Sparse算子Python API 适配"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-14']],
+        'task_types' : [['1-38']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Migrate Sparse API No.",
