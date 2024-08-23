@@ -279,6 +279,9 @@ configs = [
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/67601',
+       
+        # 监控的仓库列表
+        'repo_urls':  [],
 
         # 最大的任务ID
         'max_task_id' : 6,
