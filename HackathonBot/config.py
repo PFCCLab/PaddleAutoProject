@@ -242,7 +242,8 @@ configs = [
 
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
-                      'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
+                      'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
+                      'https://api.github.com/repos/PaddlePaddle/community/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 17,
