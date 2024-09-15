@@ -335,10 +335,10 @@ configs = [
         'max_task_id' : 54,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
+        'un_handle_tasks' : ['1-17'],  # 科学计算题目已经再另一个 issue 发布了
 
         # 已删除的赛题
-        'removed_tasks' : [],
+        'removed_tasks' : ['1-17'],
 
         # 赛道名
         'type_names' : ["框架 API 开发任务", "套件开发任务"],
