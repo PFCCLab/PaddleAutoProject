@@ -300,7 +300,7 @@ configs = [
         'repo_urls':  [],
 
         # 最大的任务ID
-        'max_task_id' : 4,
+        'max_task_id' : 6,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
