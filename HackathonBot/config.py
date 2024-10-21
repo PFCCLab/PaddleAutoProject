@@ -423,7 +423,7 @@ configs = [
         'task_types' : [['1-6']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "飞桨科学计算工具组件开发大赛",
+        'pr_prefix' : "Paddle Toolkit Development Competition",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
