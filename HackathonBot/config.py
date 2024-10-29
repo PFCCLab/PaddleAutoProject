@@ -260,7 +260,7 @@ configs = [
             ],
 
         # 最大的任务ID
-        'max_task_id' : 54,
+        'max_task_id' : 58,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : ['1-17'],  # 科学计算题目已经再另一个 issue 发布了
@@ -273,7 +273,7 @@ configs = [
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['18-42'],
-                        ['43-54']],
+                        ['43-58']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Hackathon 7th No.",
@@ -300,7 +300,7 @@ configs = [
         'repo_urls':  [],
 
         # 最大的任务ID
-        'max_task_id' : 6,
+        'max_task_id' : 8,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -312,7 +312,7 @@ configs = [
         'type_names' : ["Fundable Projects"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-6']],
+        'task_types' : [['1-8']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Hackathon 7th Fundable Projects No.",
