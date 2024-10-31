@@ -440,7 +440,7 @@ configs = [
         'start_time' : '2024-10-30T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/PaddleMIX/issues/787',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleMIX/issues/787',
 
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleMIX/pulls'],
@@ -461,7 +461,7 @@ configs = [
         'task_types' : [['1-35']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "PaddleMIX Activity",
+        'pr_prefix' : "PPMix No",
 
         # PR、状态等信息所在的列
         'pr_col': 7,
