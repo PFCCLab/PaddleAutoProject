@@ -374,19 +374,19 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 62,
+        'max_task_id' : 64,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
+        'un_handle_tasks' : ['13-16'],
 
         # 已删除的赛题
-        'removed_tasks' : [],
+        'removed_tasks' : ['13-16'],
 
         # 赛道名
         'type_names' : ["PIR-TensorRT converter推全升级"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-62']],
+        'task_types' : [['1-64']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Paddle TensorRT No.",
