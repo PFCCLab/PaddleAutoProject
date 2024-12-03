@@ -34,7 +34,8 @@ configs = [
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/6614',
 
         # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
+                      'https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
         # 最大的任务ID
         'max_task_id': 60,
@@ -67,7 +68,8 @@ configs = [
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/61975',
 
         # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
+                      'https://api.github.com/repos/PaddlePaddle/docs/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 55,
