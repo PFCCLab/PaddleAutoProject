@@ -104,93 +104,6 @@ configs = [
         'hackathon': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【Hackathon 7th】开源贡献个人挑战赛",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2024-09-14T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/68244',
-
-        # 监控的仓库列表
-        'repo_urls':  ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
-             'https://api.github.com/repos/PaddlePaddle/community/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
-             'https://api.github.com/repos/PaddlePaddle/Paddle2ONNX/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleNLP/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleMIX/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleX/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleOCR/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaddleSpeech/pulls',
-             'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
-             'https://api.github.com/repos/PaddlePaddle/docs/pulls',
-            ],
-
-        # 最大的任务ID
-        'max_task_id' : 58,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : ['1-17'],  # 科学计算题目已经再另一个 issue 发布了
-
-        # 已删除的赛题
-        'removed_tasks' : ['1-17'],
-
-        # 赛道名
-        'type_names' : ["框架 API 开发任务", "套件开发任务"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['18-42'],
-                        ['43-58']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Hackathon 7th No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 4,
-
-        # 如果需要标识完成人，需要写上完成人所在的列
-        'complete_col': 5,
-
-        # 是否展示看板信息
-        'board': True,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【Hackathon 7th】Fundable Projects",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2024-09-14T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/68245',
-
-        # 监控的仓库列表
-        'repo_urls':  [],
-
-        # 最大的任务ID
-        'max_task_id' : 11,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["Fundable Projects"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-11']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Hackathon 7th Fundable Projects No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 4,
-
-        # 是否展示看板信息
-        'board': False,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "PaddleMIX 快乐开源活动 (2024 Q4)",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -291,42 +204,6 @@ configs = [
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Backend Pass Update No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-
-        # 是否展示看板信息
-        'board': True,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【开源任务】CINN编译器后端Pass注释添加",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2024-12-12T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/70113',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 13,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["CINN编译器后端Pass改造"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-13']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Add Backend Pass Comment No.",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
