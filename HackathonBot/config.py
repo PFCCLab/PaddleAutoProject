@@ -93,6 +93,9 @@ configs = [
 
         # PR、状态等信息所在的列
         'pr_col': 4,
+        
+        # 如果需要标识完成人，需要写上完成人所在的列
+        'complete_col': 5,
 
         # 是否展示看板信息
         'board': True,
