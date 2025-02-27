@@ -174,7 +174,7 @@ configs = [
 
         # 是否展示看板信息
         'board': True,
-    }    ,{
+    },{
         # 任务名称，起标识作用
         'issue_name': "PaddleNLP 快乐开源活动 (2025 H1)",
 
