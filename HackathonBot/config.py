@@ -174,7 +174,40 @@ configs = [
 
         # 是否展示看板信息
         'board': True,
-    }    
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "PaddleSpeech 快乐开源活动 (2025 H1)",
+
+        # 【快乐开源】为 PaddleScience 案例添加 export 和 inference 功能
+        'start_time' : '2024-02-28T00:00:48Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://github.com/PaddlePaddle/PaddleSpeech/issues/3997',
+
+        # 监控的仓库列表
+        'repo_urls': ['https://github.com/PaddlePaddle/PaddleSpeech//pulls'],
+
+        # 最大的任务ID
+        'max_task_id' : 15,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],   # 已经手动分配出去了
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["快乐开源"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-15']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "PPSCI Export&Infer No.",
+
+        # PR、状态等信息所在的列
+        'pr_col': 3,
+    }
 ]
 
 
