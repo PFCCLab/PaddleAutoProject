@@ -134,10 +134,10 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : [["科学计算论文复现任务","套件开发任务"]],
+        'type_names' : ["科学计算论文复现任务","套件开发任务"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['12-27','28-42']],
+        'task_types' : [['12-27'],['28-42']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Hackathon 8th No.",
