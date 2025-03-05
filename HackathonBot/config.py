@@ -88,7 +88,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : [“框架开发任务”,"科学计算论文复现任务","套件开发任务"],
+        'type_names' : ["框架开发任务","科学计算论文复现任务","套件开发任务"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-4'],['10-27'],
@@ -161,7 +161,7 @@ configs = [
         'repo_urls': [],
 
         # 最大的任务ID
-        'max_task_id' : 5,
+        'max_task_id' : 6,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [['3']],
@@ -173,7 +173,7 @@ configs = [
         'type_names' : [["护航计划集训营（正式批）"]],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-5']],
+        'task_types' : [['1-6']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "",
