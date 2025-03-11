@@ -475,7 +475,7 @@ configs = [
         'task_types' : [['1-47']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
+        'pr_prefix' : "Add Inplace CN Doc",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
