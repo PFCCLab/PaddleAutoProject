@@ -61,7 +61,7 @@ configs = [
         'issue_name': "【Hackathon 8th】开源贡献个人挑战赛",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2024-12-01T00:00:00Z',
+        'start_time' : '2025-01-09T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/71310',
