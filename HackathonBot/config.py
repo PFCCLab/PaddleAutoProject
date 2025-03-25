@@ -385,7 +385,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleX/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 15,
+        'max_task_id' : 16,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -397,7 +397,7 @@ configs = [
         'type_names' : ["PaddleX 快乐开源活动"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-15']],
+        'task_types' : [['1-16']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "PaddleX No.",
@@ -469,7 +469,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : [["补充缺失的中文 API 文档（Inplace 类）"]],
+        'type_names' : ["补充缺失的中文 API 文档（Inplace 类）"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-47']],
