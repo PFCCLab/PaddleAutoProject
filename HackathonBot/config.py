@@ -151,84 +151,6 @@ configs = [
         'hackathon': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 8th Code Camp】黑客松护航计划集训营（正式批）",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-02-27T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/71312',
-
-        # 监控的仓库列表
-        'repo_urls': [],
-
-        # 最大的任务ID
-        'max_task_id' : 6,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [['3']],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : [["护航计划集训营（正式批）"]],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-6']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
-
-        # PR、状态等信息所在的列
-        'pr_col': 5,
-        
-        # 是否展示看板信息
-        'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': True,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 8th Code Camp】飞桨正式实习招聘（可在校）",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-02-27T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/71313',
-
-        # 监控的仓库列表
-        'repo_urls': [],
-
-        # 最大的任务ID
-        'max_task_id' : 1,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : [["飞桨正式实习招聘"]],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
-
-        # PR、状态等信息所在的列
-        'pr_col': 5,
-        
-        # 是否展示看板信息
-        'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': True,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "PaddleMIX 快乐开源活动 (2025 H1)",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -409,45 +331,6 @@ configs = [
         'board': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（第五期）",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-03-07T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/71491',
-
-        # 监控的仓库列表
-        'repo_urls': [],
-
-        # 最大的任务ID
-        'max_task_id' : 1,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : [["启航计划"]],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-        
-        # 是否展示看板信息
-        'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "【Docathon】补充缺失的中文 API 文档（Inplace 类）",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -476,45 +359,6 @@ configs = [
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "Add Inplace CN Doc",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-        
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【Docathon】修复文档注解",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-03-21T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/7134',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 44,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["修复文档注解"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-44']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Fix note",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
