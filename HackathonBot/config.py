@@ -333,14 +333,14 @@ configs = [
         # 是否为黑客松任务
         'hackathon': False,
     },{
-                # 任务名称，起标识作用
+        # 任务名称，起标识作用
         'issue_name': "Paddle 框架快乐开源活动（2025 H1）",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
         'start_time' : '2025-04-22T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/72415',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/72415',
 
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
@@ -361,7 +361,7 @@ configs = [
         'task_types' : [['1-7']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "[Auto Parallel] Add spmd rule for xxx and xxx_grad ops.",
+        'pr_prefix' : "[Auto Parallel] Add spmd rule",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
