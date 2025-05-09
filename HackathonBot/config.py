@@ -423,8 +423,8 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls'],
 
-        # 总的任务数量
-        'task_num' : 76,
+        # 最大的任务ID
+        'max_task_id' : 76,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
