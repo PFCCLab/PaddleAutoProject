@@ -418,10 +418,10 @@ configs = [
         'start_time' : '2025-05-09T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/72643',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/72643',
         
         # 监控的仓库列表
-        'repo_urls': ['https://github.com/PFCCLab/PaddleAPITest/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls'],
 
         # 总的任务数量
         'task_num' : 76,
