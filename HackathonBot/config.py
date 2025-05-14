@@ -385,7 +385,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 389,
+        'max_task_id' : 392,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -397,7 +397,7 @@ configs = [
         'type_names' : ["0-size Tensor的支持任务"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-389']],
+        'task_types' : [['1-392']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "0-size Tensor No",
