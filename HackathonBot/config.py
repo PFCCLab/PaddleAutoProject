@@ -223,42 +223,6 @@ configs = [
         'board': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "PaddleNLP 快乐开源活动 (2025 H1)",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-03-10T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleNLP/issues/9763',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleNLP/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 35,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["飞桨大语言模型快乐开源活动"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-35']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "PaddleNLP No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 7,
-
-        # 是否展示看板信息
-        'board': True,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "PaddleX 快乐开源活动 (2025 H1)",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -293,45 +257,6 @@ configs = [
 
         # 是否展示看板信息
         'board': True,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【Docathon】补充缺失的中文 API 文档（Inplace 类）",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-03-07T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/7090',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 47,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["补充缺失的中文 API 文档（Inplace 类）"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-47']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Add Inplace CN Doc",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-        
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
     },{
         # 任务名称，起标识作用
         'issue_name': "Paddle 框架快乐开源活动（2025 H1）",
@@ -415,45 +340,6 @@ configs = [
         # 是否为黑客松任务
         'hackathon': False,
 
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【快乐开源】Paddle2Torch API 转换功能开发",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-05-09T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/72643',
-        
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 112,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["转换功能开发"], 
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-112']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "P2T support No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
     },{
         # 任务名称，起标识作用
         'issue_name': "【开源任务】Paddle CPU/GPU Kernel 精度问题推全",
