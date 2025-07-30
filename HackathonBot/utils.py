@@ -98,12 +98,13 @@ def process_issue(task_text, config):
     """
     task_list = []
     for i in range(config['max_task_id']):
-        start = task_text.find('| {} |'.format(i + 1))
+        exists = re.search(r'\|\s*{}\s*\|'.format(i+1), task_text)
         # 如果没有找到该编号的任务，直接返回
-        if start < 0:
+        if exists is None:
             logger.error('没有从issue内容中找到编号为【{}】的赛题，请检查issue内容格式是否正确'.format(str(i + 1)))
             task_list.append(None)
             continue
+        start = exists.span()[0]
         end = start + 1
         column = 0
         task = {}
