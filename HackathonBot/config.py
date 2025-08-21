@@ -112,6 +112,7 @@ configs = [
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
                       'https://api.github.com/repos/PaddlePaddle/FastDeploy/pulls',
                       'https://api.github.com/repos/PaddlePaddle/GraphNet/pulls',
+                      'https://api.github.com/repos/PaddlePaddle/community/pulls',
                       'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
 
         # 最大的任务ID
@@ -124,7 +125,7 @@ configs = [
         'removed_tasks' : ['10-12'],
 
         # 赛道名
-        'type_names' : ["框架开发任务", "FastDeploy开发任务", "GraphNet 编译机床任务", "科学计算任务"],
+        'type_names' : ["框架开发任务", "FastDeploy 开发任务", "GraphNet 编译机床任务", "科学计算任务"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-19'], ['20-96'], ['97-102'], ['103-108']],
@@ -151,13 +152,13 @@ configs = [
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/74774',
 
         # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/dmlc/dgl/pulls'],
+        'repo_urls': [],
 
         # 最大的任务ID
         'max_task_id' : 3,
 
         # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : ['1-2'],
+        'un_handle_tasks' : [],
 
         # 已删除的赛题
         'removed_tasks' : [],
@@ -175,7 +176,7 @@ configs = [
         'pr_col': 4,
 
         # 是否展示看板信息
-        'board': True,
+        'board': False,
 
         # 是否为黑客松任务
         'hackathon': True,
@@ -214,7 +215,7 @@ configs = [
         'pr_col': 5,
 
         # 是否展示看板信息
-        'board': True,
+        'board': False,
 
         # 是否为黑客松任务
         'hackathon': True,
@@ -253,7 +254,7 @@ configs = [
         'pr_col': 4,
 
         # 是否展示看板信息
-        'board': True,
+        'board': False,
 
         # 是否为黑客松任务
         'hackathon': True,
