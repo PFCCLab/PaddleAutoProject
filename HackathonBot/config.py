@@ -152,7 +152,7 @@ configs = [
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/74774',
 
         # 监控的仓库列表
-        'repo_urls': [],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/community/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 3,
@@ -170,7 +170,7 @@ configs = [
         'task_types' : [['1-3']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
+        'pr_prefix' : "Hackathon 9th Fundable Projects No",
 
         # PR、状态等信息所在的列
         'pr_col': 4,
