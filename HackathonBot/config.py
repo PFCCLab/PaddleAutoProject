@@ -145,7 +145,7 @@ configs = [
         'hackathon': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 9th Code Camp】黑客松护航计划集训营（正式批）",
+        'issue_name': "【Hackathon 9th】文心大模型案例征集",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
         'start_time' : '2025-08-20T00:00:00Z',
