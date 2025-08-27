@@ -111,6 +111,7 @@ configs = [
         # 监控的仓库列表
         'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
                       'https://api.github.com/repos/PaddlePaddle/FastDeploy/pulls',
+                      'https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls',
                       'https://api.github.com/repos/PaddlePaddle/GraphNet/pulls',
                       'https://api.github.com/repos/PaddlePaddle/community/pulls',
                       'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
