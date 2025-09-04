@@ -25,42 +25,6 @@ common_config = {
 configs = [
     {
         # 任务名称，起标识作用
-        'issue_name': "PaddleMIX 快乐开源活动 (2025 H1)",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-03-10T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleMIX/issues/1046',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/PaddleMIX/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 30,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["飞桨多模态大模型快乐开源活动"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-30']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "PPMix No",
-
-        # PR、状态等信息所在的列
-        'pr_col': 7,
-
-        # 是否展示看板信息
-        'board': True,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "【开源任务】Paddle CPU/GPU Kernel 精度问题推全",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
