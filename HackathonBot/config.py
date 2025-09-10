@@ -237,7 +237,7 @@ configs = [
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/75208',
 
         # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls','https://api.github.com/repos/PaddlePaddle/PaddleCustomDevice/pulls'],
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
 
         # 最大的任务ID
         'max_task_id' : 22,
