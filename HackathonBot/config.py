@@ -421,6 +421,84 @@ configs = [
 
         # 是否为黑客松任务
         'hackathon': False,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（第六期）",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2025-09-12T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/75250',
+
+        # 监控的仓库列表
+        'repo_urls': [],
+
+        # 最大的任务ID
+        'max_task_id' : 1,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["启航计划集训营（第六期）"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "",
+
+        # PR、状态等信息所在的列
+        'pr_col': 3,
+
+        # 是否展示看板信息
+        'board': False,
+
+        # 是否为黑客松任务
+        'hackathon': False,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "[Docathon] 中文文档格式日常修复",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2025-09-12T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/7435',
+
+        # 监控的仓库列表
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls'],
+
+        # 最大的任务ID
+        'max_task_id' : 59,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["中文文档出现 COPY-FROM","中文文档出现 ``","文档出现 :attr:`` 和 :math:``"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-11'],['12-46'],['47-59']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "Fix Doc Format No",
+
+        # PR、状态等信息所在的列
+        'pr_col': 3,
+
+        # 是否展示看板信息
+        'board': True,
+
+        # 是否为黑客松任务
+        'hackathon': False,
     }
 ]
 
