@@ -252,7 +252,7 @@ configs = [
         'type_names' : ["GPU单测修复"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-22']],
+        'task_types' : [['1-24']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "UnitTestFix No.",
