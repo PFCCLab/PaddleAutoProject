@@ -375,7 +375,7 @@ configs = [
         'pr_prefix' : "",
 
         # PR、状态等信息所在的列
-        'pr_col': 3,
+        'pr_col': 7,
 
         # 是否展示看板信息
         'board': True,
