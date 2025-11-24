@@ -436,13 +436,13 @@ configs = [
         'hackathon': False,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（第六期）",
+        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（社团版）",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-09-12T00:00:00Z',
+        'start_time' : '2025-11-21T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/75250',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/76500',
 
         # 监控的仓库列表
         'repo_urls': [],
@@ -457,7 +457,7 @@ configs = [
         'removed_tasks' : [],
 
         # 赛道名
-        'type_names' : ["启航计划集训营（第六期）"],
+        'type_names' : ["飞桨启航计划集训营（社团版）"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1']],
