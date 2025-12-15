@@ -25,45 +25,6 @@ common_config = {
 configs = [
     {
         # 任务名称，起标识作用
-        'issue_name': "【开源任务】Paddle CPU/GPU Kernel 精度问题推全",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-05-12T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/72667',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls','https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 187,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["精度问题修复"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-187']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Accuracy diff No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 4,
-
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "【Hackathon 9th】开源贡献个人挑战赛",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -240,45 +201,6 @@ configs = [
         'hackathon': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【启航计划】PaddlePaddle GPU单测修复",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-09-12T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/75208',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 24,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["GPU单测修复"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-24']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "UnitTestFix No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "【启航计划】PaddlePaddle PHI算子库CUDA Kernel规范化",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -308,45 +230,6 @@ configs = [
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "CUDA Kernel No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-
-        # 是否展示看板信息
-        'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "PaddleOCR + ERINE 案例教程征集",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-09-12T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleOCR/issues/16454',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/ERNIE/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 3,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["PaddleOCR + ERINE 案例教程征集"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-3']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "PaddleOCR ERNIE No.",
 
         # PR、状态等信息所在的列
         'pr_col': 3,
@@ -431,45 +314,6 @@ configs = [
 
         # 是否展示看板信息
         'board': True,
-
-        # 是否为黑客松任务
-        'hackathon': False,
-    },{
-        # 任务名称，起标识作用
-        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（社团版）",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-11-21T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/76500',
-
-        # 监控的仓库列表
-        'repo_urls': [],
-
-        # 最大的任务ID
-        'max_task_id' : 1,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : [],
-
-        # 赛道名
-        'type_names' : ["飞桨启航计划集训营（社团版）"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
-
-        # PR、状态等信息所在的列
-        'pr_col': 3,
-
-        # 是否展示看板信息
-        'board': False,
 
         # 是否为黑客松任务
         'hackathon': False,
