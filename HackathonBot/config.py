@@ -46,7 +46,7 @@ configs = [
         'removed_tasks' : [''],
 
         # 赛道名
-        'type_names' : [""],
+        'type_names' : ["护航计划集训营（提前批）"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
         'task_types' : [['1-6']],
