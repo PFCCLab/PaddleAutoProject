@@ -31,10 +31,10 @@ configs = [
         'start_time' : '2025-12-19T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://github.com/PaddlePaddle/Paddle/issues/76977',
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/76977',
 
         # 监控的仓库列表
-        'repo_urls': [''],
+        'repo_urls': [],
 
         # 最大的任务ID
         'max_task_id' : 6,
@@ -59,9 +59,6 @@ configs = [
 
         # 是否展示看板信息
         'board': False,
-        
-        # 如果需要标识完成人，需要写上完成人所在的列
-        'complete_col': 4,
 
         # 是否为黑客松任务
         'hackathon': True,
