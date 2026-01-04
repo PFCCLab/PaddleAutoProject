@@ -8,3 +8,4 @@ dist
 config.json
 *.spec
 *.exe
+.DS_Store
