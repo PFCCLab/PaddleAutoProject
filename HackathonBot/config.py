@@ -103,53 +103,6 @@ configs = [
         'hackathon': True,
     },{
         # 任务名称，起标识作用
-        'issue_name': "【Hackathon 9th】开源贡献个人挑战赛",
-
-        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time' : '2025-08-20T00:00:00Z',
-
-        # issue页面 url 地址, 注意结尾不要有斜杠
-        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/74773',
-
-        # 监控的仓库列表
-        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/Paddle/pulls',
-                      'https://api.github.com/repos/PaddlePaddle/FastDeploy/pulls',
-                      'https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls',
-                      'https://api.github.com/repos/PaddlePaddle/GraphNet/pulls',
-                      'https://api.github.com/repos/PaddlePaddle/community/pulls',
-                      'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls'],
-
-        # 最大的任务ID
-        'max_task_id' : 128,
-
-        # 忽略不处理的题号，这部分留给人工处理
-        'un_handle_tasks' : [],
-
-        # 已删除的赛题
-        'removed_tasks' : ['10-12'],
-
-        # 赛道名
-        'type_names' : ["框架开发任务", "FastDeploy 开发任务", "GraphNet 编译机床任务", "科学计算任务"],
-
-        # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-19','109', '128'], ['20-96'], ['97-102','110-127'], ['103-108']],
-
-        # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "Hackathon 9th No.",
-
-        # PR、状态等信息所在的列
-        'pr_col': 4,
-
-        # 是否展示看板信息
-        'board': True,
-        
-        # 如果需要标识完成人，需要写上完成人所在的列
-        'complete_col': 5,
-
-        # 是否为黑客松任务
-        'hackathon': True,
-    },{
-        # 任务名称，起标识作用
         'issue_name': "【Hackathon 9th】开源贡献个人挑战赛冲刺赛",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
