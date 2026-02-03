@@ -25,6 +25,42 @@ common_config = {
 configs = [
     {
         # 任务名称，起标识作用
+        'issue_name': "【Hackathon 10th】Fundable Projects",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2026-02-03T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/77444',
+
+        # 监控的仓库列表
+        'repo_urls':  [],
+
+        # 最大的任务ID
+        'max_task_id' : 2,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["Fundable Projects"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-2']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "Hackathon 10th Fundable Projects No.",
+
+        # PR、状态等信息所在的列
+        'pr_col': 4,
+
+        # 是否展示看板信息
+        'board': False,
+    },{
+        # 任务名称，起标识作用
         'issue_name': "【Hackathon 10th】开源贡献个人挑战赛 · 春节特别季",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
@@ -125,7 +161,7 @@ configs = [
         'repo_urls': [],
 
         # 最大的任务ID
-        'max_task_id' : 6,
+        'max_task_id' : 7,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
