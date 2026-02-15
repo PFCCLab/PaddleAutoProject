@@ -335,7 +335,7 @@ configs = [
         'task_types' : [['1-74'],['75-126']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
-        'pr_prefix' : "",
+        'pr_prefix' : "Doc Link Fix No",
 
         # PR、状态等信息所在的列
         'pr_col': 5,
