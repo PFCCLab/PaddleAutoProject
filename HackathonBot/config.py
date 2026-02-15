@@ -241,7 +241,7 @@ configs = [
                       'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls'],
 
         # 最大的任务ID
-        'max_task_id' : 385,
+        'max_task_id' : 346,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks' : [],
@@ -253,7 +253,7 @@ configs = [
         'type_names' : ["PaddlePaddle API兼容性增强"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types' : [['1-385']],
+        'task_types' : [['1-346']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix' : "API Compatibility No",
