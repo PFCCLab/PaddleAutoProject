@@ -75,6 +75,8 @@ configs = [
                       'https://api.github.com/repos/PaddlePaddle/PaConvert/pulls',
                       'https://api.github.com/repos/PaddlePaddle/FastDeploy/pulls',
                       'https://api.github.com/repos/PFCCLab/PaddleAPITest/pulls',
+                      'https://api.github.com/repos/PFCCLab/paddle_sparse/pulls',
+                      'https://api.github.com/repos/PFCCLab/paddle_geometric/pulls',
                       'https://api.github.com/repos/PaddlePaddle/community/pulls',
                       'https://api.github.com/repos/PaddlePaddle/PaddleScience/pulls',
                       'https://api.github.com/repos/PaddlePaddle/PaddleMaterials/pulls'],
