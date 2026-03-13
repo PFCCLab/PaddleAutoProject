@@ -37,7 +37,7 @@ configs = [
         'repo_urls': [],
 
         # 最大的任务ID
-        'max_task_id': 7,
+        'max_task_id': 6,
 
         # 忽略不处理的题号，这部分留给人工处理
         'un_handle_tasks': [],
@@ -49,7 +49,7 @@ configs = [
         'type_names': ["护航计划集训营（正式批）"],
 
         # 每个赛题所属的赛道，每个赛道是一个数组
-        'task_types': [['1-7']],
+        'task_types': [['1-6']],
 
         # 该issue相关PR的前缀，用来标识PR是否属于该issue
         'pr_prefix': "Hackathon 10th No.",
