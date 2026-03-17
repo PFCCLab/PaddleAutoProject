@@ -56,9 +56,6 @@ configs = [
 
         # 是否展示看板信息
         'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': True,
     },{
         # 任务名称，起标识作用
         'issue_name': "【Hackathon 10th】PaddleOCR+ERNIE 应用创新赛道",
@@ -91,13 +88,10 @@ configs = [
         'pr_prefix': "Hackathon 10th OCR+ERNIE No.",
 
         # PR、状态等信息所在的列（0-indexed，报名情况列）
-        'pr_col': 3,
+        'pr_col': 4,
 
         # 是否展示看板信息
         'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': True,
     },{
         # 任务名称，起标识作用
         'issue_name': "【Hackathon 10th】Fundable Projects",
