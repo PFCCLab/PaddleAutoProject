@@ -61,7 +61,7 @@ configs = [
         'issue_name': "【Hackathon 10th】PaddleOCR+ERNIE 应用创新赛道",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
-        'start_time': '2026-03-27T00:00:00Z',
+        'start_time': '2026-03-18T00:00:00Z',
 
         # issue页面 url 地址, 注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/78325',
