@@ -410,9 +410,6 @@ configs = [
 
         # 是否展示看板信息
         'board': False,
-
-        # 是否为黑客松任务
-        'hackathon': True,
     }
 ]
 
