@@ -295,6 +295,152 @@ configs = [
 
         # 是否为黑客松任务
         'hackathon': False,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 预备营】飞桨启航计划集训营（马年新春版）",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2026-01-26T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/77510',
+
+        # 监控的仓库列表
+        'repo_urls': [],
+
+        # 最大的任务ID
+        'max_task_id' : 1,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["飞桨启航计划集训营（马年新春版）"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "",
+
+        # PR、状态等信息所在的列
+        'pr_col': 3,
+
+        # 是否展示看板信息
+        'board': False,
+
+        # 是否为黑客松任务
+        'hackathon': False,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【快乐开源】PaddlePaddle 文档链接修复任务",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time' : '2026-01-26T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/docs/issues/7735',
+
+        # 监控的仓库列表
+        'repo_urls': ['https://api.github.com/repos/PaddlePaddle/docs/pulls',
+                      'https://api.github.com/repos/PaddlePaddle/Paddle/pulls'],
+
+        # 最大的任务ID
+        'max_task_id' : 126,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks' : [],
+
+        # 已删除的赛题
+        'removed_tasks' : [],
+
+        # 赛道名
+        'type_names' : ["赛道一", "赛道二"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types' : [['1-74'],['75-126']],
+
+        # 该issue相关PR的前缀，用来标识PR是否属于该issue
+        'pr_prefix' : "Doc Link Fix No",
+
+        # PR、状态等信息所在的列
+        'pr_col': 5,
+
+        # 是否展示看板信息
+        'board': True,
+
+        # 是否为黑客松任务
+        'hackathon': False,
+    },{
+        # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 10th ERNIE with Partners】文心合作伙伴赛道",
+
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time': '2026-03-25T00:00:00Z',
+
+        # issue页面 url 地址, 注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/Paddle/issues/78485',
+
+        # 监控的仓库列表
+        'repo_urls': [],
+
+        # 最大的任务ID
+        'max_task_id': 28,
+
+        # 忽略不处理的题号，这部分留给人工处理
+        'un_handle_tasks': [],
+
+        # 已删除的赛题
+        'removed_tasks': [],
+
+        # 赛道名
+        'type_names': ["打卡任务", "进阶任务"],
+
+        # 每个赛题所属的赛道，每个赛道是一个数组
+        'task_types': [['1-12'], ['13-28']],
+
+        # PR、状态等信息所在的列（报名名单列）
+        'pr_col': 5,
+
+        # 是否展示看板信息
+        'board': False,
+    },
+    {
+        # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 10th】PaddleOCR 全球衍生模型挑战赛",
+
+        # issue页面 url 地址，注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleOCR/issues/17858',
+
+        # 监控的仓库列表（竞赛制，不追踪 PR）
+        'repo_urls': [],
+
+        # 最大的任务ID（仅1个报名任务）
+        'max_task_id': 1,
+
+        # 忽略不处理的题号
+        'un_handle_tasks': [],
+
+        # 已删除的赛题
+        'removed_tasks': [],
+
+        # 赛道名
+        'type_names': ["报名"],
+
+        # 每个赛题所属的赛道
+        'task_types': [['1']],
+
+        # PR、状态等信息所在的列（报名追踪列）
+        'pr_col': 4,
+
+        # 是否展示看板信息
+        'board': False,
+
+        # 是否为黑客松任务
+        'hackathon': True,
     }
 ]
 
