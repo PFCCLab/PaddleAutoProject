@@ -132,6 +132,9 @@ configs = [
         # issue页面 url 地址，注意结尾不要有斜杠
         'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleOCR/issues/17858',
 
+        # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
+        'start_time': '2026-03-25T00:00:00Z',
+
         # 监控的仓库列表（竞赛制，不追踪 PR）
         'repo_urls': [],
 
