@@ -127,6 +127,36 @@ configs = [
         'board': False,
     },{
         # 任务名称，起标识作用
+        'issue_name': "【HACKATHON 10th】PaddleOCR 全球衍生模型挑战赛",
+
+        # issue页面 url 地址，注意结尾不要有斜杠
+        'issue_url': 'https://api.github.com/repos/PaddlePaddle/PaddleOCR/issues/17858',
+
+        # 监控的仓库列表（竞赛制，不追踪 PR）
+        'repo_urls': [],
+
+        # 最大的任务ID（仅1个报名任务）
+        'max_task_id': 1,
+
+        # 忽略不处理的题号
+        'un_handle_tasks': [],
+
+        # 已删除的赛题
+        'removed_tasks': [],
+
+        # 赛道名
+        'type_names': ["报名"],
+
+        # 每个赛题所属的赛道
+        'task_types': [['1']],
+
+        # PR、状态等信息所在的列（报名追踪列）
+        'pr_col': 4,
+
+        # 是否展示看板信息
+        'board': False,
+    },{
+        # 任务名称，起标识作用
         'issue_name': "【Hackathon 10th】开源贡献个人挑战赛 · 春节特别季",
 
         # 开始时间，只会统计开始时间之后的PR(注意时间中的字母T和Z不能缺少)
