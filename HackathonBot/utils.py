@@ -204,12 +204,18 @@ def update_status_by_pull(tasks, pull, config):
         ids = []
         nums = title[start: end].split('、')
         for num in nums:
-            if '-' in num:
-                arr = num.split('-')
-                arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
-                ids.extend(arr)
-            else:
-                ids.append(int(num))
+            try:
+                if '-' in num:
+                    arr = num.split('-')
+                    arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
+                    ids.extend(arr)
+                else:
+                    ids.append(int(num))
+            except Exception as e:
+                comment_to_user({"body": "@{} PR赛题编号【{}】不正确".format(username, num), "id": 'pull-' + str(pull["id"])}, config)
+                config["comment_to_user_list"].append('pull-' + str(pull["id"]))
+                logger.error('@{} PR #{}中赛题编号【{}】不正确：'.format(username, pull['html_url'], num))
+                return
         
         for num in ids:
             # 防止某些PR编号写错
@@ -303,14 +309,18 @@ def process_comment(comment, config):
     ids = []
     nums = sequence.split('、')
     for num in nums:
-        if '-' in num:
-            arr = num.split('-')
-            arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
-            ids.extend(arr)
-        else:
-            ids.append(int(num))
+        try:
+            if '-' in num:
+                arr = num.split('-')
+                arr = [i for i in range(int(arr[0]), int(arr[1]) + 1)]
+                ids.extend(arr)
+            else:
+                ids.append(int(num))
+        except Exception as e:
+            logger.error('@{} 报名的格式不正确'.format(comment_obj['username']))
+            config["comment_to_user_list"].append('comment-' + str(comment["id"]))
+            return None
     nums = ids
-    
     comment_obj['num'] = nums
 
     logger.info('{} 报名赛题 {}'.format(comment_obj['username'], str(nums)))
